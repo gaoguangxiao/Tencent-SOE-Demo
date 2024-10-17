@@ -7,6 +7,7 @@
 //
 
 #import "TableViewController.h"
+#import <GXSwiftNetwork-Swift.h>
 
 @interface TableViewController ()
 @property (nonatomic, strong) NSMutableArray *tabs;
@@ -31,6 +32,11 @@
     oral.title = @"口语评测";
     oral.className = @"OralEvaluationViewController";
     [_tabs addObject:oral];
+    
+    //token信息
+    [MSBApiConfig.shared setApiConfigWithApiHost:@"https://gateway-test.risekid.cn"
+                                   commonHeaders:@{@"token":@"Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJCYXpoZkIxMCIsInV1aWQiOiI1ZDg2YThmYjhlNzU0YjVjOTlmZTQxOGViZjc3M2U0MCIsInRpbWVzdGFtcCI6MTcyODU0NjA1Njc5N30.IBJsvTBN7XyOMEHZEGkbQj_YH5kuHDpBpKYNCWI0xPR_-HrnuC0YdFLzP98tvvqS6MH6u3FlTsUSdxr8LdtTrg"}
+                             isAddDefaultHeaders:YES];
 }
 
 - (void)viewDidAppear:(BOOL)animated {

@@ -14,19 +14,16 @@ public typealias ClosureDataComplete = (_ code: Int) -> Void
 public class SOE: NSObject {
     
     let recordSOE = TencentSOE()
- 
-    func startSOE() async {
+    
+    func startSOE() async -> Int {
         recordSOE.reloadTIMTokenCount = 3
-//        Task {
-            let (code, data) = await recordSOE.startRecord()
-            let priInfo = PrivateInfo.shareInstance()
-            if code == 0 {
-                priInfo?.secretId = data.tmpSecretId
-                priInfo?.secretKey = data.tmpSecretKey
-                priInfo?.token = data.token
-            }
-//        return code
-//            block(code)
-//        }
+        let (code, data) = await recordSOE.startRecord()
+        let priInfo = PrivateInfo.shareInstance()
+        if code == 0 {
+            priInfo?.secretId = data.tmpSecretId
+            priInfo?.secretKey = data.tmpSecretKey
+            priInfo?.token = data.token
+        }
+        return code
     }
 }

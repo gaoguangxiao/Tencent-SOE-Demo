@@ -54,50 +54,55 @@
     _vadSlider.needInt = YES;
     _vadVolumeSlider.needInt = YES;
     [_sentenceInfoSeg setSelectedSegmentIndex:1];
+    
+    self.recordSOE = [SOE new];
 }
 
 - (IBAction)onClick:(id)sender {
     
-    [self.recordSOE startSOEWithCompletionHandler:^{
+    [self.recordSOE startSOEWithCompletionHandler:^(NSInteger code) {
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if(self->_running) {
+                [self->_ctl stop];
+            }else{
+                TAIOralConfig* config = [[TAIOralConfig alloc] init];
+                config.appID = kQDAppId;
+                config.token = [PrivateInfo shareInstance].token;
+                config.secretID = [PrivateInfo shareInstance].secretId;
+                config.secretKey = [PrivateInfo shareInstance].secretKey;
+                [config setApiParam:kTAIServerEngineType value:self.engineSeg.selectedSegmentIndex == 0 ? @"16k_en" : @"16k_zh"];
+                [config setApiParam:kTAIEvalMode value:[@(self.evalModeSeg.selectedSegmentIndex) stringValue]];
+                [config setApiParam:kTAIRefText value:self.refText.text];
+                [config setApiParam:kTAIScoreCoeff value:[@(self.coeffSlider.value) stringValue]];
+                [config setApiParam:kTAISentenceInfoEnabled value:[@(self.sentenceInfoSeg.selectedSegmentIndex) stringValue]];
+                if (self->_keywordText.text.length) {
+                    [config setApiParam:kTAIKeyword value:self->_keywordText.text];
+                }
+                config.audioFile =  [NSString stringWithFormat:@"%@/temp.pcm", NSTemporaryDirectory()];
+                config.vadInterval = self->_vadSlider.value;
+                config.vadVolume = self->_vadVolumeSlider.value;
+                config.connectTimeout = 3000;
+                self->_ctl = nil;
+                self->_source = nil;
+                if ([self->_sourceSeg selectedSegmentIndex] == 0) {
+                    self->_source = [[RecordDataSource alloc] init];
+                } else {
+                    // 文件源的pcm必须为单通道s16le格式
+                    NSString* path = [NSString stringWithFormat:@"%@/%@", [[NSBundle mainBundle]bundlePath], @"how_are_you.pcm"];
+                    self->_source = [[FileDataSource alloc] init:path];
+                    // 如果文件源不为pcm格式,可使用下面的方式
+        //             [config setApiParam:kTAIVoiceFormat value:@"2"];
+        //             NSString* path = [NSString stringWithFormat:@"%@/%@", [[NSBundle mainBundle]bundlePath], @"how_are_you.mp3"];
+        //             _source = [[AudioToolDataSource alloc] init:path];
+                }
+                self->_ctl =  [config build:self->_source listener:self];
+                self->_result = @"";
+                self->_running = true;
+                [self->_actionBtn setTitle:@"停止评测" forState:UIControlStateNormal];
+            }
+        });
        
-        if(self->_running) {
-            [self->_ctl stop];
-        }else{
-            TAIOralConfig* config = [[TAIOralConfig alloc] init];
-//            config.appID = kQDAppId;
-            config.token = [PrivateInfo shareInstance].token;
-            config.secretID = [PrivateInfo shareInstance].secretId;
-            config.secretKey = [PrivateInfo shareInstance].secretKey;
-            [config setApiParam:kTAIServerEngineType value:self.engineSeg.selectedSegmentIndex == 0 ? @"16k_en" : @"16k_zh"];
-            [config setApiParam:kTAIEvalMode value:[@(self.evalModeSeg.selectedSegmentIndex) stringValue]];
-            [config setApiParam:kTAIRefText value:self.refText.text];
-            [config setApiParam:kTAIScoreCoeff value:[@(self.coeffSlider.value) stringValue]];
-            [config setApiParam:kTAISentenceInfoEnabled value:[@(self.sentenceInfoSeg.selectedSegmentIndex) stringValue]];
-            if (self->_keywordText.text.length) {
-                [config setApiParam:kTAIKeyword value:self->_keywordText.text];
-            }
-            config.audioFile =  [NSString stringWithFormat:@"%@/temp.pcm", NSTemporaryDirectory()];
-            config.vadInterval = self->_vadSlider.value;
-            config.vadVolume = _vadVolumeSlider.value;
-            config.connectTimeout = 3000;
-            _ctl = nil;
-            _source = nil;
-            if ([_sourceSeg selectedSegmentIndex] == 0) {
-                _source = [[RecordDataSource alloc] init];
-            } else {
-                // 文件源的pcm必须为单通道s16le格式
-                NSString* path = [NSString stringWithFormat:@"%@/%@", [[NSBundle mainBundle]bundlePath], @"how_are_you.pcm"];
-                _source = [[FileDataSource alloc] init:path];
-                // 如果文件源不为pcm格式,可使用下面的方式
-    //             [config setApiParam:kTAIVoiceFormat value:@"2"];
-    //             NSString* path = [NSString stringWithFormat:@"%@/%@", [[NSBundle mainBundle]bundlePath], @"how_are_you.mp3"];
-    //             _source = [[AudioToolDataSource alloc] init:path];
-            }
-            _ctl =  [config build:_source listener:self];
-            _result = @"";
-            _running = true;
-            [_actionBtn setTitle:@"停止评测" forState:UIControlStateNormal];
-        }
         
     }];
 }
@@ -124,22 +129,26 @@
     [_actionBtn setTitle:@"开始评测" forState:UIControlStateNormal];
 }
 
-- (void)onFinish { 
+//评测成功
+- (void)onFinish {
     _running = false;
     [_actionBtn setTitle:@"开始评测" forState:UIControlStateNormal];
 }
 
+//评测中收到的服务端信息
 - (void)onMessage:(nonnull NSString *)value {
     _result = [NSString stringWithFormat:@"%@\n%@", _result, value];
     [_resultText setText:_result];
 }
 
+//静音回调
 - (void)onVad:(BOOL)value {
     if (!value) {
         [_ctl stop];
     }
 }
 
+//音量回调
 - (void)onVolume:(int)value {
     _volumeProgress.progress = value / 120.0;
 }
