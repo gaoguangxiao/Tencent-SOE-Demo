@@ -7,7 +7,7 @@
 
 #import "UserInfo.h"
 
-NSString* kQDAppId = @"";
+NSString* kQDAppId = @"1321939176";
 NSString* kQDSecretId = @"";
 NSString* kQDSecretKey = @"";
 NSString* kQDToken = nil;

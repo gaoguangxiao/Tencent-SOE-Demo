@@ -79,7 +79,9 @@
                 if (self->_keywordText.text.length) {
                     [config setApiParam:kTAIKeyword value:self->_keywordText.text];
                 }
-                config.audioFile =  [NSString stringWithFormat:@"%@/temp.pcm", NSTemporaryDirectory()];
+                NSString *videoDestDateString = [self createFileNamePrefix];
+//                config.audioFile =  [NSString stringWithFormat:@"%@/%@.pcm", NSTemporaryDirectory(),videoDestDateString];
+                config.audioFile = [NSString stringWithFormat:@"%@/%@.wav", NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)[0], videoDestDateString];
                 config.vadInterval = self->_vadSlider.value;
                 config.vadVolume = self->_vadVolumeSlider.value;
                 config.connectTimeout = 3000;
@@ -89,12 +91,14 @@
                     self->_source = [[RecordDataSource alloc] init];
                 } else {
                     // 文件源的pcm必须为单通道s16le格式
-                    NSString* path = [NSString stringWithFormat:@"%@/%@", [[NSBundle mainBundle]bundlePath], @"how_are_you.pcm"];
+                    NSString *path = [[NSBundle mainBundle] pathForResource:@"2024-10-16_10-00-27" ofType:@"wav"];
+//                    NSString *path = [NSString stringWithFormat:@"%@/%@", [[NSBundle mainBundle]bundlePath], @"how_are_you.wav"];
                     self->_source = [[FileDataSource alloc] init:path];
                     // 如果文件源不为pcm格式,可使用下面的方式
         //             [config setApiParam:kTAIVoiceFormat value:@"2"];
-        //             NSString* path = [NSString stringWithFormat:@"%@/%@", [[NSBundle mainBundle]bundlePath], @"how_are_you.mp3"];
-        //             _source = [[AudioToolDataSource alloc] init:path];
+//
+//                    NSString*wavPath = [NSString stringWithFormat:@"%@/%@", [[NSBundle mainBundle]bundlePath], @"how_are_you.mp3"];
+//                    self->_source = [[AudioToolDataSource alloc] init:wavPath];
                 }
                 self->_ctl =  [config build:self->_source listener:self];
                 self->_result = @"";
@@ -157,4 +161,13 @@
     NSLog(@"SOE logger ----> %@", value);
 }
 
+/**
+ *  创建文件名
+ */
+- (NSString *)createFileNamePrefix {
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd_HH-mm-ss"];//zzz
+    NSString *destDateString = [dateFormatter stringFromDate:[NSDate date]];
+    return destDateString;
+}
 @end
