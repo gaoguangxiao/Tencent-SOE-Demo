@@ -1,0 +1,6 @@
+framework module Pods_TAIDemo {
+  umbrella header "Pods-TAIDemo-umbrella.h"
+
+  export *
+  module * { export * }
+}
