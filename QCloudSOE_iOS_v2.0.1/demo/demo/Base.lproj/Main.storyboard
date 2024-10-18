@@ -138,6 +138,18 @@
                                                     <action selector="onClick:" destination="oWN-g9-2My" eventType="touchDown" id="FdB-ic-NqX"/>
                                                 </connections>
                                             </button>
+                                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" id="Twc-aW-TVO">
+                                                <rect key="frame" x="110" y="514" width="110" height="36"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <color key="backgroundColor" systemColor="groupTableViewBackgroundColor"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="80" id="uNf-Em-6oD"/>
+                                                </constraints>
+                                                <state key="normal" title="粘贴文件"/>
+                                                <connections>
+                                                    <action selector="PauseAudioFile:" destination="oWN-g9-2My" eventType="touchUpInside" id="aOn-Ld-iPE"/>
+                                                </connections>
+                                            </button>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="音量" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="szf-XH-YEp">
                                                 <rect key="frame" x="8" y="474" width="135" height="32"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -190,6 +202,9 @@
                                                     <segment title="录音"/>
                                                     <segment title="文件"/>
                                                 </segments>
+                                                <connections>
+                                                    <action selector="SegChangeSource:" destination="oWN-g9-2My" eventType="valueChanged" id="CKx-eX-J5p"/>
+                                                </connections>
                                             </segmentedControl>
                                             <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="fSa-9X-vuA">
                                                 <rect key="frame" x="8" y="108" width="398" height="34"/>
@@ -197,92 +212,45 @@
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits"/>
                                             </textField>
-                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="10" id="DAs-A4-AFC">
-                                                <rect key="frame" x="0.0" y="558" width="288" height="98"/>
-                                                <autoresizingMask key="autoresizingMask"/>
+                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="DAs-A4-AFC">
+                                                <rect key="frame" x="0.0" y="558" width="414" height="100"/>
                                                 <subviews>
-                                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="53" translatesAutoresizingMaskIntoConstraints="NO" id="lnf-rC-Vze">
-                                                        <rect key="frame" x="0.0" y="0.0" width="255" height="27.5"/>
-                                                        <subviews>
-                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Twc-aW-TVO">
-                                                                <rect key="frame" x="0.0" y="0.0" width="60" height="27.5"/>
-                                                                <color key="backgroundColor" systemColor="groupTableViewBackgroundColor"/>
-                                                                <constraints>
-                                                                    <constraint firstAttribute="width" constant="80" id="uNf-Em-6oD"/>
-                                                                </constraints>
-                                                                <state key="normal" title="粘贴文件"/>
-                                                                <connections>
-                                                                    <action selector="PauseAudioFile:" destination="oWN-g9-2My" eventType="touchUpInside" id="aOn-Ld-iPE"/>
-                                                                </connections>
-                                                            </button>
-                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="文件数：" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="f1G-Qd-7M7">
-                                                                <rect key="frame" x="113" y="0.0" width="59.5" height="27.5"/>
-                                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                                <color key="textColor" systemColor="systemRedColor"/>
-                                                                <nil key="highlightedColor"/>
-                                                            </label>
-                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1/21" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="1ng-Vu-AbV">
-                                                                <rect key="frame" x="225.5" y="0.0" width="29.5" height="27.5"/>
-                                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                                <nil key="textColor"/>
-                                                                <nil key="highlightedColor"/>
-                                                            </label>
-                                                        </subviews>
-                                                        <constraints>
-                                                            <constraint firstAttribute="height" constant="30" id="rj8-xj-4fs"/>
-                                                        </constraints>
-                                                    </stackView>
-                                                    <stackView opaque="NO" contentMode="scaleToFill" id="JHx-6N-NF9">
-                                                        <rect key="frame" x="0.0" y="37.5" width="105.5" height="20.5"/>
-                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                        <subviews>
-                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="文件名称：" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="d8O-Ve-29y">
-                                                                <rect key="frame" x="0.0" y="0.0" width="76" height="20.5"/>
-                                                                <autoresizingMask key="autoresizingMask"/>
-                                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                                <color key="textColor" systemColor="systemRedColor"/>
-                                                                <nil key="highlightedColor"/>
-                                                            </label>
-                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1/21" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="jta-JQ-kaW">
-                                                                <rect key="frame" x="76" y="0.0" width="29.5" height="20.5"/>
-                                                                <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
-                                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                                <nil key="textColor"/>
-                                                                <nil key="highlightedColor"/>
-                                                            </label>
-                                                        </subviews>
-                                                    </stackView>
-                                                    <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="84" id="OoX-oe-j47">
-                                                        <rect key="frame" x="0.0" y="68" width="288" height="30"/>
-                                                        <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="characterWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jta-JQ-kaW">
+                                                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                        <nil key="textColor"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="84" translatesAutoresizingMaskIntoConstraints="NO" id="OoX-oe-j47">
+                                                        <rect key="frame" x="0.0" y="10" width="358" height="90"/>
                                                         <subviews>
                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" id="cEa-La-FpO" userLabel="上一个">
-                                                                <rect key="frame" x="0.0" y="0.0" width="45" height="30"/>
+                                                                <rect key="frame" x="0.0" y="30" width="45" height="30"/>
                                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                                 <color key="backgroundColor" systemColor="groupTableViewBackgroundColor"/>
                                                                 <state key="normal" title="上一个"/>
                                                                 <connections>
-                                                                    <action selector="PauseAudioFile:" destination="oWN-g9-2My" eventType="touchUpInside" id="I1n-cm-w2g"/>
+                                                                    <action selector="didLast:" destination="oWN-g9-2My" eventType="touchUpInside" id="jlx-Lk-g1a"/>
                                                                 </connections>
                                                             </button>
-                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" id="1vJ-XO-O86" userLabel="上一个">
-                                                                <rect key="frame" x="129" y="0.0" width="45" height="30"/>
+                                                            <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" id="1vJ-XO-O86">
+                                                                <rect key="frame" x="129" y="30" width="45" height="30"/>
                                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                                 <color key="backgroundColor" systemColor="groupTableViewBackgroundColor"/>
                                                                 <state key="normal" title="下一个"/>
                                                                 <connections>
-                                                                    <action selector="PauseAudioFile:" destination="oWN-g9-2My" eventType="touchUpInside" id="o1Y-je-rXv"/>
+                                                                    <action selector="didLast:" destination="oWN-g9-2My" eventType="touchUpInside" id="cu0-GN-rhL"/>
                                                                 </connections>
                                                             </button>
-                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" id="hKQ-ws-8JK" userLabel="上一个">
-                                                                <rect key="frame" x="258" y="0.0" width="30" height="30"/>
-                                                                <autoresizingMask key="autoresizingMask"/>
+                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hKQ-ws-8JK" userLabel="上一个">
+                                                                <rect key="frame" x="258" y="25" width="100" height="40"/>
                                                                 <color key="backgroundColor" systemColor="groupTableViewBackgroundColor"/>
+                                                                <constraints>
+                                                                    <constraint firstAttribute="width" constant="100" id="PFC-gi-awv"/>
+                                                                    <constraint firstAttribute="height" constant="40" id="Xiq-t5-jBN"/>
+                                                                </constraints>
                                                                 <state key="normal" title="播放"/>
                                                                 <connections>
-                                                                    <action selector="PauseAudioFile:" destination="oWN-g9-2My" eventType="touchUpInside" id="58m-Ne-1IM"/>
+                                                                    <action selector="didPlayAudio:" destination="oWN-g9-2My" eventType="touchUpInside" id="lmb-lc-7F0"/>
                                                                 </connections>
                                                             </button>
                                                         </subviews>
@@ -290,36 +258,31 @@
                                                 </subviews>
                                             </stackView>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="10" id="MxE-bB-p9O">
-                                                <rect key="frame" x="0.0" y="655" width="325" height="86"/>
+                                                <rect key="frame" x="0.0" y="658" width="325" height="100"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <subviews>
-                                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="20" id="FXX-9k-VWX">
-                                                        <rect key="frame" x="0.0" y="0.0" width="96" height="55.5"/>
-                                                        <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
+                                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="FXX-9k-VWX">
+                                                        <rect key="frame" x="0.0" y="0.0" width="146" height="69.5"/>
                                                         <subviews>
-                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="识别结果：" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="fr1-Cq-SGa">
-                                                                <rect key="frame" x="0.0" y="0.0" width="76" height="55.5"/>
-                                                                <autoresizingMask key="autoresizingMask"/>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="识别结果：" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fr1-Cq-SGa">
+                                                                <rect key="frame" x="0.0" y="0.0" width="76" height="69.5"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                 <color key="textColor" systemColor="systemRedColor"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
-                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="nvF-os-hpm">
-                                                                <rect key="frame" x="96" y="0.0" width="0.0" height="55.5"/>
-                                                                <autoresizingMask key="autoresizingMask"/>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nvF-os-hpm">
+                                                                <rect key="frame" x="96" y="0.0" width="50" height="69.5"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                 <nil key="textColor"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                         </subviews>
                                                     </stackView>
-                                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="20" id="W0S-tT-KkA">
-                                                        <rect key="frame" x="0.0" y="65.5" width="96" height="20.5"/>
-                                                        <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
+                                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="W0S-tT-KkA">
+                                                        <rect key="frame" x="0.0" y="79.5" width="96" height="20.5"/>
                                                         <subviews>
-                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="建议评分：" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="mwF-ZE-425">
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="建议评分：" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mwF-ZE-425">
                                                                 <rect key="frame" x="0.0" y="0.0" width="76" height="20.5"/>
-                                                                <autoresizingMask key="autoresizingMask"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                 <color key="textColor" systemColor="systemRedColor"/>
                                                                 <nil key="highlightedColor"/>
@@ -337,7 +300,7 @@
                                                 </subviews>
                                             </stackView>
                                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="natural" id="aDa-dh-Pf0">
-                                                <rect key="frame" x="0.0" y="752" width="414" height="621"/>
+                                                <rect key="frame" x="0.0" y="792" width="406" height="550"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 <color key="backgroundColor" systemColor="systemGray6Color"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -346,7 +309,11 @@
                                         </subviews>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <constraints>
+                                            <constraint firstItem="DAs-A4-AFC" firstAttribute="leading" secondItem="dJ2-hu-gI0" secondAttribute="leading" id="OMQ-J4-aBW"/>
+                                            <constraint firstAttribute="trailing" secondItem="DAs-A4-AFC" secondAttribute="trailing" id="aWD-fW-Hkg"/>
                                             <constraint firstAttribute="height" constant="1350" id="sHv-P9-YWe"/>
+                                            <constraint firstItem="DAs-A4-AFC" firstAttribute="centerX" secondItem="dJ2-hu-gI0" secondAttribute="centerX" id="tEy-BV-AzY"/>
+                                            <constraint firstItem="DAs-A4-AFC" firstAttribute="top" secondItem="dJ2-hu-gI0" secondAttribute="top" constant="558" id="zLM-zX-u0x"/>
                                         </constraints>
                                     </view>
                                 </subviews>
@@ -365,6 +332,8 @@
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </view>
                     <connections>
+                        <outlet property="AudioSView" destination="DAs-A4-AFC" id="wdX-xf-K2o"/>
+                        <outlet property="AudioTxt" destination="jta-JQ-kaW" id="EgW-5T-VBK"/>
                         <outlet property="SuggestedScoreTxt" destination="9yc-Do-9qM" id="Z3u-Uh-Zpy"/>
                         <outlet property="WordTxt" destination="nvF-os-hpm" id="gQv-NH-1GJ"/>
                         <outlet property="actionBtn" destination="vCq-IV-mJl" id="ZVF-Fd-a2h"/>

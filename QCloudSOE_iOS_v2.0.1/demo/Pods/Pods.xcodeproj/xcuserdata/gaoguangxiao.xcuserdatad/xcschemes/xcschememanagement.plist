@@ -24,6 +24,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>GXAudioPlay.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>GXSwiftNetwork.xcscheme</key>
 		<dict>
 			<key>isShown</key>

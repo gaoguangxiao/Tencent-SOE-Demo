@@ -15,6 +15,8 @@ target 'demo' do
   pod 'GXTaskDownload', :path => '~/Documents/GitHub/GXTaskDownload' # 下载组件
   
   pod 'MJExtension'
+  
+  pod 'GXAudioPlay', :path=>'~/Documents/GitHub/GXAudioPlay'
 #  pod 'TAISDK_iOS'
   
 end

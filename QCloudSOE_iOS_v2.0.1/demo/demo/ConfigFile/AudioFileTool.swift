@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import GXAudioPlay
 
 @objcMembers
 public class AudioFileTool: NSObject {
@@ -18,6 +19,15 @@ public class AudioFileTool: NSObject {
     
     var orignTxt: String?
     
+    lazy var audioRecordPlayer2: PTAudioPlayer = {
+        let pl = PTAudioPlayer()
+        return pl
+    }()
+    
+    func clearTxt() {
+        audios.removeAll()
+    }
+    
     func saveTxt(txt: String) -> Void {
         
         orignTxt = txt
@@ -29,11 +39,19 @@ public class AudioFileTool: NSObject {
         }
     }
     
-    func cureentAudioURL() -> String {
+    func cureentAudioURL() -> String? {
+        guard audios.count > 0 else { return nil }
         return audios[current]
     }
     
+    func playAudio() {
+        if let url = cureentAudioURL() {
+            audioRecordPlayer2.play(url: url)
+        }
+    }
+    
     func nextAudioURL() -> String {
+        guard audios.count > 0 else { return "" }
         current += 1
         if current >= audios.count {
             current = 0

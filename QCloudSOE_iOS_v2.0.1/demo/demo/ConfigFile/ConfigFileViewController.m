@@ -19,10 +19,11 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    _textView.text = AudioFileTool.share.orignTxt;    
+    _textView.text = AudioFileTool.share.orignTxt;
 }
 
 - (IBAction)clear:(id)sender {
+    [AudioFileTool.share clearTxt];
 }
 
 - (IBAction)save:(id)sender {

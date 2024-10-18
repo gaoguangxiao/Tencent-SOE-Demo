@@ -21,6 +21,8 @@
 #import "demo-Swift.h"
 #import "GXTaskDownload-Swift.h"
 #import "ConfigFileViewController.h"
+
+#import <GXAudioPlay-Swift.h>
 @interface OralEvaluationViewController () <TAIOralListener, UITextFieldDelegate>
 
 @property (weak, nonatomic) IBOutlet UITextField *refText;
@@ -38,6 +40,9 @@
 @property (weak, nonatomic) IBOutlet UISegmentedControl *sentenceInfoSeg;//输出断句结果中间显示
 @property (weak, nonatomic) IBOutlet UITextField *keywordText;
 
+
+
+
 @property (nonatomic, strong) SOE *recordSOE;
 
 //下载音频至沙盒
@@ -46,6 +51,11 @@
 //音频评测面板
 @property (weak, nonatomic) IBOutlet UILabel *WordTxt;//识别结果
 @property (weak, nonatomic) IBOutlet UILabel *SuggestedScoreTxt;//建议评分
+
+//文件操作板
+@property (weak, nonatomic) IBOutlet UIStackView *AudioSView;
+@property (weak, nonatomic) IBOutlet UILabel *AudioTxt;
+@property (nonatomic, strong) AudioFileTool *tool;
 
 @end
 
@@ -68,6 +78,8 @@
     
     self.recordSOE = [SOE new];
     self.downloader = [GXDownloadManager new];
+    self.tool = AudioFileTool.share;
+    [self updateSource];
 }
 
 - (void)clearResult {
@@ -93,8 +105,9 @@
     
     if ([source isKindOfClass:RecordDataSource.class]) {
         NSString *videoDestDateString = [self createFileNamePrefix];
-        //  config.audioFile =  [NSString stringWithFormat:@"%@/%@.pcm", NSTemporaryDirectory(),videoDestDateString];
-        config.audioFile = [NSString stringWithFormat:@"%@/%@.wav", NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)[0], videoDestDateString];
+          config.audioFile =  [NSString stringWithFormat:@"%@/%@.pcm", NSTemporaryDirectory(),videoDestDateString];
+//        config.audioFile = [NSString stringWithFormat:@"%@/%@.wav", NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)[0], videoDestDateString];
+        NSLog(@"audio path is: %@",config.audioFile);
         config.vadInterval = self->_vadSlider.value;
         config.vadVolume = self->_vadVolumeSlider.value;
     } else {
@@ -134,18 +147,18 @@
                     //                    NSString*wavPath = [NSString stringWithFormat:@"%@/%@", [[NSBundle mainBundle]bundlePath], @"how_are_you.mp3"];
                     
                     // 文件源为网络音频 https://file.risekid.cn/record/problem/68055/493/2/8c3c3533618547abb24176e73e3cc8f5.mp3
-                    NSString *mp3URL = @"https://file.risekid.cn/record/problem/68055/493/2/8c3c3533618547abb24176e73e3cc8f5.mp3";
+//                    NSString *mp3URL = @"https://file.risekid.cn/record/problem/68055/493/2/8c3c3533618547abb24176e73e3cc8f5.mp3";
                     //                    data.audio = [NSData dataWithContentsOfFile:wavPath];
                     //下载音频
-                    [self.downloader downloadV2WithUrl:mp3URL path:@"problem" priority:0 block:^(float progress, NSString * _Nullable audioPath) {
-                        //                        NSLog(@"audio path is: %@",audioPath);
-                        
-                        dispatch_async(dispatch_get_main_queue(), ^{
-                            self->_source = [[AudioToolDataSource alloc] init:audioPath];
-                            [self initTAIConfig:self-> _source];
-                        });
-                        
-                        
+                    [self.downloader downloadV2WithUrl:[self->_tool cureentAudioURL] path:@"problem" priority:0 block:^(float progress, NSString * _Nullable audioPath) {
+                        if (audioPath) {
+                            NSLog(@"audio path is: %@",audioPath);
+                            dispatch_async(dispatch_get_main_queue(), ^{
+                                self->_source = [[AudioToolDataSource alloc] init:audioPath];
+                                [self initTAIConfig:self-> _source];
+                            });
+                        }
+                       
                     }];
                 }
                 
@@ -159,8 +172,37 @@
     ConfigFileViewController *controller = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"ConfigFileViewController"];
     controller.isSaveAudios = ^{
         NSLog(@"%@",[AudioFileTool.share cureentAudioURL]);
+        self.AudioTxt.text = [NSString stringWithFormat:@"%ld/%ld：%@",(long)self->_tool.current  + 1,self->_tool.audios.count,[self->_tool cureentAudioURL]];
     };
     [self.navigationController pushViewController:controller animated:YES];
+}
+
+//切换
+- (IBAction)SegChangeSource:(UISegmentedControl *)sender {
+    [self updateSource];
+}
+
+- (void)updateSource {
+    
+    _AudioSView.hidden = _sourceSeg.selectedSegmentIndex == 0;
+    
+    if (_sourceSeg.selectedSegmentIndex == 0) {
+//        _AudioSView.hidden = YES;
+    } else {
+        
+    }
+}
+
+- (IBAction)didLast:(UIButton *)sender {
+        
+    NSString *urlName = sender.tag == 0 ? [_tool lastAudioURL]:[_tool nextAudioURL];
+    self.AudioTxt.text = [NSString stringWithFormat:@"%ld/%ld：%@",(long)_tool.current + 1,_tool.audios.count,urlName];
+    
+    NSLog(@"%@",self.AudioTxt.text);
+}
+
+- (IBAction)didPlayAudio:(id)sender {
+    [_tool playAudio];
 }
 
 - (void)didReceiveMemoryWarning {
