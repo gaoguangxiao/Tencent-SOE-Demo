@@ -34,7 +34,7 @@
 @property (weak, nonatomic) IBOutlet Slider *vadSlider;
 @property (weak, nonatomic) IBOutlet UIProgressView *volumeProgress;
 @property (weak, nonatomic) IBOutlet Slider *vadVolumeSlider;
-@property (weak, nonatomic) IBOutlet UISegmentedControl *sentenceInfoSeg;
+@property (weak, nonatomic) IBOutlet UISegmentedControl *sentenceInfoSeg;//输出断句结果中间显示
 @property (weak, nonatomic) IBOutlet UITextField *keywordText;
 
 @property (nonatomic, strong) SOE *recordSOE;
@@ -69,6 +69,11 @@
     self.downloader = [GXDownloadManager new];
 }
 
+- (void)clearResult {
+    _WordTxt.text = @"";
+    _SuggestedScoreTxt.text = @"";
+}
+
 - (void)initTAIConfig:(id<TAIOralDataSource>)source {
     TAIOralConfig* config = [[TAIOralConfig alloc] init];
     config.appID = kQDAppId;
@@ -91,9 +96,12 @@
         config.audioFile = [NSString stringWithFormat:@"%@/%@.wav", NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)[0], videoDestDateString];
         config.vadInterval = self->_vadSlider.value;
         config.vadVolume = self->_vadVolumeSlider.value;
+    } else {
+        
     }
     
     self->_ctl = nil;
+    [self clearResult];
     //    self->_source = nil;
     
     self->_ctl =  [config build:source listener:self];
@@ -180,15 +188,19 @@
     NSLog(@"SOE onMessage ----> %@", value);
     
     TAIOralEvaluationWordBase *eveluation = [TAIOralEvaluationWordBase mj_objectWithKeyValues:value];
-    _result = [NSString stringWithFormat:@"%@\n%@", _result, value.mj_JSONString];
+        
+    NSData *data = [NSJSONSerialization dataWithJSONObject:[eveluation mj_JSONObject] options:NSJSONWritingPrettyPrinted error:nil];
+    NSString *dataStr =  [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+    _result = [NSString stringWithFormat:@"%@\n%@", _result, dataStr];
+    
     [_resultText setText:_result];
     TAIOralEvaluationRetV2 *result = eveluation.result;
     if (result) {
         TAIOralEvaluationWordV2 *firstWord = result.Words.firstObject;
         if (firstWord) {
-            _WordTxt.text = [NSString stringWithFormat:@"识别结果：%@",firstWord.Word];
+            _WordTxt.text = [NSString stringWithFormat:@"%@",firstWord.Word];
         }
-        _SuggestedScoreTxt.text = [NSString stringWithFormat:@"建议评分：%.2f",result.SuggestedScore];
+        _SuggestedScoreTxt.text = [NSString stringWithFormat:@"%.2f",result.SuggestedScore];
     }
 }
 
