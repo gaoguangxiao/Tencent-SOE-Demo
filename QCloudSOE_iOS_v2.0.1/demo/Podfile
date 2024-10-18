@@ -11,4 +11,6 @@ target 'demo' do
   # Pods for demo
 
   pod 'RSAdventureApi', :path => '~/Desktop/SourceTree/rs_bridge/rsadventureapi'
+  
+  pod 'GXTaskDownload', :path => '~/Documents/GitHub/GXTaskDownload' # 下载组件
 end
