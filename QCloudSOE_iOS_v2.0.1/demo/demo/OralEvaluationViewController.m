@@ -70,6 +70,8 @@
     [super viewDidLoad];
     _result = @"";
     _running = false;
+    _refText.text = @"how are you";
+//    _refText.text = @"e";
     _refText.delegate = self;
     _keywordText.delegate = self;
     _vadSlider.needInt = YES;
@@ -88,6 +90,9 @@
 }
 
 - (void)initTAIConfig:(id<TAIOralDataSource>)source {
+    
+    [self clearResult];
+    
     TAIOralConfig* config = [[TAIOralConfig alloc] init];
     config.appID = kQDAppId;
     config.token = [PrivateInfo shareInstance].token;
@@ -115,7 +120,6 @@
     }
     
     self->_ctl = nil;
-    [self clearResult];
     //    self->_source = nil;
     
     self->_ctl =  [config build:source listener:self];
@@ -138,17 +142,22 @@
                 if ([self->_sourceSeg selectedSegmentIndex] == 0) {
                     self->_source = [[RecordDataSource alloc] init];
                     [self initTAIConfig:self-> _source];
-                } else {
+                } else if ([self ->_sourceSeg selectedSegmentIndex] == 1) {
                     // 文件源的pcm必须为单通道s16le格式
-                    //                    NSString *path = [[NSBundle mainBundle] pathForResource:@"2024-10-16_10-00-27" ofType:@"wav"];
-                    //                    NSString *path = [NSString stringWithFormat:@"%@/%@", [[NSBundle mainBundle]bundlePath], @"how_are_you.wav"];
-                    //                    self->_source = [[FileDataSource alloc] init:path];
+//                    NSString *path = [[NSBundle mainBundle] pathForResource:@"2024-10-18_16-15-45" ofType:@"wav"];
+                    
+//                    NSString* path = [NSString stringWithFormat:@"%@/%@", [[NSBundle mainBundle]bundlePath], @"how_are_you.pcm"];
+//                    self->_source = [[FileDataSource alloc] init:path];
+                    
                     // 如果文件源不为pcm格式,可使用下面的方式//
-                    //                    NSString*wavPath = [NSString stringWithFormat:@"%@/%@", [[NSBundle mainBundle]bundlePath], @"how_are_you.mp3"];
+                    NSString* path = [NSString stringWithFormat:@"%@/%@", [[NSBundle mainBundle]bundlePath], @"how_are_you.mp3"];
+                    self->_source = [[AudioToolDataSource alloc] init:path];
+                    [self initTAIConfig:self-> _source];
+                } else {
                     
                     // 文件源为网络音频 https://file.risekid.cn/record/problem/68055/493/2/8c3c3533618547abb24176e73e3cc8f5.mp3
 //                    NSString *mp3URL = @"https://file.risekid.cn/record/problem/68055/493/2/8c3c3533618547abb24176e73e3cc8f5.mp3";
-                    //                    data.audio = [NSData dataWithContentsOfFile:wavPath];
+                   
                     //下载音频
                     [self.downloader downloadV2WithUrl:[self->_tool cureentAudioURL] path:@"problem" priority:0 block:^(float progress, NSString * _Nullable audioPath) {
                         if (audioPath) {
@@ -158,7 +167,6 @@
                                 [self initTAIConfig:self-> _source];
                             });
                         }
-                       
                     }];
                 }
                 
