@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		1E7A25242CC1F5940080D18A /* AudioToolDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E7A25232CC1F5940080D18A /* AudioToolDataSource.m */; };
 		1E7A25272CC200590080D18A /* TAIOralEvaluationRetV2.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E7A25262CC200590080D18A /* TAIOralEvaluationRetV2.m */; };
+		1E7A252A2CC215F60080D18A /* ConfigFileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E7A25292CC215F60080D18A /* ConfigFileViewController.m */; };
+		1E7A25332CC231B10080D18A /* AudioFileTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E7A25322CC231B10080D18A /* AudioFileTool.swift */; };
 		1E8419452CC0BCBE005E1439 /* PrivateInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E8419442CC0BCBE005E1439 /* PrivateInfo.m */; };
 		1E8419472CC0C2A7005E1439 /* SOE.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E8419462CC0C2A7005E1439 /* SOE.swift */; };
 		1E8419632CC0E0E8005E1439 /* 58DE9407-D2C6-4354-BB75-1EADB71B2890.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 1E84195F2CC0E0E8005E1439 /* 58DE9407-D2C6-4354-BB75-1EADB71B2890.mp3 */; };
@@ -56,6 +58,9 @@
 		1E7A25232CC1F5940080D18A /* AudioToolDataSource.m */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; path = AudioToolDataSource.m; sourceTree = "<group>"; };
 		1E7A25252CC200590080D18A /* TAIOralEvaluationRetV2.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TAIOralEvaluationRetV2.h; sourceTree = "<group>"; };
 		1E7A25262CC200590080D18A /* TAIOralEvaluationRetV2.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TAIOralEvaluationRetV2.m; sourceTree = "<group>"; };
+		1E7A25282CC215F60080D18A /* ConfigFileViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ConfigFileViewController.h; sourceTree = "<group>"; };
+		1E7A25292CC215F60080D18A /* ConfigFileViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ConfigFileViewController.m; sourceTree = "<group>"; };
+		1E7A25322CC231B10080D18A /* AudioFileTool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioFileTool.swift; sourceTree = "<group>"; };
 		1E8419422CC0BBEF005E1439 /* demo-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "demo-Bridging-Header.h"; sourceTree = "<group>"; };
 		1E8419432CC0BCBE005E1439 /* PrivateInfo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrivateInfo.h; sourceTree = "<group>"; };
 		1E8419442CC0BCBE005E1439 /* PrivateInfo.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PrivateInfo.m; sourceTree = "<group>"; };
@@ -128,6 +133,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1E7A252E2CC2172B0080D18A /* ConfigFile */ = {
+			isa = PBXGroup;
+			children = (
+				1E7A25282CC215F60080D18A /* ConfigFileViewController.h */,
+				1E7A25292CC215F60080D18A /* ConfigFileViewController.m */,
+				1E7A25322CC231B10080D18A /* AudioFileTool.swift */,
+			);
+			path = ConfigFile;
+			sourceTree = "<group>";
+		};
 		1E8419492CC0E0E8005E1439 /* 增益比例2.0 */ = {
 			isa = PBXGroup;
 			children = (
@@ -233,6 +248,8 @@
 		7E2FC9A22BFEEE3800077232 /* demo */ = {
 			isa = PBXGroup;
 			children = (
+				1E8419462CC0C2A7005E1439 /* SOE.swift */,
+				1E7A252E2CC2172B0080D18A /* ConfigFile */,
 				1E8419622CC0E0E8005E1439 /* 原生录制音频 */,
 				7E40DB062C08537000E06118 /* how_are_you.mp3 */,
 				7E40DB052C08537000E06118 /* how_are_you.pcm */,
@@ -261,7 +278,6 @@
 				7E2FC9B42BFEEE3900077232 /* Info.plist */,
 				7E2FC9B52BFEEE3900077232 /* main.m */,
 				1E8419422CC0BBEF005E1439 /* demo-Bridging-Header.h */,
-				1E8419462CC0C2A7005E1439 /* SOE.swift */,
 			);
 			path = demo;
 			sourceTree = "<group>";
@@ -430,6 +446,7 @@
 			files = (
 				7E988BA42C0080D300F87DA5 /* UserInfo.m in Sources */,
 				1E7A25272CC200590080D18A /* TAIOralEvaluationRetV2.m in Sources */,
+				1E7A25332CC231B10080D18A /* AudioFileTool.swift in Sources */,
 				7E2FC9AB2BFEEE3800077232 /* ViewController.m in Sources */,
 				7E2FC9EB2BFF3CF100077232 /* TableViewController.m in Sources */,
 				1E7A25242CC1F5940080D18A /* AudioToolDataSource.m in Sources */,
@@ -438,6 +455,7 @@
 				7E988BB12C0090A700F87DA5 /* Slider.m in Sources */,
 				7E2FC9B62BFEEE3900077232 /* main.m in Sources */,
 				7E988BA72C00852A00F87DA5 /* ConfigViewController.m in Sources */,
+				1E7A252A2CC215F60080D18A /* ConfigFileViewController.m in Sources */,
 				7E2FC9E82BFF3A7700077232 /* OralEvaluationViewController.m in Sources */,
 				7E988BB42C009DF300F87DA5 /* RecordDataSource.m in Sources */,
 				7E2FC9FE2BFF476D00077232 /* FileDataSource.m in Sources */,

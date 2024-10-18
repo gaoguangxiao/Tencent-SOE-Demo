@@ -20,6 +20,7 @@
 
 #import "demo-Swift.h"
 #import "GXTaskDownload-Swift.h"
+#import "ConfigFileViewController.h"
 @interface OralEvaluationViewController () <TAIOralListener, UITextFieldDelegate>
 
 @property (weak, nonatomic) IBOutlet UITextField *refText;
@@ -150,9 +151,16 @@
                 
             }
         });
-        
-        
     }];
+}
+
+- (IBAction)PauseAudioFile:(id)sender {
+    
+    ConfigFileViewController *controller = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"ConfigFileViewController"];
+    controller.isSaveAudios = ^{
+        NSLog(@"%@",[AudioFileTool.share cureentAudioURL]);
+    };
+    [self.navigationController pushViewController:controller animated:YES];
 }
 
 - (void)didReceiveMemoryWarning {
