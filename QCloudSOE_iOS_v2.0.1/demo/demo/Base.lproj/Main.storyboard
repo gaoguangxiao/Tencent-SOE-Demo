@@ -69,7 +69,7 @@
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dJ2-hu-gI0">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="792"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="1142"/>
                                         <subviews>
                                             <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="how are you" borderStyle="roundedRect" placeholder="输入文本" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="qjb-PL-kLo">
                                                 <rect key="frame" x="8" y="37" width="398" height="34"/>
@@ -197,13 +197,6 @@
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits"/>
                                             </textField>
-                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="aDa-dh-Pf0">
-                                                <rect key="frame" x="8" y="612" width="397" height="226"/>
-                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                                <color key="backgroundColor" systemColor="systemGray6Color"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                                            </textView>
                                             <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="10" id="DAs-A4-AFC">
                                                 <rect key="frame" x="0.0" y="558" width="200" height="50"/>
                                                 <autoresizingMask key="autoresizingMask"/>
@@ -219,10 +212,40 @@
                                                     </button>
                                                 </subviews>
                                             </stackView>
+                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="10" id="MxE-bB-p9O">
+                                                <rect key="frame" x="0.0" y="616" width="325" height="67"/>
+                                                <autoresizingMask key="autoresizingMask"/>
+                                                <subviews>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="识别结果：" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="nvF-os-hpm">
+                                                        <rect key="frame" x="0.0" y="0.0" width="76" height="36.5"/>
+                                                        <autoresizingMask key="autoresizingMask"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                        <nil key="textColor"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="建议评分：0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9yc-Do-9qM">
+                                                        <rect key="frame" x="0.0" y="46.5" width="325" height="20.5"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="width" constant="325" id="tOu-IL-Gyg"/>
+                                                        </constraints>
+                                                        <directionalEdgeInsets key="directionalLayoutMargins" top="8" leading="8" bottom="8" trailing="8"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                        <nil key="textColor"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                </subviews>
+                                            </stackView>
+                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="aDa-dh-Pf0">
+                                                <rect key="frame" x="8" y="742" width="397" height="642"/>
+                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                <color key="backgroundColor" systemColor="systemGray6Color"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                            </textView>
                                         </subviews>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="792" id="sHv-P9-YWe"/>
+                                            <constraint firstAttribute="height" constant="1142" id="sHv-P9-YWe"/>
                                         </constraints>
                                     </view>
                                 </subviews>
@@ -241,6 +264,8 @@
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </view>
                     <connections>
+                        <outlet property="SuggestedScoreTxt" destination="9yc-Do-9qM" id="Z3u-Uh-Zpy"/>
+                        <outlet property="WordTxt" destination="nvF-os-hpm" id="gQv-NH-1GJ"/>
                         <outlet property="actionBtn" destination="vCq-IV-mJl" id="ZVF-Fd-a2h"/>
                         <outlet property="coeffSlider" destination="cJk-zP-xhw" id="0h8-x1-Yqu"/>
                         <outlet property="engineSeg" destination="f3A-fs-kuy" id="ZzY-rh-ZpK"/>

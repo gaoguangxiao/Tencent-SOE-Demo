@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		1E7A25242CC1F5940080D18A /* AudioToolDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E7A25232CC1F5940080D18A /* AudioToolDataSource.m */; };
+		1E7A25272CC200590080D18A /* TAIOralEvaluationRetV2.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E7A25262CC200590080D18A /* TAIOralEvaluationRetV2.m */; };
 		1E8419452CC0BCBE005E1439 /* PrivateInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E8419442CC0BCBE005E1439 /* PrivateInfo.m */; };
 		1E8419472CC0C2A7005E1439 /* SOE.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E8419462CC0C2A7005E1439 /* SOE.swift */; };
 		1E8419632CC0E0E8005E1439 /* 58DE9407-D2C6-4354-BB75-1EADB71B2890.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 1E84195F2CC0E0E8005E1439 /* 58DE9407-D2C6-4354-BB75-1EADB71B2890.mp3 */; };
@@ -53,6 +54,8 @@
 /* Begin PBXFileReference section */
 		1E7A25222CC1F5940080D18A /* AudioToolDataSource.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AudioToolDataSource.h; sourceTree = "<group>"; };
 		1E7A25232CC1F5940080D18A /* AudioToolDataSource.m */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; path = AudioToolDataSource.m; sourceTree = "<group>"; };
+		1E7A25252CC200590080D18A /* TAIOralEvaluationRetV2.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TAIOralEvaluationRetV2.h; sourceTree = "<group>"; };
+		1E7A25262CC200590080D18A /* TAIOralEvaluationRetV2.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TAIOralEvaluationRetV2.m; sourceTree = "<group>"; };
 		1E8419422CC0BBEF005E1439 /* demo-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "demo-Bridging-Header.h"; sourceTree = "<group>"; };
 		1E8419432CC0BCBE005E1439 /* PrivateInfo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrivateInfo.h; sourceTree = "<group>"; };
 		1E8419442CC0BCBE005E1439 /* PrivateInfo.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PrivateInfo.m; sourceTree = "<group>"; };
@@ -282,6 +285,8 @@
 				7E988BB32C009DF300F87DA5 /* RecordDataSource.m */,
 				7E2FC9FB2BFF476D00077232 /* FileDataSource.h */,
 				7E2FC9F82BFF476D00077232 /* FileDataSource.m */,
+				1E7A25252CC200590080D18A /* TAIOralEvaluationRetV2.h */,
+				1E7A25262CC200590080D18A /* TAIOralEvaluationRetV2.m */,
 			);
 			path = datasources;
 			sourceTree = "<group>";
@@ -424,6 +429,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7E988BA42C0080D300F87DA5 /* UserInfo.m in Sources */,
+				1E7A25272CC200590080D18A /* TAIOralEvaluationRetV2.m in Sources */,
 				7E2FC9AB2BFEEE3800077232 /* ViewController.m in Sources */,
 				7E2FC9EB2BFF3CF100077232 /* TableViewController.m in Sources */,
 				1E7A25242CC1F5940080D18A /* AudioToolDataSource.m in Sources */,

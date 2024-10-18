@@ -15,6 +15,8 @@
 #import "UserInfo.h"
 #import "PrivateInfo.h"
 #import "Slider.h"
+#import "TAIOralEvaluationRetV2.h"
+#import <MJExtension.h>
 
 #import "demo-Swift.h"
 #import "GXTaskDownload-Swift.h"
@@ -39,6 +41,11 @@
 
 //下载音频至沙盒
 @property (nonatomic, strong) GXDownloadManager *downloader;
+
+//音频评测面板
+@property (weak, nonatomic) IBOutlet UILabel *WordTxt;//识别结果
+@property (weak, nonatomic) IBOutlet UILabel *SuggestedScoreTxt;//建议评分
+
 @end
 
 @implementation OralEvaluationViewController {
@@ -171,8 +178,18 @@
 //评测中收到的服务端信息
 - (void)onMessage:(nonnull NSString *)value {
     NSLog(@"SOE onMessage ----> %@", value);
-    _result = [NSString stringWithFormat:@"%@\n%@", _result, value];
+    
+    TAIOralEvaluationWordBase *eveluation = [TAIOralEvaluationWordBase mj_objectWithKeyValues:value];
+    _result = [NSString stringWithFormat:@"%@\n%@", _result, value.mj_JSONString];
     [_resultText setText:_result];
+    TAIOralEvaluationRetV2 *result = eveluation.result;
+    if (result) {
+        TAIOralEvaluationWordV2 *firstWord = result.Words.firstObject;
+        if (firstWord) {
+            _WordTxt.text = [NSString stringWithFormat:@"识别结果：%@",firstWord.Word];
+        }
+        _SuggestedScoreTxt.text = [NSString stringWithFormat:@"建议评分：%.2f",result.SuggestedScore];
+    }
 }
 
 //静音回调
