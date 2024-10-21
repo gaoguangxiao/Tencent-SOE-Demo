@@ -230,7 +230,7 @@
                                                 <textInputTraits key="textInputTraits"/>
                                             </textField>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="DAs-A4-AFC">
-                                                <rect key="frame" x="0.0" y="558" width="414" height="100"/>
+                                                <rect key="frame" x="0.0" y="558" width="414" height="40"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="characterWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jta-JQ-kaW">
                                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
@@ -238,21 +238,25 @@
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="84" translatesAutoresizingMaskIntoConstraints="NO" id="OoX-oe-j47">
-                                                        <rect key="frame" x="0.0" y="10" width="174" height="90"/>
+                                                        <rect key="frame" x="0.0" y="10" width="244" height="30"/>
                                                         <subviews>
-                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" id="cEa-La-FpO" userLabel="上一个">
-                                                                <rect key="frame" x="0.0" y="30" width="45" height="30"/>
-                                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cEa-La-FpO" userLabel="上一个">
+                                                                <rect key="frame" x="0.0" y="0.0" width="80" height="30"/>
                                                                 <color key="backgroundColor" systemColor="groupTableViewBackgroundColor"/>
+                                                                <constraints>
+                                                                    <constraint firstAttribute="width" constant="80" id="5ao-Ox-2fq"/>
+                                                                </constraints>
                                                                 <state key="normal" title="上一个"/>
                                                                 <connections>
                                                                     <action selector="didLast:" destination="oWN-g9-2My" eventType="touchUpInside" id="jlx-Lk-g1a"/>
                                                                 </connections>
                                                             </button>
-                                                            <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" id="1vJ-XO-O86">
-                                                                <rect key="frame" x="129" y="30" width="45" height="30"/>
-                                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                            <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1vJ-XO-O86">
+                                                                <rect key="frame" x="164" y="0.0" width="80" height="30"/>
                                                                 <color key="backgroundColor" systemColor="groupTableViewBackgroundColor"/>
+                                                                <constraints>
+                                                                    <constraint firstAttribute="width" constant="80" id="vmx-NH-RyY"/>
+                                                                </constraints>
                                                                 <state key="normal" title="下一个"/>
                                                                 <connections>
                                                                     <action selector="didLast:" destination="oWN-g9-2My" eventType="touchUpInside" id="cu0-GN-rhL"/>
@@ -550,7 +554,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="VMt-XG-yvA">
-                                        <rect key="frame" x="0.0" y="45" width="394" height="347"/>
+                                        <rect key="frame" x="0.0" y="45" width="386" height="236"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <color key="textColor" systemColor="labelColor"/>

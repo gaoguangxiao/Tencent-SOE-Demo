@@ -8,7 +8,7 @@ PODS:
     - Moya
     - PKHUD
     - SmartCodable
-  - GXTaskDownload (0.3.8):
+  - GXTaskDownload (0.3.9):
     - GGXSwiftExtension
     - SmartCodable
   - KeychainAccess (4.2.2)
@@ -49,8 +49,8 @@ PODS:
     - SnapKit
 
 DEPENDENCIES:
-  - GXAudioPlay (from `~/Documents/GitHub/GXAudioPlay`)
-  - GXTaskDownload (from `~/Documents/GitHub/GXTaskDownload`)
+  - GXAudioPlay
+  - GXTaskDownload
   - MJExtension
   - RSAdventureApi (from `~/Desktop/SourceTree/rs_bridge/rsadventureapi`)
 
@@ -61,7 +61,9 @@ SPEC REPOS:
     - Alamofire
     - GGXRSA
     - GGXSwiftExtension
+    - GXAudioPlay
     - GXSwiftNetwork
+    - GXTaskDownload
     - KeychainAccess
     - MJExtension
     - Moya
@@ -76,10 +78,6 @@ SPEC REPOS:
     - ZKBaseSwiftProject
 
 EXTERNAL SOURCES:
-  GXAudioPlay:
-    :path: "~/Documents/GitHub/GXAudioPlay"
-  GXTaskDownload:
-    :path: "~/Documents/GitHub/GXTaskDownload"
   RSAdventureApi:
     :path: "~/Desktop/SourceTree/rs_bridge/rsadventureapi"
 
@@ -89,7 +87,7 @@ SPEC CHECKSUMS:
   GGXSwiftExtension: 73e8c8f42907f695aa0ab56b26677eb988a8c401
   GXAudioPlay: 2a6f2f1d79c5d6c91e1fcc2b1f395fd44dffb87f
   GXSwiftNetwork: fb84d4270e8d40b5aa8b2bcacbeb90fba6c6a667
-  GXTaskDownload: 229de2b3f805cf53468f6722dd992ee6ade1a73d
+  GXTaskDownload: ea05befddbc544cd99ee90c26da3d268d08b1f63
   KeychainAccess: c0c4f7f38f6fc7bbe58f5702e25f7bd2f65abf51
   MJExtension: e97d164cb411aa9795cf576093a1fa208b4a8dd8
   Moya: 138f0573e53411fb3dc17016add0b748dfbd78ee
@@ -105,6 +103,6 @@ SPEC CHECKSUMS:
   SnapKit: d612e99e678a2d3b95bf60b0705ed0a35c03484a
   ZKBaseSwiftProject: 04cb3fb43a971c6bf0eb4ae718210b114c03daf9
 
-PODFILE CHECKSUM: 41b11b22af9831167bcaa54dc543dafdde26f62a
+PODFILE CHECKSUM: 9354ebf900e897303a9019fb3ba86ae09d5140f3
 
 COCOAPODS: 1.15.2

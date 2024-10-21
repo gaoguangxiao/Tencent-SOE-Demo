@@ -61,6 +61,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *AudioTxt;
 @property (nonatomic, strong) AudioFileTool *tool;
 
+//录制音频
+@property (nonatomic, copy) NSString *audioPath;
 @end
 
 @implementation OralEvaluationViewController {
@@ -91,6 +93,7 @@
 }
 
 - (void)clearResult {
+    self.audioPath = nil;
     _result = @"";
     _WordTxt.text = @"";
     _SuggestedScoreTxt.text = @"";
@@ -116,7 +119,8 @@
     if ([source isKindOfClass:RecordDataSource.class]) {
         NSString *videoDestDateString = [self createFileNamePrefix];
         config.audioFile =  [NSString stringWithFormat:@"%@/%@.pcm", NSTemporaryDirectory(),videoDestDateString];
-        //        config.audioFile = [NSString stringWithFormat:@"%@/%@.wav", NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)[0], videoDestDateString];
+//        config.audioFile = [NSString stringWithFormat:@"%@/%@.wav", NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)[0], videoDestDateString];
+        self.audioPath = config.audioFile;
         NSLog(@"audio path is: %@",config.audioFile);
         config.vadInterval = self->_vadSlider.value;
         config.vadVolume = self->_vadVolumeSlider.value;
@@ -139,24 +143,22 @@
         
         dispatch_async(dispatch_get_main_queue(), ^{
             
-            [self clearResult];
-            self->_source = nil;
-            
             if ([self->_sourceSeg selectedSegmentIndex] == 0) {
                 if (self.classVersion == 2) {
                     if(self->_running) {
                         [self->_ctl stop];
                     } else {
+                        [self clearResult];
+                        self->_source = nil;
                         self->_source = [[RecordDataSource alloc] init];
                         [self initTAIConfig:self-> _source];
                     }
-                    
                 } else {
                     if([self.oralEvaluation isRecording]){
                         __weak typeof(self) ws = self;
                         [self.oralEvaluation stopRecordAndEvaluation:^(TAIError *error) {
                             [ws setResponse:[NSString stringWithFormat:@"stopRecordAndEvaluation:%@", error]];
-                            [ws.actionBtn setTitle:@"开始录制" forState:UIControlStateNormal];
+                            [ws.actionBtn setTitle:@"开始评分" forState:UIControlStateNormal];
                         }];
                         return;
                     }
@@ -164,7 +166,7 @@
                 }
                 
             } else if ([self ->_sourceSeg selectedSegmentIndex] == 1) {
-                
+                [self clearResult];
                 // 文件源的pcm必须为单通道s16le格式
 //                NSString *path = [[NSBundle mainBundle] pathForResource:@"2024-10-18_16-15-45" ofType:@"wav"];
                 
@@ -186,7 +188,7 @@
                 }
                 
             } else {
-                
+                [self clearResult];
                 // 文件源为网络音频 https://file.risekid.cn/record/problem/68055/493/2/8c3c3533618547abb24176e73e3cc8f5.mp3
                 //                    NSString *mp3URL = @"https://file.risekid.cn/record/problem/68055/493/2/8c3c3533618547abb24176e73e3cc8f5.mp3";
                 
@@ -246,11 +248,25 @@
     NSString *urlName = sender.tag == 0 ? [_tool lastAudioURL]:[_tool nextAudioURL];
     self.AudioTxt.text = [NSString stringWithFormat:@"%ld/%ld：%@",(long)_tool.current + 1,_tool.audios.count,urlName];
     
-    NSLog(@"%@",self.AudioTxt.text);
+//    NSLog(@"%@",self.AudioTxt.text);
 }
 
 - (IBAction)didPlayAudio:(id)sender {
-    [_tool playAudio];
+    
+    if ([self->_sourceSeg selectedSegmentIndex] == 0) {
+//        if (self.audioPath) {
+//            [_tool playLocalWithPath:self.audioPath];
+//        } else {
+//            //
+//        }
+        if (self.classVersion == 2) {
+            [_tool playAudioWithAVWithPath:self.audioPath];
+        } else {
+            [_tool playAudioWithAVWithPath:self.audioPath];
+        }
+    } else {
+        [_tool playAudio];
+    }
 }
 
 - (void)didReceiveMemoryWarning {
@@ -362,7 +378,7 @@
         __weak typeof(self) ws = self;
         [self.oralEvaluation stopRecordAndEvaluation:^(TAIError *error) {
             [ws setResponse:[NSString stringWithFormat:@"stopRecordAndEvaluation:%@", error]];
-            [ws.actionBtn setTitle:@"开始录制" forState:UIControlStateNormal];
+            [ws.actionBtn setTitle:@"开始评分" forState:UIControlStateNormal];
         }];
         return;
     }
@@ -383,7 +399,9 @@
     param.storageMode = TAIOralEvaluationStorageMode_Enable;
     param.textMode = (TAIOralEvaluationTextMode)self.textModeSeg.selectedSegmentIndex;
     param.refText = self.refText.text;
+    
     param.audioPath = [NSString stringWithFormat:@"%@/%@.mp3", NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)[0], param.sessionId];
+    self.audioPath = param.audioPath;
     if(param.workMode == TAIOralEvaluationWorkMode_Stream){
         param.timeout = 5;
         param.retryTimes = 5;

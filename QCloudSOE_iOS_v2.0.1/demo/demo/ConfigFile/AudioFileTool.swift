@@ -24,6 +24,12 @@ public class AudioFileTool: NSObject {
         return pl
     }()
     
+    //本地音频
+    lazy var localRecordPlayer: GXAudioEnginePlayer = {
+        let pl = GXAudioEnginePlayer()
+        return pl
+    }()
+    
     func clearTxt() {
         audios.removeAll()
     }
@@ -44,10 +50,22 @@ public class AudioFileTool: NSObject {
         return audios[current]
     }
     
+    func playLocal(path: String) {
+        if let filePath = path.toUrl {
+            localRecordPlayer.play(fileURL: filePath)
+        }
+        
+    }
+    
     func playAudio() {
         if let url = cureentAudioURL() {
             audioRecordPlayer2.play(url: url)
         }
+    }
+    
+    
+    func playAudioWithAV(path: String) {
+        audioRecordPlayer2.play(url: path)
     }
     
     func nextAudioURL() -> String {
