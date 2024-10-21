@@ -34,6 +34,13 @@
 		1E8419742CC0E0E8005E1439 /* 2024-10-16_11-37-44.wav in Resources */ = {isa = PBXBuildFile; fileRef = 1E8419512CC0E0E8005E1439 /* 2024-10-16_11-37-44.wav */; };
 		1E8419752CC0E0E8005E1439 /* 2024-10-16_11-38-04.wav in Resources */ = {isa = PBXBuildFile; fileRef = 1E8419552CC0E0E8005E1439 /* 2024-10-16_11-38-04.wav */; };
 		1E8419762CC0E0E8005E1439 /* 2024-10-16_11-23-43.wav in Resources */ = {isa = PBXBuildFile; fileRef = 1E84194E2CC0E0E8005E1439 /* 2024-10-16_11-23-43.wav */; };
+		1EA56E9C2CC607B800C4FBD8 /* TIWLogger.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1EA56E9A2CC607B800C4FBD8 /* TIWLogger.framework */; };
+		1EA56E9D2CC607B800C4FBD8 /* lame.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1EA56E982CC607B800C4FBD8 /* lame.framework */; };
+		1EA56E9E2CC607B800C4FBD8 /* TAISDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1EA56E992CC607B800C4FBD8 /* TAISDK.framework */; };
+		1EA56EAF2CC627B100C4FBD8 /* badfcd68b7c745c682b383889e7b8dc5.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 1EA56EAA2CC627B100C4FBD8 /* badfcd68b7c745c682b383889e7b8dc5.mp3 */; };
+		1EA56EB12CC627B100C4FBD8 /* 9a088e9435ee4f53b0462c5e91f61700.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 1EA56EA72CC627B100C4FBD8 /* 9a088e9435ee4f53b0462c5e91f61700.mp3 */; };
+		1EA56EB32CC627B100C4FBD8 /* 7f48404cf7884770aef07ff277b40821.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 1EA56EA52CC627B100C4FBD8 /* 7f48404cf7884770aef07ff277b40821.mp3 */; };
+		1EA56EB52CC627B100C4FBD8 /* 8c3c3533618547abb24176e73e3cc8f5.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 1EA56EA62CC627B100C4FBD8 /* 8c3c3533618547abb24176e73e3cc8f5.mp3 */; };
 		6E98701C941F57B97D5335D5 /* Pods_demo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 66D3755D1942909FCBC58EFD /* Pods_demo.framework */; };
 		7E2FC9A52BFEEE3800077232 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E2FC9A42BFEEE3800077232 /* AppDelegate.m */; };
 		7E2FC9A82BFEEE3800077232 /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E2FC9A72BFEEE3800077232 /* SceneDelegate.m */; };
@@ -87,6 +94,13 @@
 		1E84195E2CC0E0E8005E1439 /* 1E9E9126-37F1-4E97-A5BF-FABCFE4715C0.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "1E9E9126-37F1-4E97-A5BF-FABCFE4715C0.mp3"; sourceTree = "<group>"; };
 		1E84195F2CC0E0E8005E1439 /* 58DE9407-D2C6-4354-BB75-1EADB71B2890.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "58DE9407-D2C6-4354-BB75-1EADB71B2890.mp3"; sourceTree = "<group>"; };
 		1E8419602CC0E0E8005E1439 /* BB9C2721-9D01-41B9-883B-7FA840F41E6F.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "BB9C2721-9D01-41B9-883B-7FA840F41E6F.mp3"; sourceTree = "<group>"; };
+		1EA56E982CC607B800C4FBD8 /* lame.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = lame.framework; sourceTree = "<group>"; };
+		1EA56E992CC607B800C4FBD8 /* TAISDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = TAISDK.framework; sourceTree = "<group>"; };
+		1EA56E9A2CC607B800C4FBD8 /* TIWLogger.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = TIWLogger.framework; sourceTree = "<group>"; };
+		1EA56EA52CC627B100C4FBD8 /* 7f48404cf7884770aef07ff277b40821.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = 7f48404cf7884770aef07ff277b40821.mp3; sourceTree = "<group>"; };
+		1EA56EA62CC627B100C4FBD8 /* 8c3c3533618547abb24176e73e3cc8f5.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = 8c3c3533618547abb24176e73e3cc8f5.mp3; sourceTree = "<group>"; };
+		1EA56EA72CC627B100C4FBD8 /* 9a088e9435ee4f53b0462c5e91f61700.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = 9a088e9435ee4f53b0462c5e91f61700.mp3; sourceTree = "<group>"; };
+		1EA56EAA2CC627B100C4FBD8 /* badfcd68b7c745c682b383889e7b8dc5.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = badfcd68b7c745c682b383889e7b8dc5.mp3; sourceTree = "<group>"; };
 		320C328B54E08180B647C915 /* Pods-demo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-demo.debug.xcconfig"; path = "Target Support Files/Pods-demo/Pods-demo.debug.xcconfig"; sourceTree = "<group>"; };
 		66D3755D1942909FCBC58EFD /* Pods_demo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_demo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7E2FC9A02BFEEE3800077232 /* demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = demo.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -127,6 +141,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1EA56E9C2CC607B800C4FBD8 /* TIWLogger.framework in Frameworks */,
+				1EA56E9D2CC607B800C4FBD8 /* lame.framework in Frameworks */,
+				1EA56E9E2CC607B800C4FBD8 /* TAISDK.framework in Frameworks */,
 				7E988BC32C05B94A00F87DA5 /* QCloudSOE.xcframework in Frameworks */,
 				6E98701C941F57B97D5335D5 /* Pods_demo.framework in Frameworks */,
 			);
@@ -221,12 +238,34 @@
 		1E8419622CC0E0E8005E1439 /* 原生录制音频 */ = {
 			isa = PBXGroup;
 			children = (
+				1EA56EAD2CC627B100C4FBD8 /* problem */,
 				1E7A25352CC259550080D18A /* TencentNew */,
 				1E8419582CC0E0E8005E1439 /* 分贝增强V2 */,
 				1E84195D2CC0E0E8005E1439 /* 无处理 */,
 				1E8419612CC0E0E8005E1439 /* Tencent */,
 			);
 			path = "原生录制音频";
+			sourceTree = "<group>";
+		};
+		1EA56E9B2CC607B800C4FBD8 /* TAIFramework */ = {
+			isa = PBXGroup;
+			children = (
+				1EA56E982CC607B800C4FBD8 /* lame.framework */,
+				1EA56E992CC607B800C4FBD8 /* TAISDK.framework */,
+				1EA56E9A2CC607B800C4FBD8 /* TIWLogger.framework */,
+			);
+			path = TAIFramework;
+			sourceTree = "<group>";
+		};
+		1EA56EAD2CC627B100C4FBD8 /* problem */ = {
+			isa = PBXGroup;
+			children = (
+				1EA56EA52CC627B100C4FBD8 /* 7f48404cf7884770aef07ff277b40821.mp3 */,
+				1EA56EA62CC627B100C4FBD8 /* 8c3c3533618547abb24176e73e3cc8f5.mp3 */,
+				1EA56EA72CC627B100C4FBD8 /* 9a088e9435ee4f53b0462c5e91f61700.mp3 */,
+				1EA56EAA2CC627B100C4FBD8 /* badfcd68b7c745c682b383889e7b8dc5.mp3 */,
+			);
+			path = problem;
 			sourceTree = "<group>";
 		};
 		2A8978D03FC62CBF6CB2AAC7 /* Pods */ = {
@@ -259,6 +298,7 @@
 		7E2FC9A22BFEEE3800077232 /* demo */ = {
 			isa = PBXGroup;
 			children = (
+				1EA56E9B2CC607B800C4FBD8 /* TAIFramework */,
 				1E8419462CC0C2A7005E1439 /* SOE.swift */,
 				1E7A252E2CC2172B0080D18A /* ConfigFile */,
 				1E8419622CC0E0E8005E1439 /* 原生录制音频 */,
@@ -397,6 +437,10 @@
 				1E8419702CC0E0E8005E1439 /* 2024-10-16_11-23-17.wav in Resources */,
 				1E8419712CC0E0E8005E1439 /* 2024-10-16_11-37-56.wav in Resources */,
 				1E8419722CC0E0E8005E1439 /* 2024-10-16_09-57-29.wav in Resources */,
+				1EA56EAF2CC627B100C4FBD8 /* badfcd68b7c745c682b383889e7b8dc5.mp3 in Resources */,
+				1EA56EB12CC627B100C4FBD8 /* 9a088e9435ee4f53b0462c5e91f61700.mp3 in Resources */,
+				1EA56EB32CC627B100C4FBD8 /* 7f48404cf7884770aef07ff277b40821.mp3 in Resources */,
+				1EA56EB52CC627B100C4FBD8 /* 8c3c3533618547abb24176e73e3cc8f5.mp3 in Resources */,
 				1E8419732CC0E0E8005E1439 /* 2024-10-16_09-58-51.wav in Resources */,
 				1E8419742CC0E0E8005E1439 /* 2024-10-16_11-37-44.wav in Resources */,
 				1E8419752CC0E0E8005E1439 /* 2024-10-16_11-38-04.wav in Resources */,
@@ -626,6 +670,10 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = MC9Q66TLXQ;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/demo/TAIFramework",
+				);
 				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = demo/Info.plist;
@@ -665,6 +713,10 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = MC9Q66TLXQ;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/demo/TAIFramework",
+				);
 				GCC_PREPROCESSOR_DEFINITIONS = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = demo/Info.plist;

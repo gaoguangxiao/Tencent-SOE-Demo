@@ -8,7 +8,7 @@
 
 #import "TableViewController.h"
 #import <GXSwiftNetwork-Swift.h>
-
+#import "OralEvaluationViewController.h"
 @interface TableViewController ()
 @property (nonatomic, strong) NSMutableArray *tabs;
 @end
@@ -29,9 +29,16 @@
     [_tabs addObject:info];
     
     TabInfo *oral = [[TabInfo alloc] init];
-    oral.title = @"口语评测";
+    oral.title = @"口语评测V1";
+    oral.classVersion = 1;
     oral.className = @"OralEvaluationViewController";
     [_tabs addObject:oral];
+    
+    TabInfo *oralv2 = [[TabInfo alloc] init];
+    oralv2.title = @"口语评测V2";
+    oralv2.className = @"OralEvaluationViewController";
+    oralv2.classVersion = 2;
+    [_tabs addObject:oralv2];
     
     //token信息
     [MSBApiConfig.shared setApiConfigWithApiHost:@"https://gateway-test.risekid.cn"
@@ -74,6 +81,10 @@
 {
     TabInfo *tab = _tabs[indexPath.row];
     UIViewController *controller = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:tab.className];
+    if ([controller isKindOfClass:OralEvaluationViewController.class]) {
+        OralEvaluationViewController *oralVc = (OralEvaluationViewController *)controller;
+        oralVc.classVersion = tab.classVersion;
+    }
     [self.navigationController pushViewController:controller animated:YES];
     
 }

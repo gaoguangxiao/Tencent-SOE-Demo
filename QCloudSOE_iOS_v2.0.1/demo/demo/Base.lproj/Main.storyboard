@@ -541,7 +541,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Sdf-fJ-pVP">
-                                <rect key="frame" x="10" y="48" width="394" height="400"/>
+                                <rect key="frame" x="10" y="48" width="394" height="300"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="AudioFile" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6wg-QT-LNM">
                                         <rect key="frame" x="0.0" y="0.0" width="394" height="20.5"/>
@@ -561,13 +561,13 @@
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
                                     <constraint firstItem="6wg-QT-LNM" firstAttribute="leading" secondItem="Sdf-fJ-pVP" secondAttribute="leading" id="MXW-FH-kKy"/>
-                                    <constraint firstAttribute="height" constant="400" id="PBg-er-ReG"/>
+                                    <constraint firstAttribute="height" constant="300" id="PBg-er-ReG"/>
                                     <constraint firstAttribute="trailing" secondItem="6wg-QT-LNM" secondAttribute="trailing" id="sR8-U6-NTF"/>
                                     <constraint firstItem="6wg-QT-LNM" firstAttribute="top" secondItem="Sdf-fJ-pVP" secondAttribute="top" id="zCP-PV-npb"/>
                                 </constraints>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dSM-aR-oaM">
-                                <rect key="frame" x="346" y="458.5" width="58" height="34.5"/>
+                                <rect key="frame" x="346" y="358.5" width="58" height="34.5"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="filled" title="保存"/>
                                 <connections>
@@ -575,7 +575,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qwM-49-0aR">
-                                <rect key="frame" x="278" y="458" width="58" height="35"/>
+                                <rect key="frame" x="278" y="358" width="58" height="35"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="35" id="c7R-BQ-iGR"/>
                                 </constraints>

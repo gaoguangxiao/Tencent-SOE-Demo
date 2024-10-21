@@ -10,4 +10,6 @@
 
 @interface OralEvaluationViewController : UIViewController
 
+//0：旧版、1：新版
+@property (nonatomic, assign) NSInteger classVersion;
 @end

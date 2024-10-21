@@ -11,6 +11,7 @@
 @interface TabInfo : NSObject
 @property (nonatomic, strong) NSString *title;
 @property (nonatomic, strong) NSString *className;
+@property (nonatomic, assign) NSInteger classVersion;
 @end
 
 @interface TableViewController : UITableViewController

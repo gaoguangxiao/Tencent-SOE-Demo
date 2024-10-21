@@ -148,7 +148,7 @@
 - (IBAction)onLocalRecord:(id)sender {
     self.responseTextView.text = @"";
     
-    [self.recordSOE startSOEWithCompletionHandler:^(NSInteger code) {
+//    [self.recordSOE startSOEWithCompletionHandler:^(NSInteger code) {
         
         TAIOralEvaluationParam *param = [[TAIOralEvaluationParam alloc] init];
         param.sessionId = [[NSUUID UUID] UUIDString];
@@ -182,7 +182,7 @@
             [ws setResponse:[NSString stringWithFormat:@"oralEvaluation:%@", error]];
         }];
         
-    }];
+//    }];
     
 }
 
