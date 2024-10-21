@@ -11,7 +11,8 @@
 #import "PrivateInfo.h"
 //#import <AFNetworking.h>
 #import "TAIDemo-Swift.h"
-//#import "GXTaskDownload-Swift.h"
+#import <GXTaskDownload/GXTaskDownload-Swift.h>
+#import <GGXSwiftExtension/GGXSwiftExtension-Swift.h>
 
 @interface OralEvaluationViewController () <TAIOralEvaluationDelegate>
 @property (weak, nonatomic) IBOutlet UITextField *inputTextField;
@@ -35,7 +36,7 @@
 @property (nonatomic, strong) SOE *recordSOE;
 
 //下载音频至沙盒
-//@property (nonatomic, strong) GXDownloadManager *downloader;
+@property (nonatomic, strong) GXDownloadManager *downloader;
 
 @end
 
@@ -58,6 +59,9 @@
     _fragSizeTextField.inputAccessoryView = toolbar;
     _coeffTextField.inputAccessoryView = toolbar;
     _vadTextField.inputAccessoryView = toolbar;
+    
+    self.recordSOE = [SOE new];
+    self.downloader = [GXDownloadManager new];
 }
 
 - (void)dismissKeyboard
@@ -143,39 +147,43 @@
 
 - (IBAction)onLocalRecord:(id)sender {
     self.responseTextView.text = @"";
-    TAIOralEvaluationParam *param = [[TAIOralEvaluationParam alloc] init];
-    param.sessionId = [[NSUUID UUID] UUIDString];
-//    param.appId = [PrivateInfo shareInstance].appId;
-//    param.soeAppId = [PrivateInfo shareInstance].soeAppId;
-    param.token = [PrivateInfo shareInstance].token;
-    param.secretId = [PrivateInfo shareInstance].secretId;
-    param.secretKey = [PrivateInfo shareInstance].secretKey;
-    param.workMode = TAIOralEvaluationWorkMode_Once;
-    param.evalMode = TAIOralEvaluationEvalMode_Sentence;
-    param.serverType = TAIOralEvaluationServerType_English;
-    param.scoreCoeff = 1.0;
-    param.fileType = TAIOralEvaluationFileType_Wav;
-    param.storageMode = TAIOralEvaluationStorageMode_Disable;
-    param.textMode = TAIOralEvaluationTextMode_Noraml;
-    param.refText = @"I am tiger.";
     
-    [self loadCerData];
-    
-    NSString *mp3Path = [[NSBundle mainBundle] pathForResource:@"badfcd68b7c745c682b383889e7b8dc5" ofType:@"mp3"];
-//    TAIOralEvaluationData *data = [[TAIOralEvaluationData alloc] init];
-//    data.seqId = 1;
-//    data.bEnd = YES;
-//    data.audio = [NSData dataWithContentsOfFile:mp3Path];
-    
-//    NSString *wavPath = [[NSBundle mainBundle] pathForResource:@"2024-10-16_10-00-27" ofType:@"wav"];
-    TAIOralEvaluationData *data = [[TAIOralEvaluationData alloc] init];
-    data.seqId = 1;
-    data.bEnd = YES;
-    data.audio = [NSData dataWithContentsOfFile:mp3Path];
-    __weak typeof(self) ws = self;
-    [self.oralEvaluation oralEvaluation:param data:data callback:^(TAIError *error) {
-        [ws setResponse:[NSString stringWithFormat:@"oralEvaluation:%@", error]];
+    [self.recordSOE startSOEWithCompletionHandler:^(NSInteger code) {
+        
+        TAIOralEvaluationParam *param = [[TAIOralEvaluationParam alloc] init];
+        param.sessionId = [[NSUUID UUID] UUIDString];
+    //    param.appId = [PrivateInfo shareInstance].appId;
+    //    param.soeAppId = [PrivateInfo shareInstance].soeAppId;
+        param.token = [PrivateInfo shareInstance].token;
+        param.secretId = [PrivateInfo shareInstance].secretId;
+        param.secretKey = [PrivateInfo shareInstance].secretKey;
+        param.workMode = TAIOralEvaluationWorkMode_Once;
+        param.evalMode = TAIOralEvaluationEvalMode_Sentence;
+        param.serverType = TAIOralEvaluationServerType_English;
+        param.scoreCoeff = 1.0;
+        param.fileType = TAIOralEvaluationFileType_Wav;
+        param.storageMode = TAIOralEvaluationStorageMode_Disable;
+        param.textMode = TAIOralEvaluationTextMode_Noraml;
+        param.refText = self->_inputTextField.text;
+                
+        NSString *mp3Path = [[NSBundle mainBundle] pathForResource:@"badfcd68b7c745c682b383889e7b8dc5" ofType:@"mp3"];
+    //    TAIOralEvaluationData *data = [[TAIOralEvaluationData alloc] init];
+    //    data.seqId = 1;
+    //    data.bEnd = YES;
+    //    data.audio = [NSData dataWithContentsOfFile:mp3Path];
+        
+    //    NSString *wavPath = [[NSBundle mainBundle] pathForResource:@"2024-10-16_10-00-27" ofType:@"wav"];
+        TAIOralEvaluationData *data = [[TAIOralEvaluationData alloc] init];
+        data.seqId = 1;
+        data.bEnd = YES;
+        data.audio = [NSData dataWithContentsOfFile:mp3Path];
+        __weak typeof(self) ws = self;
+        [self.oralEvaluation oralEvaluation:param data:data callback:^(TAIError *error) {
+            [ws setResponse:[NSString stringWithFormat:@"oralEvaluation:%@", error]];
+        }];
+        
     }];
+    
 }
 
 - (void)loadCerData {

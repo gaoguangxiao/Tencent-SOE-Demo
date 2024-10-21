@@ -8,7 +8,7 @@
 
 #import "TableViewController.h"
 #import <TAISDK/TAIManager.h>
-
+//#import ""
 @interface TableViewController ()
 @property (nonatomic, strong) NSMutableArray *tabs;
 @end
@@ -20,6 +20,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
     self.navigationItem.title = [NSString stringWithFormat:@"教育AI（%@）",[TAIManager getVersion]];
     _tabs = [NSMutableArray array];
     

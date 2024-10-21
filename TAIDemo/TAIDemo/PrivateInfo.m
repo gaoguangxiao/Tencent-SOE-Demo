@@ -18,9 +18,9 @@
 //        自行传入appId, secretId, secretKey参数
         instance = [[PrivateInfo alloc] init];
         instance.appId = @"";
-        instance.secretId = @"AKIDPa3AslAGFKDuG1vNnLNPy5HhPNXJDYE04B8RMAelNeNf4bwoviqovUm40QAJUHta";
-        instance.secretKey = @"HQ5zfpGbt+P+SHYNV+QNJ3VAnw+Ionrmkxc5/0JJPKk=";
-        instance.token = @"6HlHwiteUiBOlbSqnwPiB43nI0RmmAWa6bcce8c666df9ef8305c1877ca0b3f23ggRtQHcmZaXNJiIx6n7Sar5rrjZEVo_EoRBSiSKimIyffQPhRwLAuu7FWlsmGz3geS95VNYL0YBx72NujEvAmybrNDY52dk1GjHxX44To0C0zdYTrXlswNNHlwM7AnZCYCzLm57_stMZ-gHmIsm5K_AfXz2Kf3flQrp-OPcAdjF3F9I3yfpLjMvaR7hIh1yOscDkO5soPNV8EtSsOfPHeqJduLW6hvm63THaCNIi4yZOA4oF_LEhZumjpbDKvoukDqU0K29467J89OSszsgz316E3f_baExddddB3GWt2-3CAcO7VcCHFHkawlcfZbKiTEo2-X14UiDbTAkrmRDCVA";
+        instance.secretId = @"AKIDUFa44NzNdjW3zMM2YdbcHlQXFVeT0f0tkJJMeZCmrp06CRn1FIEhpsMlWpWFuGkg";
+        instance.secretKey = @"m0YdedZVkPXm42sqlm7tL4Ad2nwaoZ47vhHptUD44vY=";
+        instance.token = @"6HlHwiteUiBOlbSqnwPiB43nI0RmmAWa868ef7e7810f70fe56654b5f85336043ggRtQHcmZaXNJiIx6n7SamxCmWN0w7gL0nANb5GINFO25lwoHFOWgsKAeBrKu07J4GQDgQ3vQNXb79zr8R7QbAmq7frJ2Qii6qeMnaJhrYnCg8PXU7OKnpEFePGPSqcrCdnIs7Z0Ex0rGOeEq4DqtwJoRvwO5Eo3CJFe3HpuFVFD-reI2mYSQo7catYer1gqEnuDNlfxsUmp1adNJkw2xANPV3Rv-olNxqxr3G53Cu0shq70wb-jUBfnIhQ-y6fE_69nBi6Y8zbqtwWpIrhtcTVQ9xcxzOmUb4LHJ2Pn522p8vS9jHGR0eIqqiWAQV3GJHq1SZgDdCk2nWgvfZ3Wjw";
         instance.soeAppId = @"";
         instance.hcmAppId = @"";
     });

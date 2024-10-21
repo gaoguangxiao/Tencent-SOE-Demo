@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -34,7 +34,10 @@
 		1E7AB8452CBF9E0C008767D9 /* 2024-10-16_10-21-44.wav in Resources */ = {isa = PBXBuildFile; fileRef = 1E7AB8142CBF9E0C008767D9 /* 2024-10-16_10-21-44.wav */; };
 		1EA56E842CC5F4F600C4FBD8 /* how_are_you.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 1EA56E832CC5F4F600C4FBD8 /* how_are_you.mp3 */; };
 		1EA56E862CC5F6C600C4FBD8 /* badfcd68b7c745c682b383889e7b8dc5.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 1EA56E852CC5F6C600C4FBD8 /* badfcd68b7c745c682b383889e7b8dc5.mp3 */; };
-		A119188817C8DA02D5D14DE7 /* Pods_TAIDemo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 21802D6CDB264F8CA9CC9141 /* Pods_TAIDemo.framework */; };
+		1EA56E902CC5FF2300C4FBD8 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1EA56E8F2CC5FF2300C4FBD8 /* CoreTelephony.framework */; };
+		1EA56E952CC6000100C4FBD8 /* TIWLogger.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1EA56E932CC6000100C4FBD8 /* TIWLogger.framework */; };
+		1EA56E962CC6000100C4FBD8 /* TAISDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1EA56E922CC6000100C4FBD8 /* TAISDK.framework */; };
+		1EA56E972CC6000100C4FBD8 /* lame.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1EA56E912CC6000100C4FBD8 /* lame.framework */; };
 		CF1BC4DC221E4BBF008102C8 /* hello.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = CF1BC4D8221E4BBE008102C8 /* hello.mp3 */; };
 		CF1BC4DD221E4BBF008102C8 /* do_you_like_blue.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = CF1BC4DA221E4BBE008102C8 /* do_you_like_blue.mp3 */; };
 		CF1BC4DE221E4BBF008102C8 /* hello_guagua.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = CF1BC4DB221E4BBF008102C8 /* hello_guagua.mp3 */; };
@@ -47,6 +50,7 @@
 		CFE5343021AEA0330052DAD5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CFE5342E21AEA0330052DAD5 /* LaunchScreen.storyboard */; };
 		CFE5343321AEA0330052DAD5 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = CFE5343221AEA0330052DAD5 /* main.m */; };
 		CFFFC2F421D3BD5800A58C88 /* OralEvaluationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CFFFC2F321D3BD5800A58C88 /* OralEvaluationViewController.m */; };
+		D8477F69B57A9CE857BC9E59 /* Pods_TAIDemo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B59FC53D5D74E2B5A1CADA2 /* Pods_TAIDemo.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -78,8 +82,13 @@
 		1E7AB82B2CBF9E0C008767D9 /* 2024-10-16_10-00-27.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "2024-10-16_10-00-27.wav"; sourceTree = "<group>"; };
 		1EA56E832CC5F4F600C4FBD8 /* how_are_you.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = how_are_you.mp3; sourceTree = "<group>"; };
 		1EA56E852CC5F6C600C4FBD8 /* badfcd68b7c745c682b383889e7b8dc5.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = badfcd68b7c745c682b383889e7b8dc5.mp3; sourceTree = "<group>"; };
-		21802D6CDB264F8CA9CC9141 /* Pods_TAIDemo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TAIDemo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		1EA56E8E2CC5FF0E00C4FBD8 /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
+		1EA56E8F2CC5FF2300C4FBD8 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
+		1EA56E912CC6000100C4FBD8 /* lame.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = lame.framework; sourceTree = "<group>"; };
+		1EA56E922CC6000100C4FBD8 /* TAISDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = TAISDK.framework; sourceTree = "<group>"; };
+		1EA56E932CC6000100C4FBD8 /* TIWLogger.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = TIWLogger.framework; sourceTree = "<group>"; };
 		6864AB1A5676FDF11BA4012C /* Pods-TAIDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TAIDemo.release.xcconfig"; path = "Target Support Files/Pods-TAIDemo/Pods-TAIDemo.release.xcconfig"; sourceTree = "<group>"; };
+		8B59FC53D5D74E2B5A1CADA2 /* Pods_TAIDemo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TAIDemo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CF1BC4D8221E4BBE008102C8 /* hello.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = hello.mp3; sourceTree = "<group>"; };
 		CF1BC4DA221E4BBE008102C8 /* do_you_like_blue.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = do_you_like_blue.mp3; sourceTree = "<group>"; };
 		CF1BC4DB221E4BBF008102C8 /* hello_guagua.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = hello_guagua.mp3; sourceTree = "<group>"; };
@@ -107,7 +116,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A119188817C8DA02D5D14DE7 /* Pods_TAIDemo.framework in Frameworks */,
+				1EA56E902CC5FF2300C4FBD8 /* CoreTelephony.framework in Frameworks */,
+				1EA56E952CC6000100C4FBD8 /* TIWLogger.framework in Frameworks */,
+				1EA56E962CC6000100C4FBD8 /* TAISDK.framework in Frameworks */,
+				1EA56E972CC6000100C4FBD8 /* lame.framework in Frameworks */,
+				D8477F69B57A9CE857BC9E59 /* Pods_TAIDemo.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -195,6 +208,16 @@
 			path = "原生录制音频";
 			sourceTree = "<group>";
 		};
+		1EA56E942CC6000100C4FBD8 /* TAIFramework */ = {
+			isa = PBXGroup;
+			children = (
+				1EA56E912CC6000100C4FBD8 /* lame.framework */,
+				1EA56E922CC6000100C4FBD8 /* TAISDK.framework */,
+				1EA56E932CC6000100C4FBD8 /* TIWLogger.framework */,
+			);
+			path = TAIFramework;
+			sourceTree = "<group>";
+		};
 		BE5297FC3A97D0D17D6ACA15 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -204,17 +227,12 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
-		CF3405B022A00A4700965D0A /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				21802D6CDB264F8CA9CC9141 /* Pods_TAIDemo.framework */,
-			);
-			path = Frameworks;
-			sourceTree = "<group>";
-		};
 		CF3F270021BBD3C6002F1D9B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				1EA56E8F2CC5FF2300C4FBD8 /* CoreTelephony.framework */,
+				1EA56E8E2CC5FF0E00C4FBD8 /* libc++.tbd */,
+				8B59FC53D5D74E2B5A1CADA2 /* Pods_TAIDemo.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -222,7 +240,6 @@
 		CFE5341721AEA0310052DAD5 = {
 			isa = PBXGroup;
 			children = (
-				CF3405B022A00A4700965D0A /* Frameworks */,
 				CFE5342221AEA0310052DAD5 /* TAIDemo */,
 				CFE5342121AEA0310052DAD5 /* Products */,
 				CF3F270021BBD3C6002F1D9B /* Frameworks */,
@@ -241,6 +258,7 @@
 		CFE5342221AEA0310052DAD5 /* TAIDemo */ = {
 			isa = PBXGroup;
 			children = (
+				1EA56E942CC6000100C4FBD8 /* TAIFramework */,
 				1E7AB82D2CBF9E0C008767D9 /* 原生录制音频 */,
 				CFE5342321AEA0310052DAD5 /* AppDelegate.h */,
 				CFE5342421AEA0310052DAD5 /* AppDelegate.m */,
@@ -277,6 +295,7 @@
 				CFE5341C21AEA0310052DAD5 /* Sources */,
 				CFE5341D21AEA0310052DAD5 /* Frameworks */,
 				CFE5341E21AEA0310052DAD5 /* Resources */,
+				E156218B337E377CE03A0859 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -388,6 +407,23 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		E156218B337E377CE03A0859 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-TAIDemo/Pods-TAIDemo-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-TAIDemo/Pods-TAIDemo-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-TAIDemo/Pods-TAIDemo-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -549,10 +585,12 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = MC9Q66TLXQ;
 				FRAMEWORK_SEARCH_PATHS = (
-					"$(SRCROOT)/../../taisdk/TAISDK/Frameworks",
+					"$(inherited)",
 					"$(PROJECT_DIR)/Frameworks",
+					"$(PROJECT_DIR)/TAIDemo/TAIFramework",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/GXTaskDownload\"",
 				);
-				HEADER_SEARCH_PATHS = "$(SRCROOT)/../../taisdk/TAISDK/TAISDK/**";
+				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = TAIDemo/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -579,10 +617,12 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = MC9Q66TLXQ;
 				FRAMEWORK_SEARCH_PATHS = (
-					"$(SRCROOT)/../../taisdk/TAISDK/Frameworks",
+					"$(inherited)",
 					"$(PROJECT_DIR)/Frameworks",
+					"$(PROJECT_DIR)/TAIDemo/TAIFramework",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/GXTaskDownload\"",
 				);
-				HEADER_SEARCH_PATHS = "$(SRCROOT)/../../taisdk/TAISDK/TAISDK/**";
+				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = TAIDemo/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (

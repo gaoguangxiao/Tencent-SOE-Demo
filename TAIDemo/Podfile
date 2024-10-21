@@ -7,9 +7,9 @@ platform :ios, '13.0'
 target 'TAIDemo' do
   # Comment the next line if you don't want to use dynamic frameworks
   use_frameworks!
-  pod 'TAISDK_iOS'
-#  pod 'RSAdventureApi', :path => '~/Desktop/SourceTree/rs_bridge/rsadventureapi'
   
-  #  pod 'GXTaskDownload', :path => '~/Documents/GitHub/GXTaskDownload' # 下载组件
+  pod 'RSAdventureApi', :path => '~/Desktop/SourceTree/rs_bridge/rsadventureapi'
+  
+  pod 'GXTaskDownload', :path => '~/Documents/GitHub/GXTaskDownload' # 下载组件
   # Pods for TAIDemo
 end
