@@ -1,12 +1,15 @@
 # Uncomment the next line to define a global platform for your project
-#source 'https://github.com/CocoaPods/Specs.git'
-#source 'http://gitlab.risekid.cn/ce/ios-bridge/rs-trunk.git'
+source 'https://github.com/CocoaPods/Specs.git'
+source 'http://gitlab.risekid.cn/ce/ios-bridge/rs-trunk.git'
 
 platform :ios, '13.0'
 
 target 'TAIDemo' do
   # Comment the next line if you don't want to use dynamic frameworks
-    use_frameworks!
+  use_frameworks!
+  pod 'TAISDK_iOS'
+#  pod 'RSAdventureApi', :path => '~/Desktop/SourceTree/rs_bridge/rsadventureapi'
   
+  #  pod 'GXTaskDownload', :path => '~/Documents/GitHub/GXTaskDownload' # 下载组件
   # Pods for TAIDemo
 end

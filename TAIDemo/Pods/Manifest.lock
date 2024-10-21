@@ -1,3 +1,20 @@
-PODFILE CHECKSUM: 455d62e25aed3ee9af52200d27098be44c0d8ee8
+PODS:
+  - TAISDK_iOS (1.2.3.114):
+    - TIWLogger_iOS (~> 1.0.1.80)
+  - TIWLogger_iOS (1.0.1.85)
+
+DEPENDENCIES:
+  - TAISDK_iOS
+
+SPEC REPOS:
+  https://github.com/CocoaPods/Specs.git:
+    - TAISDK_iOS
+    - TIWLogger_iOS
+
+SPEC CHECKSUMS:
+  TAISDK_iOS: 7a604f164751a6eca6a214ff3cb1cc3b4612dce4
+  TIWLogger_iOS: fa8e961adfdb65efb9f06bd9ad57f39f8b63a02a
+
+PODFILE CHECKSUM: 29584eeb6eebed99bb4e54de6fe6bf721f53eb64
 
 COCOAPODS: 1.15.2

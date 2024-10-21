@@ -6,38 +6,115 @@
 	objectVersion = 54;
 	objects = {
 
+/* Begin PBXAggregateTarget section */
+		9AEE6406FD3DBF0AEA435CCF20A0C3C7 /* TIWLogger_iOS */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = 836DA8EE698AECB07E006B459A3B0763 /* Build configuration list for PBXAggregateTarget "TIWLogger_iOS" */;
+			buildPhases = (
+			);
+			dependencies = (
+			);
+			name = TIWLogger_iOS;
+		};
+		B909378CF9972004227FC2FD03E14824 /* TAISDK_iOS */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = 5C83A9A309983141F3F9E3B587803D7B /* Build configuration list for PBXAggregateTarget "TAISDK_iOS" */;
+			buildPhases = (
+			);
+			dependencies = (
+				0CE7893C9D3B01CBFC5CCDF073CF7CDF /* PBXTargetDependency */,
+			);
+			name = TAISDK_iOS;
+		};
+/* End PBXAggregateTarget section */
+
 /* Begin PBXBuildFile section */
-		CD2C8B21AD4B7041597406262E67A58E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73010CC983E3809BECEE5348DA1BB8C6 /* Foundation.framework */; };
-		D6CFD9F59D8719BBA379ECC0909517BD /* Pods-TAIDemo-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = EBA436EF3E273A663BE132558A9A35A9 /* Pods-TAIDemo-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		F2686215F3B859464B202E8A97525FA3 /* Pods-TAIDemo-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = AC2C2E4498070B10EF820CDD4D905656 /* Pods-TAIDemo-dummy.m */; };
+		5AD1139055611E9EBA9B088F66DF1412 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73010CC983E3809BECEE5348DA1BB8C6 /* Foundation.framework */; };
+		72852B3C8539708F3B226B00F68BA5A5 /* Pods-TAIDemo-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = AC2C2E4498070B10EF820CDD4D905656 /* Pods-TAIDemo-dummy.m */; };
+		901C5F1D9B97320A1566F483FCC5EC4C /* Pods-TAIDemo-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = EBA436EF3E273A663BE132558A9A35A9 /* Pods-TAIDemo-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		5C161418A116F00B03752F034FF117C0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 9AEE6406FD3DBF0AEA435CCF20A0C3C7;
+			remoteInfo = TIWLogger_iOS;
+		};
+		ACF17A097A1B42524EA324DDAB38C10A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 9AEE6406FD3DBF0AEA435CCF20A0C3C7;
+			remoteInfo = TIWLogger_iOS;
+		};
+		E3BD9C23338C0A8344441243914446BE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B909378CF9972004227FC2FD03E14824;
+			remoteInfo = TAISDK_iOS;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
+		0178B47149D7C1D5E6F163AFD7E3BAA1 /* TAICommonParam.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = TAICommonParam.h; path = TAISDK.framework/Headers/TAICommonParam.h; sourceTree = "<group>"; };
 		0833639DE9FA5722B4B71C590E966C02 /* Pods-TAIDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-TAIDemo.release.xcconfig"; sourceTree = "<group>"; };
+		11E564F4AC8CDF874E58C58F3381DE99 /* lame.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = lame.framework; sourceTree = "<group>"; };
+		1ECCAA5BD862C4E89A7D2141E8993ED1 /* TIWLogger_iOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = TIWLogger_iOS.release.xcconfig; sourceTree = "<group>"; };
+		2828FDEEA73FD1A17A7952578F152E15 /* TIWLogger.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = TIWLogger.framework; sourceTree = "<group>"; };
+		30C466875147577833D3433E278A0418 /* TAIMathCorrection.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = TAIMathCorrection.h; path = TAISDK.framework/Headers/TAIMathCorrection.h; sourceTree = "<group>"; };
+		38C999A29D9383AA769DF257EB9D05A1 /* lame.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = lame.h; path = lame.framework/Headers/lame.h; sourceTree = "<group>"; };
+		38E1F8788CED63E2F657B288ED1578EA /* TIWLogger_iOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = TIWLogger_iOS.debug.xcconfig; sourceTree = "<group>"; };
 		4335315ABD14C3E74B0B9092F3430669 /* Pods-TAIDemo-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-TAIDemo-acknowledgements.markdown"; sourceTree = "<group>"; };
 		4E275791D9F8EF167DF0C2AE045E12F8 /* Pods-TAIDemo.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-TAIDemo.modulemap"; sourceTree = "<group>"; };
 		5712498C5C0E1D2FAD3476F83898DC34 /* Pods-TAIDemo-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-TAIDemo-Info.plist"; sourceTree = "<group>"; };
+		6A4D75802CD7DFBB6BD3D4E04E31273E /* TAIOralEvaluation.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = TAIOralEvaluation.h; path = TAISDK.framework/Headers/TAIOralEvaluation.h; sourceTree = "<group>"; };
+		6F15C1C02AF7BD400163B16D87607F77 /* TAISDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = TAISDK.framework; sourceTree = "<group>"; };
 		73010CC983E3809BECEE5348DA1BB8C6 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS14.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
 		88AA7CCD9F39271C7523DA4ADD8EE9CF /* Pods-TAIDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-TAIDemo.debug.xcconfig"; sourceTree = "<group>"; };
+		9054107E30860140A12525EB0822972D /* TIWLogger.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = TIWLogger.h; path = TIWLogger.framework/Headers/TIWLogger.h; sourceTree = "<group>"; };
 		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		9E835FCAEFFCACD5F4F2CB9681187187 /* TAISDK_iOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = TAISDK_iOS.release.xcconfig; sourceTree = "<group>"; };
 		AC2C2E4498070B10EF820CDD4D905656 /* Pods-TAIDemo-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-TAIDemo-dummy.m"; sourceTree = "<group>"; };
 		B34BEFAE4B83F57C8BA02E34125158F9 /* Pods-TAIDemo-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-TAIDemo-acknowledgements.plist"; sourceTree = "<group>"; };
+		B5872223A09810D82A1C57384A95C6FE /* TAISDK_iOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = TAISDK_iOS.debug.xcconfig; sourceTree = "<group>"; };
 		C4C62D1FDA19BC96ABBFF85EC17CBC02 /* Pods-TAIDemo */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = "Pods-TAIDemo"; path = Pods_TAIDemo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		D2D73252BAC146B52EE6055039C958BB /* TAIManager.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = TAIManager.h; path = TAISDK.framework/Headers/TAIManager.h; sourceTree = "<group>"; };
 		EBA436EF3E273A663BE132558A9A35A9 /* Pods-TAIDemo-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-TAIDemo-umbrella.h"; sourceTree = "<group>"; };
+		F7CDDE8464C99CEE8C0CAA25194D2FF8 /* TAIError.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = TAIError.h; path = TAISDK.framework/Headers/TAIError.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		EB23C22C0C220D05C066AE9D9DDC4A11 /* Frameworks */ = {
+		01CA723C25781A5F0D865B39856C05E4 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CD2C8B21AD4B7041597406262E67A58E /* Foundation.framework in Frameworks */,
+				5AD1139055611E9EBA9B088F66DF1412 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		451E2AFF424FC1BADAD720935524EF99 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				11E564F4AC8CDF874E58C58F3381DE99 /* lame.framework */,
+				6F15C1C02AF7BD400163B16D87607F77 /* TAISDK.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		453E6EA641C7AB69FB07998B0F240A96 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				2828FDEEA73FD1A17A7952578F152E15 /* TIWLogger.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		54FA04BEE26E69821D54456F30960A7F /* Targets Support Files */ = {
 			isa = PBXGroup;
 			children = (
@@ -62,11 +139,43 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		8E6E337E5179AA7D6BAF9F4FECE7A5D4 /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				B5872223A09810D82A1C57384A95C6FE /* TAISDK_iOS.debug.xcconfig */,
+				9E835FCAEFFCACD5F4F2CB9681187187 /* TAISDK_iOS.release.xcconfig */,
+			);
+			name = "Support Files";
+			path = "../Target Support Files/TAISDK_iOS";
+			sourceTree = "<group>";
+		};
+		C234DD499AF6DC4F385E9E5009649739 /* TIWLogger_iOS */ = {
+			isa = PBXGroup;
+			children = (
+				9054107E30860140A12525EB0822972D /* TIWLogger.h */,
+				453E6EA641C7AB69FB07998B0F240A96 /* Frameworks */,
+				C6395B984CB10A4D2700813B3FA8E946 /* Support Files */,
+			);
+			name = TIWLogger_iOS;
+			path = TIWLogger_iOS;
+			sourceTree = "<group>";
+		};
+		C6395B984CB10A4D2700813B3FA8E946 /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				38E1F8788CED63E2F657B288ED1578EA /* TIWLogger_iOS.debug.xcconfig */,
+				1ECCAA5BD862C4E89A7D2141E8993ED1 /* TIWLogger_iOS.release.xcconfig */,
+			);
+			name = "Support Files";
+			path = "../Target Support Files/TIWLogger_iOS";
+			sourceTree = "<group>";
+		};
 		CF1408CF629C7361332E53B88F7BD30C = {
 			isa = PBXGroup;
 			children = (
 				9D940727FF8FB9C785EB98E56350EF41 /* Podfile */,
 				D210D550F4EA176C3123ED886F8F87F5 /* Frameworks */,
+				DE4E9A09E1D1229D57E45BA6A63A9F43 /* Pods */,
 				64E7FBC82633BD14F5AEA61A6F077866 /* Products */,
 				54FA04BEE26E69821D54456F30960A7F /* Targets Support Files */,
 			);
@@ -78,6 +187,15 @@
 				578452D2E740E91742655AC8F1636D1F /* iOS */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		DE4E9A09E1D1229D57E45BA6A63A9F43 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				F2E14F0E85CE7C420C5C88A46EC9C0D1 /* TAISDK_iOS */,
+				C234DD499AF6DC4F385E9E5009649739 /* TIWLogger_iOS */,
+			);
+			name = Pods;
 			sourceTree = "<group>";
 		};
 		E17FFBD947FA7525935F550C26690322 /* Pods-TAIDemo */ = {
@@ -96,14 +214,30 @@
 			path = "Target Support Files/Pods-TAIDemo";
 			sourceTree = "<group>";
 		};
+		F2E14F0E85CE7C420C5C88A46EC9C0D1 /* TAISDK_iOS */ = {
+			isa = PBXGroup;
+			children = (
+				38C999A29D9383AA769DF257EB9D05A1 /* lame.h */,
+				0178B47149D7C1D5E6F163AFD7E3BAA1 /* TAICommonParam.h */,
+				F7CDDE8464C99CEE8C0CAA25194D2FF8 /* TAIError.h */,
+				D2D73252BAC146B52EE6055039C958BB /* TAIManager.h */,
+				30C466875147577833D3433E278A0418 /* TAIMathCorrection.h */,
+				6A4D75802CD7DFBB6BD3D4E04E31273E /* TAIOralEvaluation.h */,
+				451E2AFF424FC1BADAD720935524EF99 /* Frameworks */,
+				8E6E337E5179AA7D6BAF9F4FECE7A5D4 /* Support Files */,
+			);
+			name = TAISDK_iOS;
+			path = TAISDK_iOS;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
-		5A2B7303521CDC905C861BFB7B8D58E1 /* Headers */ = {
+		3361E6F99B72037DDEBB364AF15C53B0 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D6CFD9F59D8719BBA379ECC0909517BD /* Pods-TAIDemo-umbrella.h in Headers */,
+				901C5F1D9B97320A1566F483FCC5EC4C /* Pods-TAIDemo-umbrella.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -112,16 +246,18 @@
 /* Begin PBXNativeTarget section */
 		1D63FF62046376156680B06B70F0284B /* Pods-TAIDemo */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 46D3CCF7B2E5B2EED2DB1B01B38A0908 /* Build configuration list for PBXNativeTarget "Pods-TAIDemo" */;
+			buildConfigurationList = 343AE0B2212D2EA4D8A1FBF475DBB4CE /* Build configuration list for PBXNativeTarget "Pods-TAIDemo" */;
 			buildPhases = (
-				5A2B7303521CDC905C861BFB7B8D58E1 /* Headers */,
-				6D2AC6911E63FD5CDB1069B0C3A4001E /* Sources */,
-				EB23C22C0C220D05C066AE9D9DDC4A11 /* Frameworks */,
-				E4FF2BD9BE96B206439C23B1ECD99724 /* Resources */,
+				3361E6F99B72037DDEBB364AF15C53B0 /* Headers */,
+				29A5F3A1B4D8D21C7CDCE1D82F773816 /* Sources */,
+				01CA723C25781A5F0D865B39856C05E4 /* Frameworks */,
+				583BE4D96D376BCA146F1C40D9A11E37 /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				CA807B594F35ABD2A22D82A7DC65008A /* PBXTargetDependency */,
+				3C3EF12CAF5DF45B8808D27C1F8A28E8 /* PBXTargetDependency */,
 			);
 			name = "Pods-TAIDemo";
 			productName = Pods_TAIDemo;
@@ -152,12 +288,14 @@
 			projectRoot = "";
 			targets = (
 				1D63FF62046376156680B06B70F0284B /* Pods-TAIDemo */,
+				B909378CF9972004227FC2FD03E14824 /* TAISDK_iOS */,
+				9AEE6406FD3DBF0AEA435CCF20A0C3C7 /* TIWLogger_iOS */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		E4FF2BD9BE96B206439C23B1ECD99724 /* Resources */ = {
+		583BE4D96D376BCA146F1C40D9A11E37 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -167,18 +305,55 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		6D2AC6911E63FD5CDB1069B0C3A4001E /* Sources */ = {
+		29A5F3A1B4D8D21C7CDCE1D82F773816 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F2686215F3B859464B202E8A97525FA3 /* Pods-TAIDemo-dummy.m in Sources */,
+				72852B3C8539708F3B226B00F68BA5A5 /* Pods-TAIDemo-dummy.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		0CE7893C9D3B01CBFC5CCDF073CF7CDF /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = TIWLogger_iOS;
+			target = 9AEE6406FD3DBF0AEA435CCF20A0C3C7 /* TIWLogger_iOS */;
+			targetProxy = ACF17A097A1B42524EA324DDAB38C10A /* PBXContainerItemProxy */;
+		};
+		3C3EF12CAF5DF45B8808D27C1F8A28E8 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = TIWLogger_iOS;
+			target = 9AEE6406FD3DBF0AEA435CCF20A0C3C7 /* TIWLogger_iOS */;
+			targetProxy = 5C161418A116F00B03752F034FF117C0 /* PBXContainerItemProxy */;
+		};
+		CA807B594F35ABD2A22D82A7DC65008A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = TAISDK_iOS;
+			target = B909378CF9972004227FC2FD03E14824 /* TAISDK_iOS */;
+			targetProxy = E3BD9C23338C0A8344441243914446BE /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin XCBuildConfiguration section */
-		4097775FE1C5C0CA725E46954218569E /* Debug */ = {
+		0DC6B986981842CB68069B548F97E230 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 38E1F8788CED63E2F657B288ED1578EA /* TIWLogger_iOS.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		2F0F3A3E184CC893DEB74B4F6ECA6217 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 88AA7CCD9F39271C7523DA4ADD8EE9CF /* Pods-TAIDemo.debug.xcconfig */;
 			buildSettings = {
@@ -212,6 +387,77 @@
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		4BCD8574B1BDF562F7E61B324F9EBBFD /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0833639DE9FA5722B4B71C590E966C02 /* Pods-TAIDemo.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "Target Support Files/Pods-TAIDemo/Pods-TAIDemo-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-TAIDemo/Pods-TAIDemo.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		62B7F4E5928E7F9B7854CACB089F633E /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9E835FCAEFFCACD5F4F2CB9681187187 /* TAISDK_iOS.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		6EC1BE93C813D5E994F63088616E0FB3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = B5872223A09810D82A1C57384A95C6FE /* TAISDK_iOS.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -343,52 +589,31 @@
 			};
 			name = Release;
 		};
-		D9728662B65956B438B2457D5A86548B /* Release */ = {
+		C40CB2AF2055940CD8AC27E27AE6BAEB /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 0833639DE9FA5722B4B71C590E966C02 /* Pods-TAIDemo.release.xcconfig */;
+			baseConfigurationReference = 1ECCAA5BD862C4E89A7D2141E8993ED1 /* TIWLogger_iOS.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
-				CLANG_ENABLE_OBJC_WEAK = NO;
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = "Target Support Files/Pods-TAIDemo/Pods-TAIDemo-Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
 				);
-				MACH_O_TYPE = staticlib;
-				MODULEMAP_FILE = "Target Support Files/Pods-TAIDemo/Pods-TAIDemo.modulemap";
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PODS_ROOT = "$(SRCROOT)";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		46D3CCF7B2E5B2EED2DB1B01B38A0908 /* Build configuration list for PBXNativeTarget "Pods-TAIDemo" */ = {
+		343AE0B2212D2EA4D8A1FBF475DBB4CE /* Build configuration list for PBXNativeTarget "Pods-TAIDemo" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				4097775FE1C5C0CA725E46954218569E /* Debug */,
-				D9728662B65956B438B2457D5A86548B /* Release */,
+				2F0F3A3E184CC893DEB74B4F6ECA6217 /* Debug */,
+				4BCD8574B1BDF562F7E61B324F9EBBFD /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -398,6 +623,24 @@
 			buildConfigurations = (
 				8DE5143C03248BB6CD542DE3963D6F3A /* Debug */,
 				9E406C6AAF85E580207CD97B0044DEAB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		5C83A9A309983141F3F9E3B587803D7B /* Build configuration list for PBXAggregateTarget "TAISDK_iOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6EC1BE93C813D5E994F63088616E0FB3 /* Debug */,
+				62B7F4E5928E7F9B7854CACB089F633E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		836DA8EE698AECB07E006B459A3B0763 /* Build configuration list for PBXAggregateTarget "TIWLogger_iOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0DC6B986981842CB68069B548F97E230 /* Debug */,
+				C40CB2AF2055940CD8AC27E27AE6BAEB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

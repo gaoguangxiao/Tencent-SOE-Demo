@@ -10,6 +10,8 @@
 #import <TAISDK/TAIOralEvaluation.h>
 #import "PrivateInfo.h"
 //#import <AFNetworking.h>
+#import "TAIDemo-Swift.h"
+//#import "GXTaskDownload-Swift.h"
 
 @interface OralEvaluationViewController () <TAIOralEvaluationDelegate>
 @property (weak, nonatomic) IBOutlet UITextField *inputTextField;
@@ -29,6 +31,11 @@
 @property (strong, nonatomic) TAIOralEvaluation *oralEvaluation;
 @property (strong, nonatomic) NSString *fileName;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *hostType;
+
+@property (nonatomic, strong) SOE *recordSOE;
+
+//下载音频至沙盒
+//@property (nonatomic, strong) GXDownloadManager *downloader;
 
 @end
 
@@ -154,17 +161,17 @@
     
     [self loadCerData];
     
-//    NSString *mp3Path = [[NSBundle mainBundle] pathForResource:@"hello_guagua" ofType:@"mp3"];
+    NSString *mp3Path = [[NSBundle mainBundle] pathForResource:@"badfcd68b7c745c682b383889e7b8dc5" ofType:@"mp3"];
 //    TAIOralEvaluationData *data = [[TAIOralEvaluationData alloc] init];
 //    data.seqId = 1;
 //    data.bEnd = YES;
 //    data.audio = [NSData dataWithContentsOfFile:mp3Path];
     
-    NSString *wavPath = [[NSBundle mainBundle] pathForResource:@"2024-10-16_10-00-27" ofType:@"wav"];
+//    NSString *wavPath = [[NSBundle mainBundle] pathForResource:@"2024-10-16_10-00-27" ofType:@"wav"];
     TAIOralEvaluationData *data = [[TAIOralEvaluationData alloc] init];
     data.seqId = 1;
     data.bEnd = YES;
-    data.audio = [NSData dataWithContentsOfFile:wavPath];
+    data.audio = [NSData dataWithContentsOfFile:mp3Path];
     __weak typeof(self) ws = self;
     [self.oralEvaluation oralEvaluation:param data:data callback:^(TAIError *error) {
         [ws setResponse:[NSString stringWithFormat:@"oralEvaluation:%@", error]];
