@@ -41,6 +41,7 @@
 		1EA56EB12CC627B100C4FBD8 /* 9a088e9435ee4f53b0462c5e91f61700.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 1EA56EA72CC627B100C4FBD8 /* 9a088e9435ee4f53b0462c5e91f61700.mp3 */; };
 		1EA56EB32CC627B100C4FBD8 /* 7f48404cf7884770aef07ff277b40821.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 1EA56EA52CC627B100C4FBD8 /* 7f48404cf7884770aef07ff277b40821.mp3 */; };
 		1EA56EB52CC627B100C4FBD8 /* 8c3c3533618547abb24176e73e3cc8f5.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 1EA56EA62CC627B100C4FBD8 /* 8c3c3533618547abb24176e73e3cc8f5.mp3 */; };
+		1ED134C92CC654C100350D4A /* 2024-10-18_16-15-46.wav in Resources */ = {isa = PBXBuildFile; fileRef = 1ED134C82CC654C100350D4A /* 2024-10-18_16-15-46.wav */; };
 		6E98701C941F57B97D5335D5 /* Pods_demo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 66D3755D1942909FCBC58EFD /* Pods_demo.framework */; };
 		7E2FC9A52BFEEE3800077232 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E2FC9A42BFEEE3800077232 /* AppDelegate.m */; };
 		7E2FC9A82BFEEE3800077232 /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E2FC9A72BFEEE3800077232 /* SceneDelegate.m */; };
@@ -101,6 +102,7 @@
 		1EA56EA62CC627B100C4FBD8 /* 8c3c3533618547abb24176e73e3cc8f5.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = 8c3c3533618547abb24176e73e3cc8f5.mp3; sourceTree = "<group>"; };
 		1EA56EA72CC627B100C4FBD8 /* 9a088e9435ee4f53b0462c5e91f61700.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = 9a088e9435ee4f53b0462c5e91f61700.mp3; sourceTree = "<group>"; };
 		1EA56EAA2CC627B100C4FBD8 /* badfcd68b7c745c682b383889e7b8dc5.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = badfcd68b7c745c682b383889e7b8dc5.mp3; sourceTree = "<group>"; };
+		1ED134C82CC654C100350D4A /* 2024-10-18_16-15-46.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "2024-10-18_16-15-46.wav"; sourceTree = "<group>"; };
 		320C328B54E08180B647C915 /* Pods-demo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-demo.debug.xcconfig"; path = "Target Support Files/Pods-demo/Pods-demo.debug.xcconfig"; sourceTree = "<group>"; };
 		66D3755D1942909FCBC58EFD /* Pods_demo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_demo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7E2FC9A02BFEEE3800077232 /* demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = demo.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -165,6 +167,7 @@
 		1E7A25352CC259550080D18A /* TencentNew */ = {
 			isa = PBXGroup;
 			children = (
+				1ED134C82CC654C100350D4A /* 2024-10-18_16-15-46.wav */,
 				1E7A25342CC259550080D18A /* 2024-10-18_16-15-45.wav */,
 			);
 			path = TencentNew;
@@ -446,6 +449,7 @@
 				1E8419752CC0E0E8005E1439 /* 2024-10-16_11-38-04.wav in Resources */,
 				1E8419762CC0E0E8005E1439 /* 2024-10-16_11-23-43.wav in Resources */,
 				7E40DB072C08537000E06118 /* how_are_you.pcm in Resources */,
+				1ED134C92CC654C100350D4A /* 2024-10-18_16-15-46.wav in Resources */,
 				7E2FC9AE2BFEEE3800077232 /* Main.storyboard in Resources */,
 				7E40DB082C08537000E06118 /* how_are_you.mp3 in Resources */,
 			);

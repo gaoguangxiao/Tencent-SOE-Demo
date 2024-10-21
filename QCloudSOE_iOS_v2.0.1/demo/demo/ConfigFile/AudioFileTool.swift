@@ -78,6 +78,7 @@ public class AudioFileTool: NSObject {
     }
     
     func lastAudioURL() -> String {
+        guard audios.count > 0 else { return "" }
         current -= 1
         if current == 0 {
             current = audios.count - 1

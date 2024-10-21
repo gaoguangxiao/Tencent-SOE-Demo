@@ -168,9 +168,9 @@
             } else if ([self ->_sourceSeg selectedSegmentIndex] == 1) {
                 [self clearResult];
                 // 文件源的pcm必须为单通道s16le格式
-//                NSString *path = [[NSBundle mainBundle] pathForResource:@"2024-10-18_16-15-45" ofType:@"wav"];
-                
-                NSString *path = [[NSBundle mainBundle] pathForResource:@"8c3c3533618547abb24176e73e3cc8f5" ofType:@"mp3"];
+                NSString *path = [[NSBundle mainBundle] pathForResource:@"2024-10-18_16-15-46" ofType:@"wav"];
+                self.audioPath = path;
+//                NSString *path = [[NSBundle mainBundle] pathForResource:@"8c3c3533618547abb24176e73e3cc8f5" ofType:@"mp3"];
                 
                 //                    NSString* path = [NSString stringWithFormat:@"%@/%@", [[NSBundle mainBundle]bundlePath], @"how_are_you.pcm"];
                 //
@@ -253,7 +253,7 @@
 
 - (IBAction)didPlayAudio:(id)sender {
     
-    if ([self->_sourceSeg selectedSegmentIndex] == 0) {
+    if ([self->_sourceSeg selectedSegmentIndex] == 0 || [self->_sourceSeg selectedSegmentIndex] == 1) {
 //        if (self.audioPath) {
 //            [_tool playLocalWithPath:self.audioPath];
 //        } else {
