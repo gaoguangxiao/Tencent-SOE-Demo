@@ -175,7 +175,7 @@
             } else if ([self ->_sourceSeg selectedSegmentIndex] == 1) {
                 [self clearResult];
                 // 文件源的pcm必须为单通道s16le格式
-                NSString *path = [[NSBundle mainBundle] pathForResource:@"2024-10-18_16-15-46" ofType:@"wav"];
+                NSString *path = [[NSBundle mainBundle] pathForResource:@"2024-10-22_10-20-49" ofType:@"pcm"];
                 self.audioPath = path;
 //                NSString *path = [[NSBundle mainBundle] pathForResource:@"8c3c3533618547abb24176e73e3cc8f5" ofType:@"mp3"];
                 
@@ -184,7 +184,7 @@
                 // 如果文件源不为pcm格式,可使用下面的方式//
                 //                    NSString* path = [NSString stringWithFormat:@"%@/%@", [[NSBundle mainBundle]bundlePath], @"how_are_you.mp3"];
                 if (self.classVersion == 2) {
-                    if ([path.pathExtension isEqualToString:@"wav"] || [path.lastPathComponent isEqualToString:@"pcm"]) {
+                    if ([path.pathExtension isEqualToString:@"wav"] || [path.pathExtension isEqualToString:@"pcm"]) {
                         self->_source = [[FileDataSource alloc] init:path];
                     } else {
                         self->_source = [[AudioToolDataSource alloc] init:path];
