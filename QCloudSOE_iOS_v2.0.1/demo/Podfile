@@ -7,19 +7,16 @@ platform :ios, '13.0'
 target 'demo' do
   # Comment the next line if you don't want to use dynamic frameworks
   use_frameworks!
-
+  
   # Pods for demo
-
+  
   pod 'RSAdventureApi', :path => '~/Desktop/SourceTree/rs_bridge/rsadventureapi'
   
   pod 'GXTaskDownload'
-#  , :path => '~/Documents/GitHub/GXTaskDownload' # 下载组件
+  #  , :path => '~/Documents/GitHub/GXTaskDownload' # 下载组件
   
   pod 'MJExtension'
   
-  pod 'GXAudioPlay'
-#  , :path=>'~/Documents/GitHub/GXAudioPlay'
-#  pod 'TAISDK_iOS'
-
-  
+  pod 'GXAudioPlay' , :path=>'~/Documents/GitHub/GXAudioPlay'
+  #  pod 'TAISDK_iOS'
 end

@@ -64,7 +64,7 @@
 }
 
 - (nullable NSError *)start {
-    NSURL* url = [NSURL URLWithString:_path];
+    NSURL* url = [NSURL fileURLWithPath:_path];
     OSStatus status = AudioFileOpenURL((__bridge CFURLRef)url, kAudioFileReadPermission, 0, &_audioFileID);
     if (status != noErr) {
         return [[NSError alloc] initWithDomain:@"Demo" code:-1 userInfo:@{NSLocalizedDescriptionKey: @"AudioFileOpenURL", @"Status": @(status)}];

@@ -126,9 +126,8 @@
         //        config.audioFile = [NSString stringWithFormat:@"%@/%@.wav", NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)[0], videoDestDateString];
         
         recordData.fileHandler.recordFilePath = audiopath1;
-        self.audioPath = audiopath1;
-        
-        NSLog(@"audio path is: %@",config.audioFile);
+        self.audioPath = audiopath;
+        NSLog(@"audio path is: %@",self.audioPath);
         config.vadInterval = self->_vadSlider.value;
         config.vadVolume = self->_vadVolumeSlider.value;
     } else {
@@ -245,8 +244,12 @@
     
     if (_sourceSeg.selectedSegmentIndex == 0) {
         //        _AudioSView.hidden = YES;
+    } else if (_sourceSeg.selectedSegmentIndex == 1) {
+        NSString *path = [[NSBundle mainBundle] pathForResource:@"2024-10-22_15-20-44" ofType:@"pcm"];
+        self.audioPath = path;
     } else {
-        
+//        NSString *path = [[NSBundle mainBundle] pathForResource:@"2024-10-22_10-20-49" ofType:@"pcm"];
+//        self.audioPath = path;
     }
 }
 
@@ -267,7 +270,7 @@
 //            //
 //        }
         if (self.classVersion == 2) {
-            [_tool playAudioWithAVWithPath:self.audioPath];
+            [_tool playLocalWithPath:self.audioPath];
         } else {
             [_tool playAudioWithAVWithPath:self.audioPath];
         }

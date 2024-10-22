@@ -25,10 +25,27 @@ public class AudioFileTool: NSObject {
     }()
     
     //本地音频
-    lazy var localRecordPlayer: GXAudioEnginePlayer = {
+    lazy var localRecordPlayer: GGXAudioEngine = {
+        let pl = GGXAudioEngine()
+        return pl
+    }()
+    
+    //
+    lazy var localRecordPlayerV2: GXAudioEnginePlayer = {
         let pl = GXAudioEnginePlayer()
         return pl
     }()
+    
+//    //audioqueue音频
+//    lazy var aqPlayer: AQPlayerManager = {
+//        let pl = AQPlayerManager()
+//        return pl
+//    }()
+//    
+//    lazy var audioPlayer: JHAudioRecorder = {
+//        let pl = JHAudioRecorder()
+//        return pl
+//    }()
     
     func clearTxt() {
         audios.removeAll()
@@ -51,8 +68,14 @@ public class AudioFileTool: NSObject {
     }
     
     func playLocal(path: String) {
-        if let filePath = path.toUrl {
-            localRecordPlayer.play(fileURL: filePath)
+//                    aqPlayer.startPlay(path)
+//                audioPlayer.playRecording(with: path)
+        
+        
+        if let filePath = path.toFileUrl {
+            try? localRecordPlayer.playpcm(fileURL: filePath)
+//            localRecordPlayerV2.playpcm(fileURL: filePath)
+            
         }
         
     }
