@@ -117,10 +117,17 @@
     config.connectTimeout = 3000;
     
     if ([source isKindOfClass:RecordDataSource.class]) {
+        RecordDataSource *recordData = (RecordDataSource *)source;
         NSString *videoDestDateString = [self createFileNamePrefix];
-        config.audioFile =  [NSString stringWithFormat:@"%@/%@.pcm", NSTemporaryDirectory(),videoDestDateString];
-//        config.audioFile = [NSString stringWithFormat:@"%@/%@.wav", NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)[0], videoDestDateString];
-        self.audioPath = config.audioFile;
+        NSString *audiopath = [NSString stringWithFormat:@"%@/%@.pcm", NSTemporaryDirectory(),videoDestDateString];
+        NSString *audiopath1 = [NSString stringWithFormat:@"%@/%@.wav", NSTemporaryDirectory(),videoDestDateString];
+        config.audioFile = audiopath;
+
+        //        config.audioFile = [NSString stringWithFormat:@"%@/%@.wav", NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)[0], videoDestDateString];
+        
+        recordData.fileHandler.recordFilePath = audiopath1;
+        self.audioPath = audiopath1;
+        
         NSLog(@"audio path is: %@",config.audioFile);
         config.vadInterval = self->_vadSlider.value;
         config.vadVolume = self->_vadVolumeSlider.value;

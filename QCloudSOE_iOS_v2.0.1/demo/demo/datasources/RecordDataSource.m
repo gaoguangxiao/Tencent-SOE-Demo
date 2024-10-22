@@ -6,6 +6,7 @@
 //
 
 #import "RecordDataSource.h"
+#import "RecordFileHandler.h"
 #import "Ring.h"
 
 static OSStatus recordingCallback(void *inRefCon,
@@ -27,6 +28,7 @@ static OSStatus recordingCallback(void *inRefCon,
     self = [super init];
     if (self) {
         _lock = [[NSObject alloc] init];
+        _fileHandler = [[RecordFileHandler alloc]init];
     }
     return self;
 }
@@ -142,6 +144,10 @@ static OSStatus recordingCallback(void *inRefCon,
         if (status != 0) {
             return [[NSError alloc] initWithDomain:@"Demo" code:-1 userInfo:@{NSLocalizedDescriptionKey: @"AudioOutputUnitStart Error", @"Status": @(status)}];
         }
+        
+        [_fileHandler startVoiceRecordByAudioQueue:nil
+                                             isNeedMagicCookie:NO
+                                                     audioDesc:audioFormat];
         return nil;
     }
 }
@@ -161,6 +167,8 @@ static OSStatus recordingCallback(void *inRefCon,
             return [[NSError alloc] initWithDomain:@"Demo" code:-1 userInfo:@{NSLocalizedDescriptionKey: @"AudioComponentInstanceDispose Error", @"Status": @(status)}];
         }
         _audioUnit = nil;
+        
+        [_fileHandler stopVoiceRecordAudioConverter:nil needMagicCookie:NO];
         return nil;
     }
 }
@@ -190,6 +198,13 @@ static OSStatus recordingCallback(void *inRefCon,
                                       &bufferList);
     @synchronized (source) {
         source->_ring->push((char*)bufferList.mBuffers[0].mData, bufferList.mBuffers[0].mDataByteSize);
+
+        //填充数据
+        [source.fileHandler writeFileWithInNumBytes:bufferList.mBuffers[0].mDataByteSize
+                                                      ioNumPackets:inNumberFrames
+                                           inBuffer:bufferList.mBuffers[0].mData
+                                                      inPacketDesc:NULL];
+        
     }
     free(bufferList.mBuffers[0].mData);
     return status;
