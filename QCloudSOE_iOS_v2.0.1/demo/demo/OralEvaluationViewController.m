@@ -23,12 +23,14 @@
 #import "ConfigFileViewController.h"
 
 #import <GXAudioPlay-Swift.h>
-
+#import "GGXSwiftExtension-Swift.h"
 //旧版
 #import <TAISDK/TAIOralEvaluation.h>
 
 //音频格式转换
 #import "GGXAudioConvertor.h"
+#import "RSShowWaveView.h"
+#import "TESTDATA.h" //读取文件
 @interface OralEvaluationViewController () <TAIOralListener, UITextFieldDelegate,TAIOralEvaluationDelegate>
 
 @property (weak, nonatomic) IBOutlet UITextField *refText;
@@ -40,10 +42,17 @@
 @property (weak, nonatomic) IBOutlet UITextView *resultText;
 @property (weak, nonatomic) IBOutlet UIButton *actionBtn;
 @property (weak, nonatomic) IBOutlet UISlider *coeffSlider;
+
+@property (weak, nonatomic) IBOutlet UILabel *vadTxt;                    //静音时常标签
 @property (weak, nonatomic) IBOutlet Slider *vadSlider;
 
+
+@property (nonatomic, strong) RSShowWaveView *waveAudioView;             //音量视图
+@property (weak, nonatomic) IBOutlet UIView *volumeView;
 @property (weak, nonatomic) IBOutlet UILabel *volumeTxt;                 //音量标签
 @property (weak, nonatomic) IBOutlet UIProgressView *volumeProgress;     //音量进度
+
+@property (weak, nonatomic) IBOutlet UILabel *vadVolumeTxt;              //静音阈值标签
 @property (weak, nonatomic) IBOutlet Slider *vadVolumeSlider;            //静音阈值
 @property (weak, nonatomic) IBOutlet UISegmentedControl *sentenceInfoSeg;//输出断句结果中间显示
 @property (weak, nonatomic) IBOutlet UITextField *keywordText;
@@ -89,13 +98,23 @@
     _vadVolumeSlider.needInt = YES;
     [_sentenceInfoSeg setSelectedSegmentIndex:1];
     
+    [self.volumeView addSubview:self.waveAudioView];
     self.recordSOE = [SOE new];
     self.downloader = [GXDownloadManager new];
     self.tool = AudioFileTool.share;
     [self updateSource];
+    
+    //保存待测试的网络数据
+    NSString *re = [TESTDATA loadTestTxt:@"long_text_2024-10-18-16-20-39.txt"];
+    [self.tool clearTxt];
+    [self.tool saveTxtWithTxt:re];
+    self.AudioTxt.text = [NSString stringWithFormat:@"%ld/%ld：%@",(long)self->_tool.current  + 1,self->_tool.audios.count,[self->_tool cureentAudioURL]];
 }
 
 - (void)clearResult {
+    [self.waveAudioView.pointArr removeAllObjects];
+    [self.waveAudioView setNeedsDisplay];
+    
     self.audioPath = nil;
     _result = @"";
     _WordTxt.text = @"";
@@ -180,6 +199,7 @@
                         }];
                         return;
                     }
+                    [self clearResult];
                     [self onRecord];
                 }
                 
@@ -212,16 +232,21 @@
                 //下载音频
                 [self.downloader downloadV2WithUrl:[self->_tool cureentAudioURL] path:@"problem" priority:0 block:^(float progress, NSString * _Nullable path) {
                     if (path) {
-                        NSLog(@"audio path is: %@",path);
-                        NSString *videoDestDateString = [self createFileNamePrefix];
-                        NSString *outPath = [NSString stringWithFormat:@"%@/%@.wav", NSTemporaryDirectory(),videoDestDateString];
-                        [GGXAudioConvertor convertM4AToWAV:path outPath:outPath success:^(NSString * _Nonnull outputPath) {
-                            //                            NSLog(@"outputPath path is: %@",outputPath);
-                            [self scoreWithByPath:outputPath];
-                        } failure:^(NSError * _Nonnull error) {
-                            //                            NSLog(@"outputPath error is: %@",error);
+                        
+                        if (self.classVersion == 2) {
+                            NSLog(@"audio path is: %@",path);
+                            NSString *videoDestDateString = [self createFileNamePrefix];
+                            NSString *outPath = [NSString stringWithFormat:@"%@/%@.wav", NSTemporaryDirectory(),videoDestDateString];
+                            [GGXAudioConvertor convertM4AToWAV:path outPath:outPath success:^(NSString * _Nonnull outputPath) {
+                                //                            NSLog(@"outputPath path is: %@",outputPath);
+                                [self scoreWithByPath:outputPath];
+                            } failure:^(NSError * _Nonnull error) {
+                                //                            NSLog(@"outputPath error is: %@",error);
+                                [self scoreWithByPath:path];
+                            }];
+                        } else {
                             [self scoreWithByPath:path];
-                        }];
+                        }
                         
                     }
                 }];
@@ -258,6 +283,16 @@
 //切换
 - (IBAction)SegChangeSource:(UISegmentedControl *)sender {
     [self updateSource];
+}
+
+//静音音量阈值
+- (IBAction)valChange:(UISlider *)sender {
+//    NSLog(@"%.2f",sender.value);
+    self.vadVolumeTxt.text = [NSString stringWithFormat:@"静音音量阈值：%.1f",sender.value];
+}
+
+- (IBAction)vadChange:(UISlider *)sender {
+    self.vadTxt.text = [NSString stringWithFormat:@"静音时长（ms）：%.1f",sender.value];
 }
 
 - (void)updateSource {
@@ -300,6 +335,7 @@
     return YES;
 }
 
+#pragma mark - v2 delegate
 - (void)onError:(nonnull NSError *)error {
     [_source stop];
     _running = false;
@@ -350,6 +386,12 @@
     _volumeProgress.progress = value / 120.0;
     _volumeTxt.text = [NSString stringWithFormat:@"音量：%d",value];
     NSLog(@"SOE onVolume ----> %d", value);
+    
+    MusicModel *audioPoint = [MusicModel new];
+    audioPoint.value = value;
+    [self.waveAudioView.pointArr addObject:audioPoint];
+    //绘制音量
+    [self.waveAudioView setNeedsDisplay];
 }
 
 - (void)onLog:(NSString *)value level:(int)level {
@@ -400,7 +442,7 @@
         __weak typeof(self) ws = self;
         [self.oralEvaluation stopRecordAndEvaluation:^(TAIError *error) {
             [ws setResponse:[NSString stringWithFormat:@"stopRecordAndEvaluation:%@", error]];
-            [ws.actionBtn setTitle:@"开始评分" forState:UIControlStateNormal];
+            [ws.actionBtn setTitle:@"开始评测" forState:UIControlStateNormal];
         }];
         return;
     }
@@ -412,7 +454,7 @@
     param.secretId = [PrivateInfo shareInstance].secretId;
     param.secretKey = [PrivateInfo shareInstance].secretKey;
     param.token = [PrivateInfo shareInstance].token;
-    //    param.workMode = (TAIOralEvaluationWorkMode)self.w.selectedSegmentIndex;
+    param.workMode = (TAIOralEvaluationWorkMode)self.sourceSeg.selectedSegmentIndex;
     param.evalMode = (TAIOralEvaluationEvalMode)self.evalModeSeg.selectedSegmentIndex;
     param.serverType = (TAIOralEvaluationServerType)self.sourceSeg.selectedSegmentIndex;
     param.hostType = TAIOralEvaluationHostType_Common;//(TAIOralEvaluationHostType)self.sourceSeg.selectedSegmentIndex;
@@ -443,7 +485,7 @@
     [self.oralEvaluation resetAvAudioSession:true];
     [self.oralEvaluation startRecordAndEvaluation:param callback:^(TAIError *error) {
         if(error.code == TAIErrCode_Succ){
-            [ws.actionBtn setTitle:@"停止录制" forState:UIControlStateNormal];
+            [ws.actionBtn setTitle:@"停止评测" forState:UIControlStateNormal];
         }
         [ws setResponse:[NSString stringWithFormat:@"startRecordAndEvaluation:%@", error]];
     }];
@@ -487,7 +529,8 @@
 
 - (void)oralEvaluation:(TAIOralEvaluation *)oralEvaluation onVolumeChanged:(NSInteger)volume
 {
-    //    self.progressView.progress = volume / 120.0;
+    [self onVolume:(int)volume];
+//    self.progressView.progress = volume / 120.0;
 }
 
 - (void)setResponse:(NSString *)string
@@ -496,7 +539,7 @@
     [format setDateFormat:@"yyyy-MM-dd HH:mm:ss.SSS"];
     //    NSString *desc = [NSString stringWithCString:[string cStringUsingEncoding:NSUTF8StringEncoding] encoding:NSNonLossyASCIIStringEncoding];
     //    NSString *text = _responseTextView.text;
-    NSString *text = [NSString stringWithFormat:@"%@ %@", [format stringFromDate:[NSDate date]], string];
+//    NSString *text = [NSString stringWithFormat:@"%@ %@", [format stringFromDate:[NSDate date]], string];
     //    _responseTextView.text = text;
     //    NSLog(@"SOE onMessage ----> %@", text);
 }
@@ -508,5 +551,13 @@
         _oralEvaluation.delegate = self;
     }
     return _oralEvaluation;
+}
+
+//音量面板
+- (RSShowWaveView *)waveAudioView {
+    if (!_waveAudioView) {
+        _waveAudioView = [[RSShowWaveView  alloc]initWithFrame:CGRectMake(0, 0, UIDevice.width, 120)];
+    }
+    return _waveAudioView;
 }
 @end

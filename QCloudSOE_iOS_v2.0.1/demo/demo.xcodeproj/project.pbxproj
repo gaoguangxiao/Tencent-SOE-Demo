@@ -13,6 +13,8 @@
 		1E7A25332CC231B10080D18A /* AudioFileTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E7A25322CC231B10080D18A /* AudioFileTool.swift */; };
 		1E7A25362CC259550080D18A /* 2024-10-18_16-15-45.wav in Resources */ = {isa = PBXBuildFile; fileRef = 1E7A25342CC259550080D18A /* 2024-10-18_16-15-45.wav */; };
 		1E7AFC292CC8957B0085B5FF /* RSAudioEvaluationManagerV2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E7AFC282CC8957B0085B5FF /* RSAudioEvaluationManagerV2.swift */; };
+		1E7AFC2C2CC8CFC50085B5FF /* RSShowWaveView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E7AFC2B2CC8CFC50085B5FF /* RSShowWaveView.m */; };
+		1E7AFC2E2CC8D3EC0085B5FF /* long_text_2024-10-18-16-20-39.txt in Resources */ = {isa = PBXBuildFile; fileRef = 1E7AFC2D2CC8D3EC0085B5FF /* long_text_2024-10-18-16-20-39.txt */; };
 		1E8368C12CC74E0B00FEAF8C /* 2024-10-22_10-29-12.pcm in Resources */ = {isa = PBXBuildFile; fileRef = 1E8368C02CC74E0B00FEAF8C /* 2024-10-22_10-29-12.pcm */; };
 		1E8368C22CC74E0B00FEAF8C /* 2024-10-22_10-20-49.pcm in Resources */ = {isa = PBXBuildFile; fileRef = 1E8368BF2CC74E0B00FEAF8C /* 2024-10-22_10-20-49.pcm */; };
 		1E8419452CC0BCBE005E1439 /* PrivateInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E8419442CC0BCBE005E1439 /* PrivateInfo.m */; };
@@ -80,6 +82,9 @@
 		1E7A25322CC231B10080D18A /* AudioFileTool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioFileTool.swift; sourceTree = "<group>"; };
 		1E7A25342CC259550080D18A /* 2024-10-18_16-15-45.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "2024-10-18_16-15-45.wav"; sourceTree = "<group>"; };
 		1E7AFC282CC8957B0085B5FF /* RSAudioEvaluationManagerV2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSAudioEvaluationManagerV2.swift; sourceTree = "<group>"; };
+		1E7AFC2A2CC8CFC50085B5FF /* RSShowWaveView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RSShowWaveView.h; sourceTree = "<group>"; };
+		1E7AFC2B2CC8CFC50085B5FF /* RSShowWaveView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RSShowWaveView.m; sourceTree = "<group>"; };
+		1E7AFC2D2CC8D3EC0085B5FF /* long_text_2024-10-18-16-20-39.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = "long_text_2024-10-18-16-20-39.txt"; sourceTree = "<group>"; };
 		1E8368BF2CC74E0B00FEAF8C /* 2024-10-22_10-20-49.pcm */ = {isa = PBXFileReference; lastKnownFileType = file; path = "2024-10-22_10-20-49.pcm"; sourceTree = "<group>"; };
 		1E8368C02CC74E0B00FEAF8C /* 2024-10-22_10-29-12.pcm */ = {isa = PBXFileReference; lastKnownFileType = file; path = "2024-10-22_10-29-12.pcm"; sourceTree = "<group>"; };
 		1E8419422CC0BBEF005E1439 /* demo-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "demo-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -176,9 +181,12 @@
 			children = (
 				1E7A25282CC215F60080D18A /* ConfigFileViewController.h */,
 				1E7A25292CC215F60080D18A /* ConfigFileViewController.m */,
+				1E7AFC2A2CC8CFC50085B5FF /* RSShowWaveView.h */,
+				1E7AFC2B2CC8CFC50085B5FF /* RSShowWaveView.m */,
 				1E7A25322CC231B10080D18A /* AudioFileTool.swift */,
 				1EEB0CA62CC77C9D006BDA2E /* GGXAudioEngine.swift */,
 				1E7AFC282CC8957B0085B5FF /* RSAudioEvaluationManagerV2.swift */,
+				1E7AFC2D2CC8D3EC0085B5FF /* long_text_2024-10-18-16-20-39.txt */,
 			);
 			path = ConfigFile;
 			sourceTree = "<group>";
@@ -457,6 +465,7 @@
 				1E8419682CC0E0E8005E1439 /* 2024-10-16_11-37-48.wav in Resources */,
 				1E7A25362CC259550080D18A /* 2024-10-18_16-15-45.wav in Resources */,
 				1E8368C12CC74E0B00FEAF8C /* 2024-10-22_10-29-12.pcm in Resources */,
+				1E7AFC2E2CC8D3EC0085B5FF /* long_text_2024-10-18-16-20-39.txt in Resources */,
 				1E8368C22CC74E0B00FEAF8C /* 2024-10-22_10-20-49.pcm in Resources */,
 				1EEB0CAB2CC78AEA006BDA2E /* 2024-10-22_15-20-18.pcm in Resources */,
 				1EEB0CAC2CC78AEA006BDA2E /* 2024-10-22_15-20-29.pcm in Resources */,
@@ -545,6 +554,7 @@
 				1E8419452CC0BCBE005E1439 /* PrivateInfo.m in Sources */,
 				1ED134D22CC6614400350D4A /* RecordFileHandler.m in Sources */,
 				7E2FC9A52BFEEE3800077232 /* AppDelegate.m in Sources */,
+				1E7AFC2C2CC8CFC50085B5FF /* RSShowWaveView.m in Sources */,
 				7E988BB12C0090A700F87DA5 /* Slider.m in Sources */,
 				7E2FC9B62BFEEE3900077232 /* main.m in Sources */,
 				7E988BA72C00852A00F87DA5 /* ConfigViewController.m in Sources */,

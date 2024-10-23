@@ -1,0 +1,6 @@
+framework module AFServiceNet {
+  umbrella header "AFServiceNet-umbrella.h"
+
+  export *
+  module * { export * }
+}
