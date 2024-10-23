@@ -228,15 +228,14 @@
             } else {
                 [self clearResult];
                 // 文件源为网络音频 https://file.risekid.cn/record/problem/68055/493/2/8c3c3533618547abb24176e73e3cc8f5.mp3
-                //                    NSString *mp3URL = @"https://file.risekid.cn/record/problem/68055/493/2/8c3c3533618547abb24176e73e3cc8f5.mp3";
+                NSString *mp3URL = [self.tool cureentAudioURL];
                 //下载音频
-                [self.downloader downloadV2WithUrl:[self->_tool cureentAudioURL] path:@"problem" priority:0 block:^(float progress, NSString * _Nullable path) {
+                [self.downloader downloadV2WithUrl:mp3URL path:@"problem" priority:0 clearOld:NO block:^(float progress, NSString * _Nullable path) {
                     if (path) {
-                        
                         if (self.classVersion == 2) {
                             NSLog(@"audio path is: %@",path);
-                            NSString *videoDestDateString = [self createFileNamePrefix];
-                            NSString *outPath = [NSString stringWithFormat:@"%@/%@.wav", NSTemporaryDirectory(),videoDestDateString];
+                            NSString *videoDestDateString = [mp3URL.lastPathComponent stringByDeletingPathExtension];
+                            NSString *outPath = [NSString stringWithFormat:@"%@/%@.wav", NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)[0], videoDestDateString];;
                             [GGXAudioConvertor convertM4AToWAV:path outPath:outPath success:^(NSString * _Nonnull outputPath) {
                                 //                            NSLog(@"outputPath path is: %@",outputPath);
                                 [self scoreWithByPath:outputPath];
@@ -385,7 +384,7 @@
 - (void)onVolume:(int)value {
     _volumeProgress.progress = value / 120.0;
     _volumeTxt.text = [NSString stringWithFormat:@"音量：%d",value];
-    NSLog(@"SOE onVolume ----> %d", value);
+    NSLog(@"%@：SOE onVolume ----> %d",[self createFileNamePrefix], value);
     
     MusicModel *audioPoint = [MusicModel new];
     audioPoint.value = value;
@@ -403,7 +402,7 @@
  */
 - (NSString *)createFileNamePrefix {
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setDateFormat:@"yyyy-MM-dd_HH-mm-ss"];//zzz
+    [dateFormatter setDateFormat:@"yyyy-MM-dd_HH-mm-ss-sss"];//zzz
     NSString *destDateString = [dateFormatter stringFromDate:[NSDate date]];
     return destDateString;
 }
@@ -556,7 +555,7 @@
 //音量面板
 - (RSShowWaveView *)waveAudioView {
     if (!_waveAudioView) {
-        _waveAudioView = [[RSShowWaveView  alloc]initWithFrame:CGRectMake(0, 0, UIDevice.width, 120)];
+        _waveAudioView = [[RSShowWaveView  alloc]initWithFrame:CGRectMake(0, 0, UIDevice.width, self.volumeView.height)];
     }
     return _waveAudioView;
 }

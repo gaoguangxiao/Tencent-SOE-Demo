@@ -24,25 +24,25 @@
         // Initialization code
         _pointArr = [[NSMutableArray alloc]init];
 
-        self.backgroundColor = [UIColor systemGroupedBackgroundColor];
+        self.backgroundColor = [UIColor systemGray4Color];
         
-        [self initView];
+        _pointArr = [NSMutableArray new];
+//        [self initView];
     }
     return self;
 }
--(void)initView{
+
+//-(void)initView{
     
 //    self.timeView = [[MOTimeTableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
 //    self.timeView.frame = CGRectMake(0, 0, self.frame.size.width, 20);
 //    [self addSubview:self.timeView];
     
-    //绘制中间线
-    UIView *centerLine = [[UIView alloc]initWithFrame:CGRectMake(0, self.frame.size.height - 1, self.frame.size.width, 1)];
-    centerLine.backgroundColor = UIColor.yellowColor;
-    [self addSubview:centerLine];
-    
-    _pointArr = [NSMutableArray new];
-}
+    //
+//    UIView *centerLine = [[UIView alloc]initWithFrame:CGRectMake(0, self.frame.size.height - 1, self.frame.size.width, 1)];
+//    centerLine.backgroundColor = UIColor.yellowColor;
+//    [self addSubview:centerLine];
+//}
 
 //柱形
 -(void)drawRect:(CGRect)rect
@@ -62,7 +62,6 @@
     CGFloat height = self.frame.size.height;
     CGFloat width = self.frame.size.width;
     
-    
     UIFont *font = [UIFont systemFontOfSize:12]; // 设置文字大小为24点
     UIColor *textColor = [UIColor blueColor];
     UIColor *backTextColor = [UIColor whiteColor];
@@ -75,8 +74,11 @@
 //    float channelCenterY = self.frame.size.height - 1;//中间线是
     for (NSInteger i = 0; i < self.pointArr.count; i++){
         MusicModel *point = self.pointArr[i];
-        float val = point.value;//
-        //        NSLog(@"%f---%f",point.value,val);
+        float val = point.value + 1;//
+        NSLog(@"db is：%f",point.value);
+        if (val <= 1) {
+            val = 1;
+        }
         float x = 50 + i * 2;
         CGContextMoveToPoint(context, x, cheight);
         CGContextAddLineToPoint(context, x, cheight - val);
@@ -89,7 +91,7 @@
         float val = i * heightPer;
         float position = cheight - val;
         NSString *value = [NSString stringWithFormat:@"%.0f",val];
-        [value drawInRect:CGRectMake(0, position - 6, titleWidth, 12) withAttributes:@{NSFontAttributeName: font,
+        [value drawInRect:CGRectMake(0, position - 12, titleWidth, 12) withAttributes:@{NSFontAttributeName: font,
                                                                                 NSForegroundColorAttributeName:textColor,
                                                                                 NSBackgroundColorAttributeName:backTextColor}];
 

@@ -83,7 +83,7 @@ DEPENDENCIES:
   - AFServiceNet
   - GXAudioPlay
   - GXAudioRecord
-  - GXTaskDownload
+  - GXTaskDownload (from `~/Documents/GitHub/GXTaskDownload`)
   - MJExtension
   - RSAdventureApi (from `~/Desktop/SourceTree/rs_bridge/rsadventureapi`)
   - RSBridgeAudioEvaluation
@@ -101,7 +101,6 @@ SPEC REPOS:
     - GXAudioPlay
     - GXAudioRecord
     - GXSwiftNetwork
-    - GXTaskDownload
     - KeychainAccess
     - MBProgressHUD
     - MJExtension
@@ -118,6 +117,8 @@ SPEC REPOS:
     - ZKBaseSwiftProject
 
 EXTERNAL SOURCES:
+  GXTaskDownload:
+    :path: "~/Documents/GitHub/GXTaskDownload"
   RSAdventureApi:
     :path: "~/Desktop/SourceTree/rs_bridge/rsadventureapi"
 
@@ -149,6 +150,6 @@ SPEC CHECKSUMS:
   YYModel: 2a7fdd96aaa4b86a824e26d0c517de8928c04b30
   ZKBaseSwiftProject: 04cb3fb43a971c6bf0eb4ae718210b114c03daf9
 
-PODFILE CHECKSUM: bfdfc395a9fc1346934c8a205444c4c2c9b0367b
+PODFILE CHECKSUM: 39cfd1a1e10e533f972da6a9f22b12d72484e2e2
 
 COCOAPODS: 1.15.2
