@@ -41,28 +41,27 @@
 @property (weak, nonatomic) IBOutlet UIButton *actionBtn;
 @property (weak, nonatomic) IBOutlet UISlider *coeffSlider;
 @property (weak, nonatomic) IBOutlet Slider *vadSlider;
-@property (weak, nonatomic) IBOutlet UIProgressView *volumeProgress;
-@property (weak, nonatomic) IBOutlet Slider *vadVolumeSlider;
+
+@property (weak, nonatomic) IBOutlet UILabel *volumeTxt;                 //音量标签
+@property (weak, nonatomic) IBOutlet UIProgressView *volumeProgress;     //音量进度
+@property (weak, nonatomic) IBOutlet Slider *vadVolumeSlider;            //静音阈值
 @property (weak, nonatomic) IBOutlet UISegmentedControl *sentenceInfoSeg;//输出断句结果中间显示
 @property (weak, nonatomic) IBOutlet UITextField *keywordText;
 
-
-//旧版
-@property (strong, nonatomic) TAIOralEvaluation *oralEvaluation;
-
-@property (nonatomic, strong) SOE *recordSOE;
-
-//下载音频至沙盒
-@property (nonatomic, strong) GXDownloadManager *downloader;
+@property (strong, nonatomic) TAIOralEvaluation *oralEvaluation;//智聆旧版
+@property (nonatomic, strong) SOE *recordSOE;                   //获取智聆token相关
+@property (nonatomic, strong) GXDownloadManager *downloader;    //下载音频
+@property (nonatomic, strong) AudioFileTool *tool;              //文件播放器
 
 //音频评测面板
 @property (weak, nonatomic) IBOutlet UILabel *WordTxt;//识别结果
 @property (weak, nonatomic) IBOutlet UILabel *SuggestedScoreTxt;//建议评分
+@property (weak, nonatomic) IBOutlet UILabel *PronCompletionTxt;//完整度
+@property (weak, nonatomic) IBOutlet UILabel *MemTxt;//耗时
 
 //文件操作板
-@property (weak, nonatomic) IBOutlet UIStackView *AudioSView;
-@property (weak, nonatomic) IBOutlet UILabel *AudioTxt;
-@property (nonatomic, strong) AudioFileTool *tool;
+@property (weak, nonatomic) IBOutlet UIStackView *AudioSView;//网络文件粘贴视图
+@property (weak, nonatomic) IBOutlet UILabel *AudioTxt;      //网络文件顺序标签
 
 //录制音频
 @property (nonatomic, copy) NSString *audioPath;
@@ -184,33 +183,32 @@
                     [self onRecord];
                 }
                 
-            } else if ([self ->_sourceSeg selectedSegmentIndex] == 1) {
-                [self clearResult];
-                // 文件源的pcm必须为单通道s16le格式
-                NSString *path = [[NSBundle mainBundle] pathForResource:@"2024-10-22_10-20-49" ofType:@"pcm"];
-                self.audioPath = path;
-                //                NSString *path = [[NSBundle mainBundle] pathForResource:@"8c3c3533618547abb24176e73e3cc8f5" ofType:@"mp3"];
-                
-                //                    NSString* path = [NSString stringWithFormat:@"%@/%@", [[NSBundle mainBundle]bundlePath], @"how_are_you.pcm"];
+                //            } else if ([self ->_sourceSeg selectedSegmentIndex] == 1) {
+                //                [self clearResult];
+                //                // 文件源的pcm必须为单通道s16le格式
+                //                NSString *path = [[NSBundle mainBundle] pathForResource:@"2024-10-22_10-20-49" ofType:@"pcm"];
+                //                self.audioPath = path;
+                //                //                NSString *path = [[NSBundle mainBundle] pathForResource:@"8c3c3533618547abb24176e73e3cc8f5" ofType:@"mp3"];
                 //
-                // 如果文件源不为pcm格式,可使用下面的方式//
-                //                    NSString* path = [NSString stringWithFormat:@"%@/%@", [[NSBundle mainBundle]bundlePath], @"how_are_you.mp3"];
-                if (self.classVersion == 2) {
-                    if ([path.pathExtension isEqualToString:@"wav"] || [path.pathExtension isEqualToString:@"pcm"]) {
-                        self->_source = [[FileDataSource alloc] init:path];
-                    } else {
-                        self->_source = [[AudioToolDataSource alloc] init:path];
-                    }
-                    [self initTAIConfig:self-> _source];
-                } else {
-                    [self onLocalRecord:path];
-                }
-                
+                //                //                    NSString* path = [NSString stringWithFormat:@"%@/%@", [[NSBundle mainBundle]bundlePath], @"how_are_you.pcm"];
+                //                //
+                //                // 如果文件源不为pcm格式,可使用下面的方式//
+                //                //                    NSString* path = [NSString stringWithFormat:@"%@/%@", [[NSBundle mainBundle]bundlePath], @"how_are_you.mp3"];
+                //                if (self.classVersion == 2) {
+                //                    if ([path.pathExtension isEqualToString:@"wav"] || [path.pathExtension isEqualToString:@"pcm"]) {
+                //                        self->_source = [[FileDataSource alloc] init:path];
+                //                    } else {
+                //                        self->_source = [[AudioToolDataSource alloc] init:path];
+                //                    }
+                //                    [self initTAIConfig:self-> _source];
+                //                } else {
+                //                    [self onLocalRecord:path];
+                //                }
+                //
             } else {
                 [self clearResult];
                 // 文件源为网络音频 https://file.risekid.cn/record/problem/68055/493/2/8c3c3533618547abb24176e73e3cc8f5.mp3
                 //                    NSString *mp3URL = @"https://file.risekid.cn/record/problem/68055/493/2/8c3c3533618547abb24176e73e3cc8f5.mp3";
-                
                 //下载音频
                 [self.downloader downloadV2WithUrl:[self->_tool cureentAudioURL] path:@"problem" priority:0 block:^(float progress, NSString * _Nullable path) {
                     if (path) {
@@ -218,10 +216,10 @@
                         NSString *videoDestDateString = [self createFileNamePrefix];
                         NSString *outPath = [NSString stringWithFormat:@"%@/%@.wav", NSTemporaryDirectory(),videoDestDateString];
                         [GGXAudioConvertor convertM4AToWAV:path outPath:outPath success:^(NSString * _Nonnull outputPath) {
-//                            NSLog(@"outputPath path is: %@",outputPath);
+                            //                            NSLog(@"outputPath path is: %@",outputPath);
                             [self scoreWithByPath:outputPath];
                         } failure:^(NSError * _Nonnull error) {
-//                            NSLog(@"outputPath error is: %@",error);
+                            //                            NSLog(@"outputPath error is: %@",error);
                             [self scoreWithByPath:path];
                         }];
                         
@@ -265,34 +263,20 @@
 - (void)updateSource {
     
     _AudioSView.hidden = _sourceSeg.selectedSegmentIndex == 0;
+    self.AudioTxt.hidden = _sourceSeg.selectedSegmentIndex == 0;
     
-    if (_sourceSeg.selectedSegmentIndex == 0) {
-        //        _AudioSView.hidden = YES;
-    } else if (_sourceSeg.selectedSegmentIndex == 1) {
-        NSString *path = [[NSBundle mainBundle] pathForResource:@"2024-10-22_15-20-44" ofType:@"pcm"];
-        self.audioPath = path;
-    } else {
-        //        NSString *path = [[NSBundle mainBundle] pathForResource:@"2024-10-22_10-20-49" ofType:@"pcm"];
-        //        self.audioPath = path;
-    }
 }
 
+//切换网络文件
 - (IBAction)didLast:(UIButton *)sender {
-    
     NSString *urlName = sender.tag == 0 ? [_tool lastAudioURL]:[_tool nextAudioURL];
     self.AudioTxt.text = [NSString stringWithFormat:@"%ld/%ld：%@",(long)_tool.current + 1,_tool.audios.count,urlName];
-    
     //    NSLog(@"%@",self.AudioTxt.text);
 }
 
+//播放文件
 - (IBAction)didPlayAudio:(id)sender {
-    
-    if ([self->_sourceSeg selectedSegmentIndex] == 0 || [self->_sourceSeg selectedSegmentIndex] == 1) {
-        //        if (self.audioPath) {
-        //            [_tool playLocalWithPath:self.audioPath];
-        //        } else {
-        //            //
-        //        }
+    if ([self->_sourceSeg selectedSegmentIndex] == 0) {
         if (self.classVersion == 2) {
             [_tool playLocalWithPath:self.audioPath];
         } else {
@@ -349,6 +333,8 @@
             _WordTxt.text = [NSString stringWithFormat:@"%@",firstWord.Word];
         }
         _SuggestedScoreTxt.text = [NSString stringWithFormat:@"%.2f",result.SuggestedScore];
+        _PronCompletionTxt.text = [NSString stringWithFormat:@"%.2f",result.PronCompletion];
+        //        result.ti
     }
 }
 
@@ -362,6 +348,8 @@
 //音量回调
 - (void)onVolume:(int)value {
     _volumeProgress.progress = value / 120.0;
+    _volumeTxt.text = [NSString stringWithFormat:@"音量：%d",value];
+    NSLog(@"SOE onVolume ----> %d", value);
 }
 
 - (void)onLog:(NSString *)value level:(int)level {
