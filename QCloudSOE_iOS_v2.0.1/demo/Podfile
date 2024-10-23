@@ -19,6 +19,9 @@ target 'demo' do
   
   pod 'GXAudioPlay' , :path=>'~/Documents/GitHub/GXAudioPlay'
   
+  # 录音库、包含音频格式转换
+  pod 'GXAudioRecord', :path=>'~/Documents/GitHub/gxaudioqueue'
+  
   pod 'RSBridgeAudioEvaluation'
   #  pod 'TAISDK_iOS'
 end

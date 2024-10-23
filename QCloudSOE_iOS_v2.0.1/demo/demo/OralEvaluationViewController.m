@@ -26,6 +26,9 @@
 
 //旧版
 #import <TAISDK/TAIOralEvaluation.h>
+
+//音频格式转换
+#import "GGXAudioConvertor.h"
 @interface OralEvaluationViewController () <TAIOralListener, UITextFieldDelegate,TAIOralEvaluationDelegate>
 
 @property (weak, nonatomic) IBOutlet UITextField *refText;
@@ -132,7 +135,7 @@
         NSString *audiopath = [NSString stringWithFormat:@"%@/%@.pcm", NSTemporaryDirectory(),videoDestDateString];
         NSString *audiopath1 = [NSString stringWithFormat:@"%@/%@.wav", NSTemporaryDirectory(),videoDestDateString];
         config.audioFile = audiopath;
-
+        
         //        config.audioFile = [NSString stringWithFormat:@"%@/%@.wav", NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)[0], videoDestDateString];
         
         recordData.fileHandler.recordFilePath = audiopath1;
@@ -186,7 +189,7 @@
                 // 文件源的pcm必须为单通道s16le格式
                 NSString *path = [[NSBundle mainBundle] pathForResource:@"2024-10-22_10-20-49" ofType:@"pcm"];
                 self.audioPath = path;
-//                NSString *path = [[NSBundle mainBundle] pathForResource:@"8c3c3533618547abb24176e73e3cc8f5" ofType:@"mp3"];
+                //                NSString *path = [[NSBundle mainBundle] pathForResource:@"8c3c3533618547abb24176e73e3cc8f5" ofType:@"mp3"];
                 
                 //                    NSString* path = [NSString stringWithFormat:@"%@/%@", [[NSBundle mainBundle]bundlePath], @"how_are_you.pcm"];
                 //
@@ -212,25 +215,36 @@
                 [self.downloader downloadV2WithUrl:[self->_tool cureentAudioURL] path:@"problem" priority:0 block:^(float progress, NSString * _Nullable path) {
                     if (path) {
                         NSLog(@"audio path is: %@",path);
-                        dispatch_async(dispatch_get_main_queue(), ^{
-                            if (self.classVersion == 2) {
-                                if ([path.pathExtension isEqualToString:@"wav"] || [path.lastPathComponent isEqualToString:@"pcm"]) {
-                                    self->_source = [[FileDataSource alloc] init:path];
-                                } else {
-                                    self->_source = [[AudioToolDataSource alloc] init:path];
-                                }
-                                [self initTAIConfig:self-> _source];
-                            } else {
-                                [self onLocalRecord:path];
-                            }
-                        });
+                        NSString *videoDestDateString = [self createFileNamePrefix];
+                        NSString *outPath = [NSString stringWithFormat:@"%@/%@.wav", NSTemporaryDirectory(),videoDestDateString];
+                        [GGXAudioConvertor convertM4AToWAV:path outPath:outPath success:^(NSString * _Nonnull outputPath) {
+//                            NSLog(@"outputPath path is: %@",outputPath);
+                            [self scoreWithByPath:outputPath];
+                        } failure:^(NSError * _Nonnull error) {
+//                            NSLog(@"outputPath error is: %@",error);
+                            [self scoreWithByPath:path];
+                        }];
+                        
                     }
                 }];
             }
-            
-            //            }
         });
     }];
+}
+
+- (void)scoreWithByPath:(NSString *)path {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        if (self.classVersion == 2) {
+            if ([path.pathExtension isEqualToString:@"wav"] || [path.pathExtension isEqualToString:@"pcm"]) {
+                self->_source = [[FileDataSource alloc] init:path];
+            } else {
+                self->_source = [[AudioToolDataSource alloc] init:path];
+            }
+            [self initTAIConfig:self-> _source];
+        } else {
+            [self onLocalRecord:path];
+        }
+    });
 }
 
 - (IBAction)PauseAudioFile:(id)sender {
@@ -258,8 +272,8 @@
         NSString *path = [[NSBundle mainBundle] pathForResource:@"2024-10-22_15-20-44" ofType:@"pcm"];
         self.audioPath = path;
     } else {
-//        NSString *path = [[NSBundle mainBundle] pathForResource:@"2024-10-22_10-20-49" ofType:@"pcm"];
-//        self.audioPath = path;
+        //        NSString *path = [[NSBundle mainBundle] pathForResource:@"2024-10-22_10-20-49" ofType:@"pcm"];
+        //        self.audioPath = path;
     }
 }
 
@@ -268,17 +282,17 @@
     NSString *urlName = sender.tag == 0 ? [_tool lastAudioURL]:[_tool nextAudioURL];
     self.AudioTxt.text = [NSString stringWithFormat:@"%ld/%ld：%@",(long)_tool.current + 1,_tool.audios.count,urlName];
     
-//    NSLog(@"%@",self.AudioTxt.text);
+    //    NSLog(@"%@",self.AudioTxt.text);
 }
 
 - (IBAction)didPlayAudio:(id)sender {
     
     if ([self->_sourceSeg selectedSegmentIndex] == 0 || [self->_sourceSeg selectedSegmentIndex] == 1) {
-//        if (self.audioPath) {
-//            [_tool playLocalWithPath:self.audioPath];
-//        } else {
-//            //
-//        }
+        //        if (self.audioPath) {
+        //            [_tool playLocalWithPath:self.audioPath];
+        //        } else {
+        //            //
+        //        }
         if (self.classVersion == 2) {
             [_tool playLocalWithPath:self.audioPath];
         } else {
@@ -430,7 +444,7 @@
         param.timeout = 30;
         param.retryTimes = 0;
     }
-
+    
     TAIRecorderParam *recordParam = [[TAIRecorderParam alloc] init];
     recordParam.fragEnable = (param.workMode == TAIOralEvaluationWorkMode_Stream ? YES: NO);
     recordParam.fragSize = 1.0 * 1024;
@@ -453,13 +467,13 @@
     if(error.code != TAIErrCode_Succ){
         //        [_recordButton setTitle:@"开始录制" forState:UIControlStateNormal];
     }
-//    NSString *log = [NSString stringWithFormat:@"oralEvaluation:seq:%ld, end:%ld, error:%@, ret:%@", (long)data.seqId, (long)data.bEnd, error, result];
-//    NSLog(@"oralEvaluation onMessage ----> %@", log);
-//    _result = [NSString stringWithFormat:@"%@\n%@", _result, log];
-//    [_resultText setText:_result];
+    //    NSString *log = [NSString stringWithFormat:@"oralEvaluation:seq:%ld, end:%ld, error:%@, ret:%@", (long)data.seqId, (long)data.bEnd, error, result];
+    //    NSLog(@"oralEvaluation onMessage ----> %@", log);
+    //    _result = [NSString stringWithFormat:@"%@\n%@", _result, log];
+    //    [_resultText setText:_result];
     
     if (data.bEnd) {
-//        TAIOralEvaluationRetV2 *result = eveluation.result;
+        //        TAIOralEvaluationRetV2 *result = eveluation.result;
         if (result) {
             TAIOralEvaluationWord *firstWord = result.words.firstObject;
             if (firstWord) {
