@@ -18,5 +18,7 @@ target 'demo' do
   pod 'MJExtension'
   
   pod 'GXAudioPlay' , :path=>'~/Documents/GitHub/GXAudioPlay'
+  
+  pod 'RSBridgeAudioEvaluation'
   #  pod 'TAISDK_iOS'
 end

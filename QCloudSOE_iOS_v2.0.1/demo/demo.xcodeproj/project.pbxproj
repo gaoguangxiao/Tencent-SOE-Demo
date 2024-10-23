@@ -12,6 +12,7 @@
 		1E7A252A2CC215F60080D18A /* ConfigFileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E7A25292CC215F60080D18A /* ConfigFileViewController.m */; };
 		1E7A25332CC231B10080D18A /* AudioFileTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E7A25322CC231B10080D18A /* AudioFileTool.swift */; };
 		1E7A25362CC259550080D18A /* 2024-10-18_16-15-45.wav in Resources */ = {isa = PBXBuildFile; fileRef = 1E7A25342CC259550080D18A /* 2024-10-18_16-15-45.wav */; };
+		1E7AFC292CC8957B0085B5FF /* RSAudioEvaluationManagerV2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E7AFC282CC8957B0085B5FF /* RSAudioEvaluationManagerV2.swift */; };
 		1E8368C12CC74E0B00FEAF8C /* 2024-10-22_10-29-12.pcm in Resources */ = {isa = PBXBuildFile; fileRef = 1E8368C02CC74E0B00FEAF8C /* 2024-10-22_10-29-12.pcm */; };
 		1E8368C22CC74E0B00FEAF8C /* 2024-10-22_10-20-49.pcm in Resources */ = {isa = PBXBuildFile; fileRef = 1E8368BF2CC74E0B00FEAF8C /* 2024-10-22_10-20-49.pcm */; };
 		1E8419452CC0BCBE005E1439 /* PrivateInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E8419442CC0BCBE005E1439 /* PrivateInfo.m */; };
@@ -78,6 +79,7 @@
 		1E7A25292CC215F60080D18A /* ConfigFileViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ConfigFileViewController.m; sourceTree = "<group>"; };
 		1E7A25322CC231B10080D18A /* AudioFileTool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioFileTool.swift; sourceTree = "<group>"; };
 		1E7A25342CC259550080D18A /* 2024-10-18_16-15-45.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "2024-10-18_16-15-45.wav"; sourceTree = "<group>"; };
+		1E7AFC282CC8957B0085B5FF /* RSAudioEvaluationManagerV2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSAudioEvaluationManagerV2.swift; sourceTree = "<group>"; };
 		1E8368BF2CC74E0B00FEAF8C /* 2024-10-22_10-20-49.pcm */ = {isa = PBXFileReference; lastKnownFileType = file; path = "2024-10-22_10-20-49.pcm"; sourceTree = "<group>"; };
 		1E8368C02CC74E0B00FEAF8C /* 2024-10-22_10-29-12.pcm */ = {isa = PBXFileReference; lastKnownFileType = file; path = "2024-10-22_10-29-12.pcm"; sourceTree = "<group>"; };
 		1E8419422CC0BBEF005E1439 /* demo-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "demo-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -176,6 +178,7 @@
 				1E7A25292CC215F60080D18A /* ConfigFileViewController.m */,
 				1E7A25322CC231B10080D18A /* AudioFileTool.swift */,
 				1EEB0CA62CC77C9D006BDA2E /* GGXAudioEngine.swift */,
+				1E7AFC282CC8957B0085B5FF /* RSAudioEvaluationManagerV2.swift */,
 			);
 			path = ConfigFile;
 			sourceTree = "<group>";
@@ -546,6 +549,7 @@
 				7E2FC9B62BFEEE3900077232 /* main.m in Sources */,
 				7E988BA72C00852A00F87DA5 /* ConfigViewController.m in Sources */,
 				1E7A252A2CC215F60080D18A /* ConfigFileViewController.m in Sources */,
+				1E7AFC292CC8957B0085B5FF /* RSAudioEvaluationManagerV2.swift in Sources */,
 				7E2FC9E82BFF3A7700077232 /* OralEvaluationViewController.m in Sources */,
 				7E988BB42C009DF300F87DA5 /* RecordDataSource.m in Sources */,
 				7E2FC9FE2BFF476D00077232 /* FileDataSource.m in Sources */,

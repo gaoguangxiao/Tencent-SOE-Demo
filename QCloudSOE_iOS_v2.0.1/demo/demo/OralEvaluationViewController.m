@@ -63,6 +63,7 @@
 
 //录制音频
 @property (nonatomic, copy) NSString *audioPath;
+
 @end
 
 @implementation OralEvaluationViewController {
@@ -106,14 +107,23 @@
     config.token = [PrivateInfo shareInstance].token;
     config.secretID = [PrivateInfo shareInstance].secretId;
     config.secretKey = [PrivateInfo shareInstance].secretKey;
+    //引擎
     [config setApiParam:kTAIServerEngineType value:self.engineSeg.selectedSegmentIndex == 0 ? @"16k_en" : @"16k_zh"];
-    [config setApiParam:kTAIEvalMode value:[@(self.evalModeSeg.selectedSegmentIndex) stringValue]];
+    //文本模式
+    [config setApiParam:kTAITextMode value:[@(self.textModeSeg.selectedSegmentIndex) stringValue]];
+    //评测文本
     [config setApiParam:kTAIRefText value:self.refText.text];
-    [config setApiParam:kTAIScoreCoeff value:[@(self.coeffSlider.value) stringValue]];
-    [config setApiParam:kTAISentenceInfoEnabled value:[@(self.sentenceInfoSeg.selectedSegmentIndex) stringValue]];
+    //关键词
     if (self->_keywordText.text.length) {
         [config setApiParam:kTAIKeyword value:self->_keywordText.text];
     }
+    //评测模式
+    [config setApiParam:kTAIEvalMode value:[@(self.evalModeSeg.selectedSegmentIndex) stringValue]];
+    //苛刻度
+    [config setApiParam:kTAIScoreCoeff value:[@(self.coeffSlider.value) stringValue]];
+    //传输模式
+    [config setApiParam:kTAISentenceInfoEnabled value:[@(self.sentenceInfoSeg.selectedSegmentIndex) stringValue]];
+    //网络超时时间
     config.connectTimeout = 3000;
     
     if ([source isKindOfClass:RecordDataSource.class]) {

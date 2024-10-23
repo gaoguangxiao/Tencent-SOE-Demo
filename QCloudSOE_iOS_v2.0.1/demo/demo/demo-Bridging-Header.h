@@ -3,3 +3,5 @@
 //
 
 #import "PrivateInfo.h"
+#import <QCloudSOE/TAIOralConfig.h>
+#import "RecordDataSource.h"
