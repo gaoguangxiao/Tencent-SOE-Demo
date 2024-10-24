@@ -11,6 +11,7 @@ import RSBridgeAudioEvaluation
 //import PTDebugView
 import ZKBaseSwiftProject
 
+@objcMembers
 public class RSAudioEvaluationManagerV2: NSObject {
         
 //    let recordSOE = TencentSOE()
@@ -26,12 +27,11 @@ public class RSAudioEvaluationManagerV2: NSObject {
     
     private var recordPath: String?
     
-    func endRecordingV2() {
+    public func endRecordingV2() {
         _ctl?.stop()
     }
     
-    
-    private func startV2(audioModel: RSBridgeAudioModel,
+    public func startV2(audioModel: RSBridgeAudioModel,
                        cerData: TencentSOECredentialsModel) async throws -> Bool {
         
         guard let text = audioModel.speechData?.text else {

@@ -15,6 +15,7 @@
 		1E7AFC292CC8957B0085B5FF /* RSAudioEvaluationManagerV2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E7AFC282CC8957B0085B5FF /* RSAudioEvaluationManagerV2.swift */; };
 		1E7AFC2C2CC8CFC50085B5FF /* RSShowWaveView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E7AFC2B2CC8CFC50085B5FF /* RSShowWaveView.m */; };
 		1E7AFC2E2CC8D3EC0085B5FF /* long_text_2024-10-18-16-20-39.txt in Resources */ = {isa = PBXBuildFile; fileRef = 1E7AFC2D2CC8D3EC0085B5FF /* long_text_2024-10-18-16-20-39.txt */; };
+		1E7BB6202CCA1D74009883FE /* TAIOralEvaluationV2.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E7BB61F2CCA1D74009883FE /* TAIOralEvaluationV2.m */; };
 		1E8368C12CC74E0B00FEAF8C /* 2024-10-22_10-29-12.pcm in Resources */ = {isa = PBXBuildFile; fileRef = 1E8368C02CC74E0B00FEAF8C /* 2024-10-22_10-29-12.pcm */; };
 		1E8368C22CC74E0B00FEAF8C /* 2024-10-22_10-20-49.pcm in Resources */ = {isa = PBXBuildFile; fileRef = 1E8368BF2CC74E0B00FEAF8C /* 2024-10-22_10-20-49.pcm */; };
 		1E8419452CC0BCBE005E1439 /* PrivateInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E8419442CC0BCBE005E1439 /* PrivateInfo.m */; };
@@ -85,6 +86,8 @@
 		1E7AFC2A2CC8CFC50085B5FF /* RSShowWaveView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RSShowWaveView.h; sourceTree = "<group>"; };
 		1E7AFC2B2CC8CFC50085B5FF /* RSShowWaveView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RSShowWaveView.m; sourceTree = "<group>"; };
 		1E7AFC2D2CC8D3EC0085B5FF /* long_text_2024-10-18-16-20-39.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = "long_text_2024-10-18-16-20-39.txt"; sourceTree = "<group>"; };
+		1E7BB61E2CCA1D74009883FE /* TAIOralEvaluationV2.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TAIOralEvaluationV2.h; sourceTree = "<group>"; };
+		1E7BB61F2CCA1D74009883FE /* TAIOralEvaluationV2.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TAIOralEvaluationV2.m; sourceTree = "<group>"; };
 		1E8368BF2CC74E0B00FEAF8C /* 2024-10-22_10-20-49.pcm */ = {isa = PBXFileReference; lastKnownFileType = file; path = "2024-10-22_10-20-49.pcm"; sourceTree = "<group>"; };
 		1E8368C02CC74E0B00FEAF8C /* 2024-10-22_10-29-12.pcm */ = {isa = PBXFileReference; lastKnownFileType = file; path = "2024-10-22_10-29-12.pcm"; sourceTree = "<group>"; };
 		1E8419422CC0BBEF005E1439 /* demo-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "demo-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -334,7 +337,6 @@
 			isa = PBXGroup;
 			children = (
 				1EA56E9B2CC607B800C4FBD8 /* TAIFramework */,
-				1E8419462CC0C2A7005E1439 /* SOE.swift */,
 				1E7A252E2CC2172B0080D18A /* ConfigFile */,
 				1E8419622CC0E0E8005E1439 /* 原生录制音频 */,
 				7E40DB062C08537000E06118 /* how_are_you.mp3 */,
@@ -354,8 +356,6 @@
 				7E988BA62C00852A00F87DA5 /* ConfigViewController.m */,
 				7E988BA22C0080AF00F87DA5 /* UserInfo.h */,
 				7E988BA32C0080D300F87DA5 /* UserInfo.m */,
-				1E8419432CC0BCBE005E1439 /* PrivateInfo.h */,
-				1E8419442CC0BCBE005E1439 /* PrivateInfo.m */,
 				7E988BAF2C0090A700F87DA5 /* Slider.h */,
 				7E988BB02C0090A700F87DA5 /* Slider.m */,
 				7E2FC9AC2BFEEE3800077232 /* Main.storyboard */,
@@ -380,6 +380,7 @@
 		7E2FC9F72BFF472F00077232 /* datasources */ = {
 			isa = PBXGroup;
 			children = (
+				1E8419462CC0C2A7005E1439 /* SOE.swift */,
 				1E7A25222CC1F5940080D18A /* AudioToolDataSource.h */,
 				1E7A25232CC1F5940080D18A /* AudioToolDataSource.m */,
 				7E988BB52C00AFDA00F87DA5 /* Ring.h */,
@@ -391,6 +392,10 @@
 				7E2FC9F82BFF476D00077232 /* FileDataSource.m */,
 				1E7A25252CC200590080D18A /* TAIOralEvaluationRetV2.h */,
 				1E7A25262CC200590080D18A /* TAIOralEvaluationRetV2.m */,
+				1E7BB61E2CCA1D74009883FE /* TAIOralEvaluationV2.h */,
+				1E7BB61F2CCA1D74009883FE /* TAIOralEvaluationV2.m */,
+				1E8419432CC0BCBE005E1439 /* PrivateInfo.h */,
+				1E8419442CC0BCBE005E1439 /* PrivateInfo.m */,
 			);
 			path = datasources;
 			sourceTree = "<group>";
@@ -548,6 +553,7 @@
 				1E7A25272CC200590080D18A /* TAIOralEvaluationRetV2.m in Sources */,
 				1E7A25332CC231B10080D18A /* AudioFileTool.swift in Sources */,
 				1EEB0CA72CC77C9D006BDA2E /* GGXAudioEngine.swift in Sources */,
+				1E7BB6202CCA1D74009883FE /* TAIOralEvaluationV2.m in Sources */,
 				7E2FC9AB2BFEEE3800077232 /* ViewController.m in Sources */,
 				7E2FC9EB2BFF3CF100077232 /* TableViewController.m in Sources */,
 				1E7A25242CC1F5940080D18A /* AudioToolDataSource.m in Sources */,

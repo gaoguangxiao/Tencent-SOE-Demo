@@ -33,6 +33,8 @@
 #import "TESTDATA.h" //读取文件
 
 #import "MBProgressHUD.h"
+
+
 @interface OralEvaluationViewController () <TAIOralListener, UITextFieldDelegate,TAIOralEvaluationDelegate>
 
 @property (weak, nonatomic) IBOutlet UITextField *refText;
@@ -40,7 +42,7 @@
 @property (weak, nonatomic) IBOutlet UISegmentedControl *evalModeSeg;//单词、句子
 @property (weak, nonatomic) IBOutlet UISegmentedControl *engineSeg;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *textModeSeg;//普通文本
-@property (weak, nonatomic) IBOutlet UISegmentedControl *sourceSeg;
+@property (weak, nonatomic) IBOutlet UISegmentedControl *sourceSeg;  //来源
 @property (weak, nonatomic) IBOutlet UITextView *resultText;
 @property (weak, nonatomic) IBOutlet UIButton *actionBtn;
 @property (weak, nonatomic) IBOutlet UISlider *coeffSlider;
@@ -68,7 +70,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *WordTxt;//识别结果
 @property (weak, nonatomic) IBOutlet UILabel *SuggestedScoreTxt;//建议评分
 @property (weak, nonatomic) IBOutlet UILabel *PronCompletionTxt;//完整度
-@property (weak, nonatomic) IBOutlet UILabel *MemTxt;//耗时
+@property (weak, nonatomic) IBOutlet UILabel *PronAccuracyTxt;//精准度
+@property (weak, nonatomic) IBOutlet UILabel *PronFluencyTxt;//流利度
 
 //文件操作板
 @property (weak, nonatomic) IBOutlet UIStackView *AudioSView;//网络文件粘贴视图
@@ -77,6 +80,8 @@
 //录制音频
 @property (nonatomic, copy) NSString *audioPath;
 
+//将录制oc-该外swift工具
+@property (nonatomic, strong) RSAudioEvaluationManagerV2 *audioEvaluationV2;
 @end
 
 @implementation OralEvaluationViewController {
@@ -106,6 +111,7 @@
     self.tool = AudioFileTool.share;
     [self updateSource];
     
+    self.audioEvaluationV2 = [RSAudioEvaluationManagerV2 new];
     //保存待测试的网络数据
     NSString *re = [TESTDATA loadTestTxt:@"long_text_2024-10-18-16-20-39.txt"];
     [self.tool clearTxt];
@@ -121,61 +127,9 @@
     _result = @"";
     _WordTxt.text = @"";
     _SuggestedScoreTxt.text = @"";
-}
-
-- (void)initTAIConfig:(id<TAIOralDataSource>)source {
-    
-    TAIOralConfig* config = [[TAIOralConfig alloc] init];
-    config.appID = kQDAppId;
-    config.token = [PrivateInfo shareInstance].token;
-    config.secretID = [PrivateInfo shareInstance].secretId;
-    config.secretKey = [PrivateInfo shareInstance].secretKey;
-    //引擎
-    [config setApiParam:kTAIServerEngineType value:self.engineSeg.selectedSegmentIndex == 0 ? @"16k_en" : @"16k_zh"];
-    //文本模式
-    [config setApiParam:kTAITextMode value:[@(self.textModeSeg.selectedSegmentIndex) stringValue]];
-    //评测文本
-    [config setApiParam:kTAIRefText value:self.refText.text];
-    //关键词
-    if (self->_keywordText.text.length) {
-        [config setApiParam:kTAIKeyword value:self->_keywordText.text];
-    }
-    //评测模式
-    [config setApiParam:kTAIEvalMode value:[@(self.evalModeSeg.selectedSegmentIndex) stringValue]];
-    //苛刻度
-    [config setApiParam:kTAIScoreCoeff value:[@(self.coeffSlider.value) stringValue]];
-    NSString *sentenceinfoStr = [@(self.sentenceInfoSeg.selectedSegmentIndex) stringValue];
-    NSLog(@"传输模式：%@",sentenceinfoStr);
-    //传输模式
-    [config setApiParam:kTAISentenceInfoEnabled value:sentenceinfoStr];
-    //网络超时时间
-    config.connectTimeout = 3000;
-    
-    if ([source isKindOfClass:RecordDataSource.class]) {
-        RecordDataSource *recordData = (RecordDataSource *)source;
-        NSString *videoDestDateString = [self createFileNamePrefix];
-        NSString *audiopath = [NSString stringWithFormat:@"%@/%@.pcm", NSTemporaryDirectory(),videoDestDateString];
-        NSString *audiopath1 = [NSString stringWithFormat:@"%@/%@.wav", NSTemporaryDirectory(),videoDestDateString];
-        config.audioFile = audiopath;
-        
-        //        config.audioFile = [NSString stringWithFormat:@"%@/%@.wav", NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)[0], videoDestDateString];
-        
-        recordData.fileHandler.recordFilePath = audiopath1;
-        self.audioPath = audiopath;
-        NSLog(@"audio path is: %@",self.audioPath);
-        config.vadInterval = self->_vadSlider.value;
-        config.vadVolume = self->_vadVolumeSlider.value;
-    } else {
-        
-    }
-    
-    self->_ctl = nil;
-    //    self->_source = nil;
-    
-    self->_ctl =  [config build:source listener:self];
-    
-    self->_running = true;
-    [self->_actionBtn setTitle:@"停止评测" forState:UIControlStateNormal];
+    _PronCompletionTxt.text = @"";
+    _PronAccuracyTxt.text = @"";
+    _PronFluencyTxt.text = @"";
 }
 
 - (IBAction)onClick:(id)sender {
@@ -197,14 +151,14 @@
                         [self initTAIConfig:self-> _source];
                     }
                 } else {
-                    if([self.oralEvaluation isRecording]){
-                        __weak typeof(self) ws = self;
-                        [self.oralEvaluation stopRecordAndEvaluation:^(TAIError *error) {
-                            [ws setResponse:[NSString stringWithFormat:@"stopRecordAndEvaluation:%@", error]];
-                            [ws.actionBtn setTitle:@"开始评分" forState:UIControlStateNormal];
-                        }];
-                        return;
-                    }
+//                    if([self.oralEvaluation isRecording]){
+//                        __weak typeof(self) ws = self;
+//                        [self.oralEvaluation stopRecordAndEvaluation:^(TAIError *error) {
+//                            [ws setResponse:[NSString stringWithFormat:@"stopRecordAndEvaluation:%@", error]];
+//                            [ws.actionBtn setTitle:@"开始评测" forState:UIControlStateNormal];
+//                        }];
+//                        return;
+//                    }
                     [self clearResult];
                     [self onRecord];
                 }
@@ -341,6 +295,63 @@
     return YES;
 }
 
+- (void)initTAIConfig:(id<TAIOralDataSource>)source {
+    
+    TAIOralConfig* config = [[TAIOralConfig alloc] init];
+    config.appID = kQDAppId;
+    config.token = [PrivateInfo shareInstance].token;
+    config.secretID = [PrivateInfo shareInstance].secretId;
+    config.secretKey = [PrivateInfo shareInstance].secretKey;
+    //引擎
+    [config setApiParam:kTAIServerEngineType value:self.engineSeg.selectedSegmentIndex == 0 ? @"16k_en" : @"16k_zh"];
+    //文本模式
+    [config setApiParam:kTAITextMode value:[@(self.textModeSeg.selectedSegmentIndex) stringValue]];
+    //评测文本
+    [config setApiParam:kTAIRefText value:self.refText.text];
+    //关键词
+    if (self->_keywordText.text.length) {
+        [config setApiParam:kTAIKeyword value:self->_keywordText.text];
+    }
+    //评测模式
+    [config setApiParam:kTAIEvalMode value:[@(self.evalModeSeg.selectedSegmentIndex) stringValue]];
+    //苛刻度
+    [config setApiParam:kTAIScoreCoeff value:[@(self.coeffSlider.value) stringValue]];
+    NSString *sentenceinfoStr = [@(self.sentenceInfoSeg.selectedSegmentIndex) stringValue];
+//    NSLog(@"传输模式：%@",sentenceinfoStr);
+    //传输模式
+    [config setApiParam:kTAISentenceInfoEnabled value:sentenceinfoStr];
+    //网络超时时间
+    config.connectTimeout = 3000;
+    
+    if ([source isKindOfClass:RecordDataSource.class]) {
+        RecordDataSource *recordData = (RecordDataSource *)source;
+        NSString *videoDestDateString = [self createFileNamePrefix];
+        NSString *audiopath = [NSString stringWithFormat:@"%@/%@.pcm", NSTemporaryDirectory(),videoDestDateString];
+        NSString *audiopath1 = [NSString stringWithFormat:@"%@/%@.wav", NSTemporaryDirectory(),videoDestDateString];
+        config.audioFile = audiopath;
+        
+        //        config.audioFile = [NSString stringWithFormat:@"%@/%@.wav", NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)[0], videoDestDateString];
+        
+        recordData.fileHandler.recordFilePath = audiopath1;
+        self.audioPath = audiopath;
+        NSLog(@"audio path is: %@",self.audioPath);
+        config.vadInterval = self->_vadSlider.value;
+        config.vadVolume = self->_vadVolumeSlider.value;
+    } else {
+        
+    }
+    
+    self->_ctl = nil;
+    //    self->_source = nil;
+    
+    self->_ctl =  [config build:source listener:self];
+    
+    self->_running = true;
+    [self->_actionBtn setTitle:@"停止评测" forState:UIControlStateNormal];
+        
+    [self.waveAudioView startWave];
+}
+
 #pragma mark - v2 delegate
 - (void)onError:(nonnull NSError *)error {
     [_source stop];
@@ -376,8 +387,13 @@
         }
         _SuggestedScoreTxt.text = [NSString stringWithFormat:@"%.2f",result.SuggestedScore];
         _PronCompletionTxt.text = [NSString stringWithFormat:@"%.2f",result.PronCompletion];
-        //        result.ti
+        _PronAccuracyTxt.text   = [NSString stringWithFormat:@"%.2f",result.PronAccuracy];
+        _PronFluencyTxt.text   = [NSString stringWithFormat:@"%.2f",result.PronFluency];
+        if (result.PronCompletion >= 1.0 && result.PronAccuracy >= 60) {
+            [self->_ctl stop];
+        }
     }
+    
 }
 
 //静音回调
@@ -391,7 +407,7 @@
 - (void)onVolume:(int)value {
     _volumeProgress.progress = value / 120.0;
     _volumeTxt.text = [NSString stringWithFormat:@"音量：%d",value];
-    NSLog(@"%@：SOE onVolume ----> %d",[self createFileNamePrefix], value);
+//    NSLog(@"%@：SOE onVolume ----> %d",[self createFileNamePrefix], value);
     
     MusicModel *audioPoint = [MusicModel new];
     audioPoint.value = value;
@@ -414,8 +430,7 @@
     return destDateString;
 }
 
-///---------------旧版
-
+#pragma mark - 智聆旧版
 - (void)onLocalRecord:(NSString *)mp3Path {
     TAIOralEvaluationParam *param = [[TAIOralEvaluationParam alloc] init];
     param.sessionId = [[NSUUID UUID] UUIDString];
@@ -460,9 +475,9 @@
     param.secretId = [PrivateInfo shareInstance].secretId;
     param.secretKey = [PrivateInfo shareInstance].secretKey;
     param.token = [PrivateInfo shareInstance].token;
-    param.workMode = (TAIOralEvaluationWorkMode)self.sourceSeg.selectedSegmentIndex;
+    param.workMode = (TAIOralEvaluationWorkMode)self.sentenceInfoSeg.selectedSegmentIndex == 0? TAIOralEvaluationWorkMode_Once : TAIOralEvaluationWorkMode_Stream;
     param.evalMode = (TAIOralEvaluationEvalMode)self.evalModeSeg.selectedSegmentIndex;
-    param.serverType = (TAIOralEvaluationServerType)self.sourceSeg.selectedSegmentIndex;
+    param.serverType = TAIOralEvaluationServerType_English;
     param.hostType = TAIOralEvaluationHostType_Common;//(TAIOralEvaluationHostType)self.sourceSeg.selectedSegmentIndex;
     param.scoreCoeff = self.coeffSlider.value;
     param.fileType = TAIOralEvaluationFileType_Mp3;
@@ -485,7 +500,10 @@
     recordParam.fragEnable = (param.workMode == TAIOralEvaluationWorkMode_Stream ? YES: NO);
     recordParam.fragSize = 1.0 * 1024;
     recordParam.vadEnable = YES;
-    //    recordParam.vadInterval = [_vadTextField.text intValue];
+    
+    recordParam.vadInterval = self->_vadSlider.value;
+    recordParam.db = self->_vadVolumeSlider.value;
+
     [self.oralEvaluation setRecorderParam:recordParam];
     __weak typeof(self) ws = self;
     [self.oralEvaluation resetAvAudioSession:true];
@@ -508,14 +526,20 @@
     //    _result = [NSString stringWithFormat:@"%@\n%@", _result, log];
     //    [_resultText setText:_result];
     
-    if (data.bEnd) {
-        //        TAIOralEvaluationRetV2 *result = eveluation.result;
-        if (result) {
-            TAIOralEvaluationWord *firstWord = result.words.firstObject;
-            if (firstWord) {
-                _WordTxt.text = [NSString stringWithFormat:@"%@",firstWord.word];
-            }
-            _SuggestedScoreTxt.text = [NSString stringWithFormat:@"%.2f",result.suggestedScore];
+    if (result) {
+        TAIOralEvaluationWord *firstWord = result.words.firstObject;
+        if (firstWord) {
+            _WordTxt.text = [NSString stringWithFormat:@"%@",firstWord.word];
+        }
+        _SuggestedScoreTxt.text = [NSString stringWithFormat:@"%.2f",result.suggestedScore];
+        _PronCompletionTxt.text = [NSString stringWithFormat:@"%.2f",result.pronCompletion];
+        _PronAccuracyTxt.text   = [NSString stringWithFormat:@"%.2f",result.pronAccuracy];
+        _PronFluencyTxt.text   = [NSString stringWithFormat:@"%.2f",result.pronFluency];
+        
+        if (result.pronCompletion >= 1.0 && result.pronAccuracy >= 60) {
+            [self.oralEvaluation stopRecordAndEvaluation:^(TAIError *error) {
+                
+            }];
         }
         
         NSData *data = [NSJSONSerialization dataWithJSONObject:[result mj_JSONObject] options:NSJSONWritingPrettyPrinted error:nil];
@@ -525,18 +549,24 @@
         
         NSLog(@"oralEvaluation onMessage ----> %@", result.mj_JSONString);
     }
+    
+    if (data.bEnd) {
+        [self onFinish];
+    }
 }
 
-- (void)onEndOfSpeechInOralEvaluation:(TAIOralEvaluation *)oralEvaluation
-{
-    [self setResponse:@"onEndOfSpeech"];
-    //    [self onRecord:nil];
+//- (void)onEndOfSpeechInOralEvaluation:(TAIOralEvaluation *)oralEvaluation
+//{
+//    [self onRecord];
+//}
+
+- (void)oralEvaluation:(TAIOralEvaluation *)oralEvaluation  onEndOfSpeechInOralEvaluation:(BOOL)isSpeak {
+    [self onRecord];
 }
 
 - (void)oralEvaluation:(TAIOralEvaluation *)oralEvaluation onVolumeChanged:(NSInteger)volume
 {
     [self onVolume:(int)volume];
-//    self.progressView.progress = volume / 120.0;
 }
 
 - (void)setResponse:(NSString *)string

@@ -12,4 +12,5 @@
 
 @property (nonatomic, strong) NSMutableArray *pointArr;
 
+- (void)startWave;
 @end

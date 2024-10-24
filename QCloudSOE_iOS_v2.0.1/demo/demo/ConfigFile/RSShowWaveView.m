@@ -44,6 +44,14 @@
 //    [self addSubview:centerLine];
 //}
 
+- (void)startWave {
+//    MusicModel *audioPoint = [MusicModel new];
+//    audioPoint.value = value;
+//    [self.waveAudioView.pointArr addObject:audioPoint];
+    //绘制音量
+    [self setNeedsDisplay];
+}
+
 //柱形
 -(void)drawRect:(CGRect)rect
 {
@@ -52,9 +60,9 @@
 }
 
 - (void)drawLine {
-    if (!self.pointArr||[self.pointArr count] == 0) {
-        return;
-    }
+//    if (!self.pointArr||[self.pointArr count] == 0) {
+//        return;
+//    }
     CGContextRef context = UIGraphicsGetCurrentContext();
 //    CGContextSetLineWidth(context, 1.0);
 //    CGContextSetLineCap(context, kCGLineCapRound);
