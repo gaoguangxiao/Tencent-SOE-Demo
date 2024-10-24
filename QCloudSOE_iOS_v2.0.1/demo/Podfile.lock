@@ -28,7 +28,7 @@ PODS:
     - Moya
     - PKHUD
     - SmartCodable
-  - GXTaskDownload (0.3.9):
+  - GXTaskDownload (0.4.0):
     - GGXSwiftExtension
     - SmartCodable
   - KeychainAccess (4.2.2)
@@ -83,7 +83,7 @@ DEPENDENCIES:
   - AFServiceNet
   - GXAudioPlay
   - GXAudioRecord
-  - GXTaskDownload (from `~/Documents/GitHub/GXTaskDownload`)
+  - GXTaskDownload
   - MJExtension
   - RSAdventureApi (from `~/Desktop/SourceTree/rs_bridge/rsadventureapi`)
   - RSBridgeAudioEvaluation
@@ -101,6 +101,7 @@ SPEC REPOS:
     - GXAudioPlay
     - GXAudioRecord
     - GXSwiftNetwork
+    - GXTaskDownload
     - KeychainAccess
     - MBProgressHUD
     - MJExtension
@@ -117,8 +118,6 @@ SPEC REPOS:
     - ZKBaseSwiftProject
 
 EXTERNAL SOURCES:
-  GXTaskDownload:
-    :path: "~/Documents/GitHub/GXTaskDownload"
   RSAdventureApi:
     :path: "~/Desktop/SourceTree/rs_bridge/rsadventureapi"
 
@@ -131,7 +130,7 @@ SPEC CHECKSUMS:
   GXAudioPlay: 2a6f2f1d79c5d6c91e1fcc2b1f395fd44dffb87f
   GXAudioRecord: 8c03d92392dacbff96c3de76f3946f0b23858602
   GXSwiftNetwork: fb84d4270e8d40b5aa8b2bcacbeb90fba6c6a667
-  GXTaskDownload: ea05befddbc544cd99ee90c26da3d268d08b1f63
+  GXTaskDownload: 4550bab312ee907d21ba39e8385cce72c90b7c87
   KeychainAccess: c0c4f7f38f6fc7bbe58f5702e25f7bd2f65abf51
   MBProgressHUD: 3ee5efcc380f6a79a7cc9b363dd669c5e1ae7406
   MJExtension: e97d164cb411aa9795cf576093a1fa208b4a8dd8
@@ -150,6 +149,6 @@ SPEC CHECKSUMS:
   YYModel: 2a7fdd96aaa4b86a824e26d0c517de8928c04b30
   ZKBaseSwiftProject: 04cb3fb43a971c6bf0eb4ae718210b114c03daf9
 
-PODFILE CHECKSUM: 39cfd1a1e10e533f972da6a9f22b12d72484e2e2
+PODFILE CHECKSUM: e69abebc59fed6e259f1804ff1e22434983f3752
 
 COCOAPODS: 1.15.2
