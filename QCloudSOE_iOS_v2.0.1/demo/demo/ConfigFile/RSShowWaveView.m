@@ -75,7 +75,7 @@
     for (NSInteger i = 0; i < self.pointArr.count; i++){
         MusicModel *point = self.pointArr[i];
         float val = point.value + 1;//
-        NSLog(@"db is：%f",point.value);
+//        NSLog(@"db is：%f",point.value);
         if (val <= 1) {
             val = 1;
         }

@@ -31,6 +31,8 @@
 #import "GGXAudioConvertor.h"
 #import "RSShowWaveView.h"
 #import "TESTDATA.h" //读取文件
+
+#import "MBProgressHUD.h"
 @interface OralEvaluationViewController () <TAIOralListener, UITextFieldDelegate,TAIOralEvaluationDelegate>
 
 @property (weak, nonatomic) IBOutlet UITextField *refText;
@@ -142,8 +144,10 @@
     [config setApiParam:kTAIEvalMode value:[@(self.evalModeSeg.selectedSegmentIndex) stringValue]];
     //苛刻度
     [config setApiParam:kTAIScoreCoeff value:[@(self.coeffSlider.value) stringValue]];
+    NSString *sentenceinfoStr = [@(self.sentenceInfoSeg.selectedSegmentIndex) stringValue];
+    NSLog(@"传输模式：%@",sentenceinfoStr);
     //传输模式
-    [config setApiParam:kTAISentenceInfoEnabled value:[@(self.sentenceInfoSeg.selectedSegmentIndex) stringValue]];
+    [config setApiParam:kTAISentenceInfoEnabled value:sentenceinfoStr];
     //网络超时时间
     config.connectTimeout = 3000;
     
@@ -176,11 +180,13 @@
 
 - (IBAction)onClick:(id)sender {
     
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     [self.recordSOE startSOEWithCompletionHandler:^(NSInteger code) {
         
         dispatch_async(dispatch_get_main_queue(), ^{
-            
+
             if ([self->_sourceSeg selectedSegmentIndex] == 0) {
+                
                 if (self.classVersion == 2) {
                     if(self->_running) {
                         [self->_ctl stop];
@@ -202,7 +208,7 @@
                     [self clearResult];
                     [self onRecord];
                 }
-                
+                [MBProgressHUD hideHUDForView:self.view animated:YES];
                 //            } else if ([self ->_sourceSeg selectedSegmentIndex] == 1) {
                 //                [self clearResult];
                 //                // 文件源的pcm必须为单通道s16le格式
@@ -231,6 +237,7 @@
                 NSString *mp3URL = [self.tool cureentAudioURL];
                 //下载音频
                 [self.downloader downloadV2WithUrl:mp3URL path:@"problem" priority:0 clearOld:NO block:^(float progress, NSString * _Nullable path) {
+                    
                     if (path) {
                         if (self.classVersion == 2) {
                             NSLog(@"audio path is: %@",path);
@@ -246,7 +253,6 @@
                         } else {
                             [self scoreWithByPath:path];
                         }
-                        
                     }
                 }];
             }
@@ -256,6 +262,7 @@
 
 - (void)scoreWithByPath:(NSString *)path {
     dispatch_async(dispatch_get_main_queue(), ^{
+        [MBProgressHUD hideHUDForView:self.view animated:YES];
         if (self.classVersion == 2) {
             if ([path.pathExtension isEqualToString:@"wav"] || [path.pathExtension isEqualToString:@"pcm"]) {
                 self->_source = [[FileDataSource alloc] init:path];

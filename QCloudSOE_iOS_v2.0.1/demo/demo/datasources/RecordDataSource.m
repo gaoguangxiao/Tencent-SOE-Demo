@@ -33,7 +33,7 @@ static OSStatus recordingCallback(void *inRefCon,
     return self;
 }
 
-- (bool)empty { 
+- (bool)empty {
     return false;
 }
 
@@ -105,7 +105,7 @@ static OSStatus recordingCallback(void *inRefCon,
         AudioStreamBasicDescription audioFormat;
         audioFormat.mSampleRate = 16000.0;
         audioFormat.mFormatID = kAudioFormatLinearPCM;
-        audioFormat.mFormatFlags = kAudioFormatFlagIsSignedInteger | kAudioFormatFlagIsPacked;
+        audioFormat.mFormatFlags = kAudioFormatFlagIsSignedInteger | kAudioFormatFlagIsPacked;//有符号整数和打包
         audioFormat.mFramesPerPacket = 1;
         audioFormat.mChannelsPerFrame = 1;
         audioFormat.mBitsPerChannel = 16;
@@ -146,13 +146,13 @@ static OSStatus recordingCallback(void *inRefCon,
         }
         
         [_fileHandler startVoiceRecordByAudioQueue:nil
-                                             isNeedMagicCookie:NO
-                                                     audioDesc:audioFormat];
+                                 isNeedMagicCookie:NO
+                                         audioDesc:audioFormat];
         return nil;
     }
 }
 
-- (nullable NSError *)stop { 
+- (nullable NSError *)stop {
     @synchronized (_lock) {
         OSStatus status = AudioOutputUnitStop(_audioUnit);
         if (status != 0) {
@@ -177,6 +177,57 @@ static OSStatus recordingCallback(void *inRefCon,
     [self stop];
 }
 
+int calculateDBFromInt16AudioBufferPCMDB(AudioBuffer audioBuffer) {
+    // 计算 AudioBuffer 中数据的大小
+    NSUInteger dataSize = audioBuffer.mDataByteSize;
+    NSData *buffer = [NSData dataWithBytes:audioBuffer.mData length:dataSize];
+    long long sum = 0; // 存储样本绝对值的总和
+    short *pos = (short *)buffer.bytes; // 将 NSData 的字节转为 short 指针
+//    SInt16 *curData = (SInt16 *)audioBuffer.mData; // 获取音频数据指针
+    // 遍历所有样本
+    for (int i = 0; i < buffer.length / 2; i++) {
+        sum += abs(*pos); // 计算每个样本的绝对值并累加
+        pos++; // 移动到下一个样本
+    }
+
+    // 计算 dB 值
+    int db = (int)(sum * 600 / (buffer.length / 2 * 32767));
+    if (db >= 120) {
+        db = 120; // 限制最大值为 120
+    }
+    return db; // 返回计算出的 dB 值
+}
+
+float calculateDBFromInt16AudioBuffer(AudioBuffer audioBuffer) {
+    SInt16 *curData = (SInt16 *)audioBuffer.mData; // 获取音频数据指针
+    UInt32 frameCount = audioBuffer.mDataByteSize / sizeof(SInt16); // 计算样本数量
+    if (frameCount == 0) {
+        return -INFINITY; // 如果没有样本，返回负无穷大
+    }
+//    NSLog(@"frameCount is： %u",static_cast<unsigned int>(frameCount));
+    float sum = 0.0;
+    for (UInt32 i = 0; i < frameCount; i++) {
+        SInt16 curDataValue = curData[i]; // 示例值
+        float sample = curDataValue / 32768.0f; // 将 16 位样本转换为范围 [-1.0, 1.0]
+//        NSLog(@"i is %d、curDataValueis: %.2hd： sample：%f",i,curDataValue,sample);
+        float square = sample * sample;
+//        NSLog(@"square is ：%f",square);
+        sum = sum + square; // 计算平方和
+//        NSLog(@"---sum： %f",sum);
+    }
+//    NSLog(@"all sum： %f",sum);
+    float rms = sqrt(sum / frameCount);
+//    NSLog(@"rms：%f",rms);
+    // 如果 RMS 为零，返回 0 dB（表示无音量），RMS 值的范围是从 0 到 1，当转换为 dB 时，则可能会产生从负无穷大到 0 的值，而1的RMS对应0db，值越小分贝越大
+    if (rms == 0) {
+        return 0; // 处理无音信号
+    }
+    // 转换为分贝
+    float dbValue = 20 * log10(rms);
+    return dbValue;
+}
+
+
 static OSStatus recordingCallback(void *inRefCon,
                                   AudioUnitRenderActionFlags *ioActionFlags,
                                   const AudioTimeStamp *inTimeStamp,
@@ -186,10 +237,10 @@ static OSStatus recordingCallback(void *inRefCon,
     RecordDataSource* source = (__bridge RecordDataSource*)inRefCon;
     AudioBufferList bufferList;
     bufferList.mNumberBuffers = 1;
-    bufferList.mBuffers[0].mDataByteSize =inNumberFrames * sizeof(SInt16);
+    bufferList.mBuffers[0].mDataByteSize =inNumberFrames * sizeof(SInt16);// 设置数据大小
     bufferList.mBuffers[0].mNumberChannels = 1;
-    bufferList.mBuffers[0].mData = malloc(inNumberFrames * sizeof(SInt16));
-
+    bufferList.mBuffers[0].mData = malloc(inNumberFrames * sizeof(SInt16));// 为 mData 分配内存
+    
     OSStatus status = AudioUnitRender(source->_audioUnit,
                                       ioActionFlags,
                                       inTimeStamp,
@@ -198,13 +249,15 @@ static OSStatus recordingCallback(void *inRefCon,
                                       &bufferList);
     @synchronized (source) {
         source->_ring->push((char*)bufferList.mBuffers[0].mData, bufferList.mBuffers[0].mDataByteSize);
-
+        
         //填充数据
         [source.fileHandler writeFileWithInNumBytes:bufferList.mBuffers[0].mDataByteSize
-                                                      ioNumPackets:inNumberFrames
+                                       ioNumPackets:inNumberFrames
                                            inBuffer:bufferList.mBuffers[0].mData
-                                                      inPacketDesc:NULL];
-        
+                                       inPacketDesc:NULL];
+        //计算分贝
+//        float db = calculateDBFromInt16AudioBufferPCMDB(bufferList.mBuffers[0]);
+//        NSLog(@"收到分贝：%.2f",db);
     }
     free(bufferList.mBuffers[0].mData);
     return status;
