@@ -33,7 +33,7 @@
 #import "TESTDATA.h" //读取文件
 
 #import "MBProgressHUD.h"
-
+#import "ParsingAudioHander.h"
 
 @interface OralEvaluationViewController () <TAIOralListener, UITextFieldDelegate,TAIOralEvaluationDelegate>
 
@@ -159,7 +159,7 @@
 //                        }];
 //                        return;
 //                    }
-                    [self clearResult];
+                    
                     [self onRecord];
                 }
                 [MBProgressHUD hideHUDForView:self.view animated:YES];
@@ -456,6 +456,12 @@
     [self.oralEvaluation oralEvaluation:param data:data callback:^(TAIError *error) {
         //        [ws setResponse:[NSString stringWithFormat:@"oralEvaluation:%@", error]];
     }];
+    
+//    ParsingAudioHander *audioHander =  [ParsingAudioHander new];
+//    NSURL *url = [NSURL fileURLWithPath:mp3Path];
+//    NSArray *datas = [audioHander calculateDBDecibelValuesFromBuffer:url];
+    
+//    [self.waveAudioView.pointArr addObjectsFromArray:datas];
 }
 
 - (void)onRecord {
@@ -467,7 +473,7 @@
         }];
         return;
     }
-    
+    [self clearResult];
     TAIOralEvaluationParam *param = [[TAIOralEvaluationParam alloc] init];
     param.sessionId = [[NSUUID UUID] UUIDString];
     param.appId = [PrivateInfo shareInstance].appId;
