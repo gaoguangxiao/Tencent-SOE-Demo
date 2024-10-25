@@ -27,7 +27,9 @@
     return _empty;
 }
 
-- (nonnull NSData *)read:(int)ms error:(NSError *__autoreleasing  _Nullable * _Nullable)error { 
+//ms值为，40
+- (nonnull NSData *)read:(int)ms error:(NSError *__autoreleasing  _Nullable * _Nullable)error {
+//    NSLog(@"ms: %d",ms);
     int len = ms * 16 *2;
     NSMutableData* data = [NSMutableData dataWithCapacity:len];
     data.length = len;

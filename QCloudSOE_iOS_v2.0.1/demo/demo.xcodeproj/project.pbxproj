@@ -40,6 +40,7 @@
 		1E8419742CC0E0E8005E1439 /* 2024-10-16_11-37-44.wav in Resources */ = {isa = PBXBuildFile; fileRef = 1E8419512CC0E0E8005E1439 /* 2024-10-16_11-37-44.wav */; };
 		1E8419752CC0E0E8005E1439 /* 2024-10-16_11-38-04.wav in Resources */ = {isa = PBXBuildFile; fileRef = 1E8419552CC0E0E8005E1439 /* 2024-10-16_11-38-04.wav */; };
 		1E8419762CC0E0E8005E1439 /* 2024-10-16_11-23-43.wav in Resources */ = {isa = PBXBuildFile; fileRef = 1E84194E2CC0E0E8005E1439 /* 2024-10-16_11-23-43.wav */; };
+		1E8B69E62CCB2DF5006E7E85 /* TAIDataSourceHandle.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E8B69E52CCB2DF5006E7E85 /* TAIDataSourceHandle.m */; };
 		1EA56E9C2CC607B800C4FBD8 /* TIWLogger.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1EA56E9A2CC607B800C4FBD8 /* TIWLogger.framework */; };
 		1EA56E9D2CC607B800C4FBD8 /* lame.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1EA56E982CC607B800C4FBD8 /* lame.framework */; };
 		1EA56E9E2CC607B800C4FBD8 /* TAISDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1EA56E992CC607B800C4FBD8 /* TAISDK.framework */; };
@@ -114,6 +115,8 @@
 		1E84195E2CC0E0E8005E1439 /* 1E9E9126-37F1-4E97-A5BF-FABCFE4715C0.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "1E9E9126-37F1-4E97-A5BF-FABCFE4715C0.mp3"; sourceTree = "<group>"; };
 		1E84195F2CC0E0E8005E1439 /* 58DE9407-D2C6-4354-BB75-1EADB71B2890.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "58DE9407-D2C6-4354-BB75-1EADB71B2890.mp3"; sourceTree = "<group>"; };
 		1E8419602CC0E0E8005E1439 /* BB9C2721-9D01-41B9-883B-7FA840F41E6F.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "BB9C2721-9D01-41B9-883B-7FA840F41E6F.mp3"; sourceTree = "<group>"; };
+		1E8B69E42CCB2DF5006E7E85 /* TAIDataSourceHandle.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TAIDataSourceHandle.h; sourceTree = "<group>"; };
+		1E8B69E52CCB2DF5006E7E85 /* TAIDataSourceHandle.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TAIDataSourceHandle.m; sourceTree = "<group>"; };
 		1EA56E982CC607B800C4FBD8 /* lame.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = lame.framework; sourceTree = "<group>"; };
 		1EA56E992CC607B800C4FBD8 /* TAISDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = TAISDK.framework; sourceTree = "<group>"; };
 		1EA56E9A2CC607B800C4FBD8 /* TIWLogger.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = TIWLogger.framework; sourceTree = "<group>"; };
@@ -390,6 +393,8 @@
 				1ED134D12CC6614400350D4A /* RecordFileHandler.m */,
 				7E2FC9FB2BFF476D00077232 /* FileDataSource.h */,
 				7E2FC9F82BFF476D00077232 /* FileDataSource.m */,
+				1E8B69E42CCB2DF5006E7E85 /* TAIDataSourceHandle.h */,
+				1E8B69E52CCB2DF5006E7E85 /* TAIDataSourceHandle.m */,
 				1E7A25252CC200590080D18A /* TAIOralEvaluationRetV2.h */,
 				1E7A25262CC200590080D18A /* TAIOralEvaluationRetV2.m */,
 				1E7BB61E2CCA1D74009883FE /* TAIOralEvaluationV2.h */,
@@ -550,6 +555,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7E988BA42C0080D300F87DA5 /* UserInfo.m in Sources */,
+				1E8B69E62CCB2DF5006E7E85 /* TAIDataSourceHandle.m in Sources */,
 				1E7A25272CC200590080D18A /* TAIOralEvaluationRetV2.m in Sources */,
 				1E7A25332CC231B10080D18A /* AudioFileTool.swift in Sources */,
 				1EEB0CA72CC77C9D006BDA2E /* GGXAudioEngine.swift in Sources */,

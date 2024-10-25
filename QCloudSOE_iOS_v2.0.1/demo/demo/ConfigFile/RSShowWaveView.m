@@ -72,7 +72,7 @@
     
     UIFont *font = [UIFont systemFontOfSize:12]; // 设置文字大小为24点
     UIColor *textColor = [UIColor blueColor];
-    UIColor *backTextColor = [UIColor whiteColor];
+//    UIColor *backTextColor = [UIColor labelColor];
     float titleWidth = 100;
     
     CGFloat cheight = height;
@@ -83,7 +83,7 @@
     for (NSInteger i = 0; i < self.pointArr.count; i++){
         MusicModel *point = self.pointArr[i];
         float val = point.value + 1;//
-//        NSLog(@"db is：%f",point.value);
+        NSLog(@"timer：%f db is：%f",point.time,point.value);
         if (val <= 1) {
             val = 1;
         }
@@ -100,8 +100,7 @@
         float position = cheight - val;
         NSString *value = [NSString stringWithFormat:@"%.0f",val];
         [value drawInRect:CGRectMake(0, position - 12, titleWidth, 12) withAttributes:@{NSFontAttributeName: font,
-                                                                                NSForegroundColorAttributeName:textColor,
-                                                                                NSBackgroundColorAttributeName:backTextColor}];
+                                                                                NSForegroundColorAttributeName:textColor}];
 
         // 设置虚线样式
         CGFloat dashPattern[] = {4, 2}; // 4点长度的线段和2点长度的空白

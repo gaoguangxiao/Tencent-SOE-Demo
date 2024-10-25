@@ -33,8 +33,7 @@
 #import "TESTDATA.h" //读取文件
 
 #import "MBProgressHUD.h"
-#import "ParsingAudioHander.h"
-
+#import "TAIDataSourceHandle.h" //对音频pcm、wav音频解析数据
 @interface OralEvaluationViewController () <TAIOralListener, UITextFieldDelegate,TAIOralEvaluationDelegate>
 
 @property (weak, nonatomic) IBOutlet UITextField *refText;
@@ -65,6 +64,7 @@
 @property (nonatomic, strong) SOE *recordSOE;                   //获取智聆token相关
 @property (nonatomic, strong) GXDownloadManager *downloader;    //下载音频
 @property (nonatomic, strong) AudioFileTool *tool;              //文件播放器
+@property (nonatomic, strong) TAIDataSourceHandle *dataSourceHandle; //定时解析音频数据
 
 //音频评测面板
 @property (weak, nonatomic) IBOutlet UILabel *WordTxt;//识别结果
@@ -97,8 +97,8 @@
     self.title = [NSString stringWithFormat:@"录制版本:%ld",self.classVersion];
     _result = @"";
     _running = false;
-    _refText.text = @"how are you";
-    //    _refText.text = @"e";
+//    _refText.text = @"how are you";
+    _refText.text = @"ask";
     _refText.delegate = self;
     _keywordText.delegate = self;
     _vadSlider.needInt = YES;
@@ -110,6 +110,8 @@
     self.downloader = [GXDownloadManager new];
     self.tool = AudioFileTool.share;
     [self updateSource];
+    
+    self.dataSourceHandle = [TAIDataSourceHandle new];
     
     self.audioEvaluationV2 = [RSAudioEvaluationManagerV2 new];
     //保存待测试的网络数据
@@ -193,20 +195,20 @@
                 [self.downloader downloadV2WithUrl:mp3URL path:@"problem" priority:0 clearOld:NO block:^(float progress, NSString * _Nullable path) {
                     
                     if (path) {
-                        if (self.classVersion == 2) {
+//                        if (self.classVersion == 2) {
                             NSLog(@"audio path is: %@",path);
                             NSString *videoDestDateString = [mp3URL.lastPathComponent stringByDeletingPathExtension];
                             NSString *outPath = [NSString stringWithFormat:@"%@/%@.wav", NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)[0], videoDestDateString];;
                             [GGXAudioConvertor convertM4AToWAV:path outPath:outPath success:^(NSString * _Nonnull outputPath) {
                                 //                            NSLog(@"outputPath path is: %@",outputPath);
-                                [self scoreWithByPath:outputPath];
+                                [self scoreWithByPath:path andwavPath:outputPath];
                             } failure:^(NSError * _Nonnull error) {
                                 //                            NSLog(@"outputPath error is: %@",error);
-                                [self scoreWithByPath:path];
+                                [self scoreWithByPath:path andwavPath:nil];
                             }];
-                        } else {
-                            [self scoreWithByPath:path];
-                        }
+//                        } else {
+//                            [self scoreWithByPath:path];
+//                        }
                     }
                 }];
             }
@@ -214,21 +216,7 @@
     }];
 }
 
-- (void)scoreWithByPath:(NSString *)path {
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [MBProgressHUD hideHUDForView:self.view animated:YES];
-        if (self.classVersion == 2) {
-            if ([path.pathExtension isEqualToString:@"wav"] || [path.pathExtension isEqualToString:@"pcm"]) {
-                self->_source = [[FileDataSource alloc] init:path];
-            } else {
-                self->_source = [[AudioToolDataSource alloc] init:path];
-            }
-            [self initTAIConfig:self-> _source];
-        } else {
-            [self onLocalRecord:path];
-        }
-    });
-}
+
 
 - (IBAction)PauseAudioFile:(id)sender {
     
@@ -393,7 +381,6 @@
             [self->_ctl stop];
         }
     }
-    
 }
 
 //静音回调
@@ -411,6 +398,7 @@
     
     MusicModel *audioPoint = [MusicModel new];
     audioPoint.value = value;
+//    audioPoint.time = [[NSDate date] timeIntervalSince1970];
     [self.waveAudioView.pointArr addObject:audioPoint];
     //绘制音量
     [self.waveAudioView setNeedsDisplay];
@@ -420,18 +408,10 @@
     NSLog(@"SOE logger ----> %@", value);
 }
 
-/**
- *  创建文件名
- */
-- (NSString *)createFileNamePrefix {
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setDateFormat:@"yyyy-MM-dd_HH-mm-ss-sss"];//zzz
-    NSString *destDateString = [dateFormatter stringFromDate:[NSDate date]];
-    return destDateString;
-}
+
 
 #pragma mark - 智聆旧版
-- (void)onLocalRecord:(NSString *)mp3Path {
+- (void)onLocalRecord:(NSString *)audioPath andwavPath:(NSString *)wavPath{
     TAIOralEvaluationParam *param = [[TAIOralEvaluationParam alloc] init];
     param.sessionId = [[NSUUID UUID] UUIDString];
     //    param.appId = [PrivateInfo shareInstance].appId;
@@ -442,26 +422,25 @@
     param.workMode = TAIOralEvaluationWorkMode_Once;
     param.evalMode = (TAIOralEvaluationEvalMode)self.evalModeSeg.selectedSegmentIndex;
     param.serverType = TAIOralEvaluationServerType_English;
+    param.textMode = (TAIOralEvaluationTextMode)self.textModeSeg.selectedSegmentIndex;
     param.scoreCoeff = self.coeffSlider.value;
     param.fileType = TAIOralEvaluationFileType_Mp3;
     param.storageMode = TAIOralEvaluationStorageMode_Disable;
-    param.textMode = (TAIOralEvaluationTextMode)self.textModeSeg.selectedSegmentIndex;
+    
     param.refText = self.refText.text;
     
     TAIOralEvaluationData *data = [[TAIOralEvaluationData alloc] init];
     data.seqId = 1;
     data.bEnd = YES;
-    data.audio = [NSData dataWithContentsOfFile:mp3Path];
-    __weak typeof(self) ws = self;
+    data.audio = [NSData dataWithContentsOfFile:audioPath];
+//    __weak typeof(self) ws = self;
     [self.oralEvaluation oralEvaluation:param data:data callback:^(TAIError *error) {
+        NSLog(@"onLocalRecord finish: %@",error);
         //        [ws setResponse:[NSString stringWithFormat:@"oralEvaluation:%@", error]];
     }];
     
-//    ParsingAudioHander *audioHander =  [ParsingAudioHander new];
-//    NSURL *url = [NSURL fileURLWithPath:mp3Path];
-//    NSArray *datas = [audioHander calculateDBDecibelValuesFromBuffer:url];
-    
-//    [self.waveAudioView.pointArr addObjectsFromArray:datas];
+    //
+    [self.dataSourceHandle build:_source listener:self];
 }
 
 - (void)onRecord {
@@ -527,11 +506,7 @@
     if(error.code != TAIErrCode_Succ){
         //        [_recordButton setTitle:@"开始录制" forState:UIControlStateNormal];
     }
-    //    NSString *log = [NSString stringWithFormat:@"oralEvaluation:seq:%ld, end:%ld, error:%@, ret:%@", (long)data.seqId, (long)data.bEnd, error, result];
-    //    NSLog(@"oralEvaluation onMessage ----> %@", log);
-    //    _result = [NSString stringWithFormat:@"%@\n%@", _result, log];
-    //    [_resultText setText:_result];
-    
+
     if (result) {
         TAIOralEvaluationWord *firstWord = result.words.firstObject;
         if (firstWord) {
@@ -558,13 +533,10 @@
     
     if (data.bEnd) {
         [self onFinish];
+        //
+        [self onResult:result.mj_JSONString];
     }
 }
-
-//- (void)onEndOfSpeechInOralEvaluation:(TAIOralEvaluation *)oralEvaluation
-//{
-//    [self onRecord];
-//}
 
 - (void)oralEvaluation:(TAIOralEvaluation *)oralEvaluation  onEndOfSpeechInOralEvaluation:(BOOL)isSpeak {
     [self onRecord];
@@ -573,6 +545,31 @@
 - (void)oralEvaluation:(TAIOralEvaluation *)oralEvaluation onVolumeChanged:(NSInteger)volume
 {
     [self onVolume:(int)volume];
+}
+
+#pragma mark - other
+- (void)scoreWithByPath:(NSString *)path andwavPath:(NSString *)wavPath{
+    self->_source = nil;
+    if ([wavPath.pathExtension isEqualToString:@"wav"] || [wavPath.pathExtension isEqualToString:@"pcm"]) {
+        self->_source = [[FileDataSource alloc] init:wavPath];
+    } else {
+        self->_source = [[AudioToolDataSource alloc] init:wavPath];
+    }
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [MBProgressHUD hideHUDForView:self.view animated:YES];
+        if (self.classVersion == 2) {
+            [self initTAIConfig:self-> _source];
+        } else {
+            [self onLocalRecord:path andwavPath:wavPath];
+        }
+    });
+}
+
+//获取到评分结果
+- (void)onResult:(NSString *)result {
+ 
+    //旧版停止
+    [self.dataSourceHandle stop];
 }
 
 - (void)setResponse:(NSString *)string
@@ -584,6 +581,16 @@
 //    NSString *text = [NSString stringWithFormat:@"%@ %@", [format stringFromDate:[NSDate date]], string];
     //    _responseTextView.text = text;
     //    NSLog(@"SOE onMessage ----> %@", text);
+}
+
+/**
+ *  创建文件名
+ */
+- (NSString *)createFileNamePrefix {
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd_HH-mm-ss-sss"];//zzz
+    NSString *destDateString = [dateFormatter stringFromDate:[NSDate date]];
+    return destDateString;
 }
 
 - (TAIOralEvaluation *)oralEvaluation
