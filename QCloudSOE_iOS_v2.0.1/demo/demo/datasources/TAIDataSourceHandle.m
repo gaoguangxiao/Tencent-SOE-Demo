@@ -25,7 +25,7 @@
     
     _listener = listener;
     
-    [_source start];
+    NSError *error = [_source start];
     
     [self addReadAudioTimer];
 }
