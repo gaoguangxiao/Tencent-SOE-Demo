@@ -103,6 +103,7 @@ extension GXDownloadManager {
         let downloader = GXTaskDownloadDisk()
         downloader.diskFile.taskDownloadPath = path + (urlModel.src?.toPath.stringByDeletingLastPathComponent ?? "")
         downloader.prepare(urlModel: urlModel)
+        downloader.downloader.estimatedTotalBytesCount = urlModel.size
         waitingTasks.append(downloader)
     }
     
@@ -195,8 +196,8 @@ extension GXDownloadManager {
             return
         }
         objc_sync_enter(self)
-        //并发修改某个值，进入同
-        finishBytesReceived += Double(task.downloader.totalBytesReceived)
+        //已下载文件的下载量和预估下载量
+        finishBytesReceived += bytesReceivedByDownloader(task.downloader)
         self.downloadingTasks.removeAll { _task in
             return _task == task
         }
@@ -225,8 +226,8 @@ extension GXDownloadManager {
     
     @objc func updateSpeedTime() {
         var deltaLength: Double = 0
-        for downloadingTask in self.downloadingTasks {
-            deltaLength += Double(downloadingTask.downloader.totalBytesReceived)
+        for task in self.downloadingTasks {
+            deltaLength += bytesReceivedByDownloader(task.downloader)
         }
         //已下载字节
         deltaLength += finishBytesReceived
@@ -237,6 +238,15 @@ extension GXDownloadManager {
             proSpeed(speed,totalBytesReceived,fileTotalLength)
         }
         totalBytesReceived = deltaLength
+    }
+    
+    //获取下载器的下载量，当下载量大于预估时，则取两者最小值
+    private func bytesReceivedByDownloader(_ downloader: GXDownloader) -> Double{
+        var bytesReceived = Double(downloader.totalBytesReceived)
+        if downloader.estimatedTotalBytesCount > 0 {
+            bytesReceived = min(downloader.estimatedTotalBytesCount, Double(downloader.totalBytesReceived))
+        }
+        return bytesReceived
     }
 }
 

@@ -10,6 +10,7 @@ import RSBridgeCore
 import RSBridgeAudioEvaluation
 //import PTDebugView
 import ZKBaseSwiftProject
+import RSAdventureApi
 
 @objcMembers
 public class RSAudioEvaluationManagerV2: NSObject {

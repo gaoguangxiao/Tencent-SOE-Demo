@@ -60,12 +60,12 @@ class RSAudioApi: MSBApi {
         }
     }
     
-    class certificateApi: RSAudioApi{
-        init(paras : [String: Any]) {
-            super.init(path:"/wap/api/certificate/tencent",
-                       parameters: paras,showErrorMsg: false,showHud: false)
-        }
-    }
+//    class certificateApi: RSAudioApi{
+//        init(paras : [String: Any]) {
+//            super.init(path:"/wap/api/certificate/tencent",
+//                       parameters: paras,showErrorMsg: false,showHud: false)
+//        }
+//    }
 }
 
 
@@ -89,14 +89,14 @@ public class AudioApiService: NSObject {
     }
     
     //MARK: 获取TIM配置
-    public func configsTIM(params: [String: Any],closure: @escaping ((TencentSOEBaseModel) -> ())) {
-        let api = RSAudioApi.certificateApi(paras: params)
-        api.request { (result: TencentSOEBaseModel) in
-            closure(result)
-        } onFailure: { e in
-            let bm = TencentSOEBaseModel()
-            bm.code = e.code
-            closure(bm)
-        }
-    }
+//    public func configsTIM(params: [String: Any],closure: @escaping ((TencentSOEBaseModel) -> ())) {
+//        let api = RSAudioApi.certificateApi(paras: params)
+//        api.request { (result: TencentSOEBaseModel) in
+//            closure(result)
+//        } onFailure: { e in
+//            let bm = TencentSOEBaseModel()
+//            bm.code = e.code
+//            closure(bm)
+//        }
+//    }
 }

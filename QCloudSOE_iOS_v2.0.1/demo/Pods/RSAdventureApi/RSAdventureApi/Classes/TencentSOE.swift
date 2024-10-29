@@ -9,57 +9,9 @@ import Foundation
 import GXSwiftNetwork
 import SmartCodable
 
-public class TencentSOEBaseModel: MSBApiModel {
-    
-    var ydata: TencentSOEModel? {
-        return TencentSOEModel.deserialize(from: data as? Dictionary<String, Any>)
-    }
-}
-
-
-public class TencentSOEModel: SmartCodable {
-    /// 具体参数
-    var credentials: TencentSOECredentialsModel?
-    
-    /// 有效时间
-    var validTime: Int64 = 60
-    
-    /// 过期时间
-    var expiredTime: Int64?
-    
-    ///
-    var expiration: String?
-    
-    /// 请求ID
-    var requestId: String?
-    
-    required public init() {
-        
-    }
-}
-
-public class TencentSOECredentialsModel: SmartCodable {
-    
-    var appId: String?
-    
-    var skipSign: Bool?
-    
-    public var desc: String?
-    
-    public var token: String?
-    
-    public var tmpSecretId: String?
-    
-    public var tmpSecretKey: String?
-    
-    required public init() {
-        
-    }
-}
-
-
 public typealias ClosuretencentSOE = (_ code: Int,_ data: TencentSOECredentialsModel) -> Void
 
+@objcMembers
 public class TencentSOE: NSObject {
     
     /// Refresh the request key three times by default
@@ -89,21 +41,25 @@ public class TencentSOE: NSObject {
                 return (-2,credentialsModel)
             }
             reloadTIMTokenCount = reloadTIMTokenCount - 1
-            return await withUnsafeContinuation { result in
-                AudioApiService.share.configsTIM(params: [:]) { configModel in
-                    let b = configModel.success
-                    if let cd = configModel.ydata, let cre = cd.credentials, b == true {
-                        UserDefaults.ExpiredTime = cd.expiredTime
-                        UserDefaults.DurationSeconds = cd.validTime
-                        UserDefaults.Credentials = cre.toJSONString()
-                        result.resume(with: .success((0,cre)))
-                    } else {
-                        let credentialsModel = TencentSOECredentialsModel()
-                        credentialsModel.desc = "获取临时密钥失败"
-                        result.resume(with: .success((-1,credentialsModel)))
-                    }
+            
+            do {
+                let configModel = try await TencentSOEApi.response(parameters: [:])
+                if let configModel ,let cer = configModel.credentials {
+                    UserDefaults.ExpiredTime = configModel.expiredTime
+                    UserDefaults.DurationSeconds = configModel.validTime
+                    UserDefaults.Credentials = cer.toJSONString()
+                    return (0, cer)
+                } else {
+                    let credentialsModel = TencentSOECredentialsModel()
+                    credentialsModel.desc = "获取临时密钥失败"
+                    return (-1,credentialsModel)
                 }
+            } catch  {
+                let credentialsModel = TencentSOECredentialsModel()
+                credentialsModel.desc = "获取临时密钥失败"
+                return (-1,credentialsModel)
             }
+
         }
     }
     
@@ -128,6 +84,8 @@ public class TencentSOE: NSObject {
         UserDefaults.Credentials = ""
     }
 }
+
+
 
 /**
  //获取TIM凭证过期时间
