@@ -21,7 +21,7 @@ target 'demo' do
   
   pod 'MJExtension'
   
-  pod 'GXAudioPlay' 
+  pod 'GXAudioPlay'
 #  , :path=>'~/Documents/GitHub/GXAudioPlay'
   
   # 录音库、包含音频格式转换
@@ -30,4 +30,6 @@ target 'demo' do
   
   pod 'RSBridgeAudioEvaluation'
   #  pod 'TAISDK_iOS'
+  
+  pod 'IQKeyboardManagerSwift'
 end

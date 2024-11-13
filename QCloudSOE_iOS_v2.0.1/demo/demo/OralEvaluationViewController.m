@@ -114,10 +114,10 @@
     self.dataSourceHandle = [TAIDataSourceHandle new];
     
     self.audioEvaluationV2 = [RSAudioEvaluationManagerV2 new];
-    //保存待测试的网络数据
-    NSString *re = [TESTDATA loadTestTxt:@"long_text_2024-10-18-16-20-39.txt"];
-    [self.tool clearTxt];
-    [self.tool saveTxtWithTxt:re];
+//    //保存待测试的网络数据
+//    NSString *re = [TESTDATA loadTestTxt:@"long_text_2024-10-18-16-20-39.txt"];
+//    [self.tool clearTxt];
+//    [self.tool saveTxtWithTxt:re];
     self.AudioTxt.text = [NSString stringWithFormat:@"%ld/%ld：%@",(long)self->_tool.current  + 1,self->_tool.audios.count,[self->_tool cureentAudioURL]];
 }
 

@@ -23,10 +23,22 @@
 }
 
 - (IBAction)clear:(id)sender {
-    [AudioFileTool.share clearTxt];
+    _textView.text = @"";
+    
 }
 
 - (IBAction)save:(id)sender {
+    [AudioFileTool.share clearTxt];
+    
+    //对粘贴的文本进行截取
+    [AudioFileTool.share saveTxtWithTxt:_textView.text];
+    
+    [self.navigationController popViewControllerAnimated:YES];
+    
+    self.isSaveAudios();
+}
+
+- (IBAction)add:(id)sender {
     //对粘贴的文本进行截取
     [AudioFileTool.share saveTxtWithTxt:_textView.text];
     

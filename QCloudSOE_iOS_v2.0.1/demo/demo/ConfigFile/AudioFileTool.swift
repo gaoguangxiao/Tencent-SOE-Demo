@@ -55,9 +55,11 @@ public class AudioFileTool: NSObject {
         
         orignTxt = txt
         
-        let txts = txt.components(separatedBy: "\n")
+        var txts = txt.components(separatedBy: "\n")
         if txts.count > 0 {
             current = 0;
+            //txts、中当从表格复制的时候，带有\r字符
+            txts = txts.map { $0.replace("\r", new: "") }
             audios.append(contentsOf: txts)
         }
     }

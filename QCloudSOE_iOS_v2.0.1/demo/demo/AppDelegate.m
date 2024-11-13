@@ -6,7 +6,7 @@
 //
 
 #import "AppDelegate.h"
-
+#import <IQKeyboardManagerSwift/IQKeyboardManagerSwift-Swift.h>
 @interface AppDelegate ()
 
 @end
@@ -16,6 +16,10 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    
+    IQKeyboardManager.shared.isEnabled = true;
+    IQKeyboardManager.shared.resignOnTouchOutside = true; // 当点击键盘外部时，键盘是否应该关闭
+    
     return YES;
 }
 

@@ -9,6 +9,8 @@
 #import "TableViewController.h"
 #import <GXSwiftNetwork-Swift.h>
 #import "OralEvaluationViewController.h"
+#import "TESTDATA.h" //读取文件
+#import "demo-Swift.h"
 @interface TableViewController ()
 @property (nonatomic, strong) NSMutableArray *tabs;
 @end
@@ -39,11 +41,16 @@
     oralv2.className = @"OralEvaluationViewController";
     oralv2.classVersion = 2;
     [_tabs addObject:oralv2];
-    
+//    https://gw.risekid.cn/wap/api/auth/guest/login
     //token信息
-    [MSBApiConfig.shared setApiConfigWithApiHost:@"https://gateway-test.risekid.cn"
-                                   commonHeaders:@{@"token":@"Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJCYXpoZkIxMCIsInV1aWQiOiI1ZDg2YThmYjhlNzU0YjVjOTlmZTQxOGViZjc3M2U0MCIsInRpbWVzdGFtcCI6MTcyODU0NjA1Njc5N30.IBJsvTBN7XyOMEHZEGkbQj_YH5kuHDpBpKYNCWI0xPR_-HrnuC0YdFLzP98tvvqS6MH6u3FlTsUSdxr8LdtTrg"}
+    [MSBApiConfig.shared setApiConfigWithApiHost:@"https://gw.risekid.cn"
+                                   commonHeaders:@{@"token":@"Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwidXVpZCI6IlZKc1BhMGlpIn0.SB1zY9NNalHEPyDR3JOSKnyYdBuuWFPW8MtUGXfL8MftQZlZUXpNPY1w2GRvqUlxtizJM7q7du3P0k-KaMupbw"}
                              isAddDefaultHeaders:YES];
+    
+    //保存待测试的网络数据
+    NSString *re = [TESTDATA loadTestTxt:@"long_text_2024-10-18-16-20-39.txt"];
+    [AudioFileTool.share clearTxt];
+    [AudioFileTool.share saveTxtWithTxt:re];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
