@@ -474,6 +474,10 @@ public func flatSpecificScale(_ value: CGFloat, _ scale: CGFloat) -> CGFloat {
         return Int(UIScreen.main.bounds.width)
     }
     
+    static var widthf: CGFloat {
+        return UIScreen.main.bounds.width
+    }
+    
     static var height: Int {
         return Int(UIScreen.main.bounds.size.height)
     }

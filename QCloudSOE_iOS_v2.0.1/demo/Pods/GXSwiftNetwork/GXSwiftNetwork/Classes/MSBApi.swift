@@ -66,8 +66,7 @@ open class MSBApi: TargetType {
         requestShowErrorMsg      = showErrorMsg
         requestShowHUD   = showHud
         
-        log("********request requestParameters=\(requestParameters)***********")
-        log("********request sampleData=\(sampleData)***********")
+        log("request sampleData=\(sampleData)\nrequestParameters=\(requestParameters)")
     }
     
     public init(url: String?,
@@ -87,8 +86,7 @@ open class MSBApi: TargetType {
         requestShowErrorMsg      = showErrorMsg
         requestShowHUD   = showHud
         
-        log("********request requestParameters=\(requestParameters)***********")
-        log("********request sampleData=\(sampleData)***********")
+        log("request sampleData=\(sampleData)\nrequestParameters=\(requestParameters)")
     }
     
     /// 获取自定义json model数据
@@ -121,6 +119,11 @@ open class MSBApi: TargetType {
 extension MSBApi {
     
     @available(iOS 13.0, *)
+    public func requestV2<T: SmartCodable>(_ Model: T.Type) async throws {
+        print("requestV2----")
+    }
+    
+    @available(iOS 13.0, *)
     public func request<T: SmartCodable>(_ Model: T.Type) async throws -> T where T: SmartCodable {
         if self.requestShowHUD {
             DispatchQueue.main.async {
@@ -137,7 +140,7 @@ extension MSBApi {
                     do {
                         let response = try response.filter(statusCodes: 200...499)
                         let jsonObject = try response.mapString()
-                        log("**************response data = \(jsonObject)**************")
+                        log("response data = \(jsonObject)")
                         let model = Model.deserialize(from: jsonObject, designatedPath: "")
                         guard let model else {
                             continuation.resume(throwing: NSError(domain: "network", code: response.statusCode,userInfo: ["msg": "数据解析失败"]))
@@ -222,7 +225,7 @@ extension MSBApi {
             _headers = requestHeaders
         }
         if let _headers = _headers {
-            print("********request headers=\(_headers)***********")
+            log("request headers=\(_headers)")
             return _headers
         }
         return [:]

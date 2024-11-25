@@ -29,13 +29,18 @@ public class RSBridgeAudioModel: SmartCodable {
     /// 是否开启流式判卷 默认为true
     public var stream = true
     
-    /// 静音时长 默认6000ms
-    public var vadInterval = 6000
+    /// 静音时长 默认5000ms
+    public var vadInterval = 5000
     
     /// 是否支持静音检测，默认为true
     public var vad = true
     
+    /// 识别到静音是否停止本次识别，默认YES
+//    public var endEvaluationWhenDetectSilenceAutoStop = true
 //    public var speechData : Dictionary<String,Any> = [:]
+    
+    /// 静音检测分贝阈值 v0.2.8增加
+    public var dbValue: Int = 20
     
     /// 句子中单词或音素长度
     public var wordsCount: Int?
@@ -46,13 +51,15 @@ public class RSBridgeAudioModel: SmartCodable {
     public var enableDetectVolume = true
     
     /// 录音音量回调时间，毫秒，默认200ms
-    public var minVolumeCallbackTime = 200
+    public var minVolumeCallbackTime: Double = 200
     
     ///同时启动语音识别
     public var recognition = true
     
     ///是否开启语音识别流式
     public var recognitionStream = false
+    
+    public var RecognitionConfig: TIMRecognitionConfig? //v0.2.7添加
     
     /// 语言识别过滤敏感词
     public var filterSensitive = false
@@ -63,14 +70,29 @@ public class RSBridgeAudioModel: SmartCodable {
 
 public extension RSBridgeAudioModel {
     
+    var recognizerPath: String {
+         "recognizer/" + (path ?? "")
+    }
+    
+    var recognizerExt: String {
+         "wav"
+    }
+    
+    var recognizerExtPath: String {
+        recognizerPath + ".\(recognizerExt)"
+    }
+    
     var fillRecordPath: String {
-        return ZKDiskTool.shared.createAudioRecordpath(path: path ?? "", fileExt: "wav")
+        return ZKDiskTool.shared.createAudioRecordpath(path: recognizerPath, fileExt: recognizerExt)
     }
 }
 
 //https://cloud.tencent.com/document/product/884/84102
 public class TIMConfigModel: SmartCodable {
 
+    /// 识别引擎
+    public var engineModelType: String = "16k_zh"
+    
     ///  // 0单词，1句子，2段落，3自由说，4单词纠错，5情景，6多分支，7单词实时，8拼音
     public var evalMode: Int?
     
@@ -83,21 +105,10 @@ public class TIMConfigModel: SmartCodable {
     /// 输入文本模式。0:普通文本、1音素结构
     public var textMode: Int = 0
     
-    /// 是否识别静音，默认YES
-    public var silentDetectTimeOut: Bool = true
-    
-    /// 录音音量回调时间，毫秒，默认200ms
-    public var minVolumeCallbackTime: Double = 200
-    
-    /// 识别到静音是否停止本次识别，默认YES
-    public var endRecognizeWhenDetectSilenceAutoStop = true
-    
-    /// 最大静音时间阈值, 超过silenceDetectDuration时间不说话则为静音, 单位:秒
-    public var audioFlowSilenceTimeOut: Float = 5.0
-    
-    /// 识别到静音是否停止本次识别，默认YES
-    public var silenceDetectDuration = true
-    
+    required public init() {}
+}
+
+public struct TIMRecognitionConfig: SmartCodable {
     /// 识别引擎
     public var engineModelType: String = "16k_zh"
     
@@ -133,7 +144,8 @@ public class TIMConfigModel: SmartCodable {
     
     /// 强制断句功能，取值范围 5000-90000(单位:毫秒），默认值0(不开启)。
     public var maxSpeakTime = 0
-    required public init() {}
+    
+    public init() {}
 }
 
 public class BridgeAnswerDetail: SmartCodable {

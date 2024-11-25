@@ -179,6 +179,7 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/AFNetworking/AFNetworking.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/AFServiceNet/AFServiceNet.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/GGXAppleSpeech/GGXAppleSpeech.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/GGXRSA/GGXRSA.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/GGXSwiftExtension/GGXSwiftExtension.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/GXAudioPlay/GXAudioPlay.framework"
@@ -208,6 +209,7 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/RxSwift/RxSwift.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/SmartCodable/SmartCodable.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/TKPermissionKit/TKPermissionKit.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/YYModel/YYModel.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/ZKBaseSwiftProject/ZKBaseSwiftProject.framework"
 fi
@@ -215,6 +217,7 @@ if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/AFNetworking/AFNetworking.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/AFServiceNet/AFServiceNet.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/GGXAppleSpeech/GGXAppleSpeech.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/GGXRSA/GGXRSA.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/GGXSwiftExtension/GGXSwiftExtension.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/GXAudioPlay/GXAudioPlay.framework"
@@ -244,6 +247,7 @@ if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/RxSwift/RxSwift.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/SmartCodable/SmartCodable.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/TKPermissionKit/TKPermissionKit.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/YYModel/YYModel.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/ZKBaseSwiftProject/ZKBaseSwiftProject.framework"
 fi

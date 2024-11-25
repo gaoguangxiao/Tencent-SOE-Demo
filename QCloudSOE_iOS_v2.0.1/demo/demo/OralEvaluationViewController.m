@@ -15,7 +15,7 @@
 #import "UserInfo.h"
 #import "PrivateInfo.h"
 #import "Slider.h"
-#import "TAIOralEvaluationRetV2.h"
+//#import "TAIOralEvaluationRetV2.h"
 #import <MJExtension.h>
 
 #import "demo-Swift.h"
@@ -24,6 +24,8 @@
 
 #import <GXAudioPlay-Swift.h>
 #import "GGXSwiftExtension-Swift.h"
+#import <RSBridgeAudioEvaluation-Swift.h>
+#import <RSAdventureApi-Swift.h>
 //旧版
 #import <TAISDK/TAIOralEvaluation.h>
 
@@ -34,7 +36,7 @@
 
 #import "MBProgressHUD.h"
 #import "TAIDataSourceHandle.h" //对音频pcm、wav音频解析数据
-@interface OralEvaluationViewController () <TAIOralListener, UITextFieldDelegate,TAIOralEvaluationDelegate>
+@interface OralEvaluationViewController () <TAIOralListener, UITextFieldDelegate,TAIOralEvaluationDelegate,QCloudRealTimeRecognizerDelegate>
 
 @property (weak, nonatomic) IBOutlet UITextField *refText;
 
@@ -66,6 +68,7 @@
 @property (nonatomic, strong) AudioFileTool *tool;              //文件播放器
 @property (nonatomic, strong) TAIDataSourceHandle *dataSourceHandle; //定时解析音频数据
 
+@property (nonatomic, strong) TXSpeechTool *speechTools;//腾讯语言识别
 //音频评测面板
 @property (weak, nonatomic) IBOutlet UILabel *WordTxt;//识别结果
 @property (weak, nonatomic) IBOutlet UILabel *SuggestedScoreTxt;//建议评分
@@ -81,7 +84,7 @@
 @property (nonatomic, copy) NSString *audioPath;
 
 //将录制oc-该外swift工具
-@property (nonatomic, strong) RSAudioEvaluationManagerV2 *audioEvaluationV2;
+//@property (nonatomic, strong) RSAudioEvaluationManagerV2 *audioEvaluationV2;
 @end
 
 @implementation OralEvaluationViewController {
@@ -107,13 +110,17 @@
     
     [self.volumeView addSubview:self.waveAudioView];
     self.recordSOE = [SOE new];
+    
+    self.speechTools = [TXSpeechTool new];
+    self.speechTools.delegate = self;
+    
     self.downloader = [GXDownloadManager new];
     self.tool = AudioFileTool.share;
     [self updateSource];
     
     self.dataSourceHandle = [TAIDataSourceHandle new];
     
-    self.audioEvaluationV2 = [RSAudioEvaluationManagerV2 new];
+//    self.audioEvaluationV2 = [RSAudioEvaluationManagerV2 new];
 //    //保存待测试的网络数据
 //    NSString *re = [TESTDATA loadTestTxt:@"long_text_2024-10-18-16-20-39.txt"];
 //    [self.tool clearTxt];
@@ -321,7 +328,7 @@
         //        config.audioFile = [NSString stringWithFormat:@"%@/%@.wav", NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)[0], videoDestDateString];
         
         recordData.fileHandler.recordFilePath = audiopath1;
-        self.audioPath = audiopath;
+        self.audioPath = audiopath1;
         NSLog(@"audio path is: %@",self.audioPath);
         config.vadInterval = self->_vadSlider.value;
         config.vadVolume = self->_vadVolumeSlider.value;
@@ -348,19 +355,21 @@
     [_resultText setText:_result];
     NSLog(@"SOE onError ----> %@", _result);
     [_actionBtn setTitle:@"开始评测" forState:UIControlStateNormal];
+    [self.speechTools endSpeech];
 }
 
 //评测成功
 - (void)onFinish {
     _running = false;
     [_actionBtn setTitle:@"开始评测" forState:UIControlStateNormal];
+    [self.speechTools endSpeech];
 }
 
 //评测中收到的服务端信息
 - (void)onMessage:(nonnull NSString *)value {
     NSLog(@"SOE onMessage ----> %@", value);
     
-    TAIOralEvaluationWordBase *eveluation = [TAIOralEvaluationWordBase mj_objectWithKeyValues:value];
+    TAIOralEvaluationWordBase *eveluation = [TAIOralEvaluationWordBase objectValues:value];
     
     NSData *data = [NSJSONSerialization dataWithJSONObject:[eveluation mj_JSONObject] options:NSJSONWritingPrettyPrinted error:nil];
     NSString *dataStr =  [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
@@ -370,9 +379,9 @@
     TAIOralEvaluationRetV2 *result = eveluation.result;
     if (result) {
         TAIOralEvaluationWordV2 *firstWord = result.Words.firstObject;
-        if (firstWord) {
-            _WordTxt.text = [NSString stringWithFormat:@"%@",firstWord.Word];
-        }
+//        if (firstWord) {
+//            _WordTxt.text = [NSString stringWithFormat:@"%@",firstWord.Word];
+//        }
         _SuggestedScoreTxt.text = [NSString stringWithFormat:@"%.2f",result.SuggestedScore];
         _PronCompletionTxt.text = [NSString stringWithFormat:@"%.2f",result.PronCompletion];
         _PronAccuracyTxt.text   = [NSString stringWithFormat:@"%.2f",result.PronAccuracy];
@@ -489,6 +498,15 @@
     recordParam.vadInterval = self->_vadSlider.value;
     recordParam.db = self->_vadVolumeSlider.value;
 
+
+    TencentSOECredentialsModel *model = [TencentSOECredentialsModel new];
+    model.appId = [PrivateInfo shareInstance].appId;
+    model.token = [PrivateInfo shareInstance].token;
+    model.tmpSecretId = [PrivateInfo shareInstance].secretId;
+    model.tmpSecretKey = [PrivateInfo shareInstance].secretKey;
+    
+    [self.speechTools startSpeechWithCredentials:model];
+    
     [self.oralEvaluation setRecorderParam:recordParam];
     __weak typeof(self) ws = self;
     [self.oralEvaluation resetAvAudioSession:true];
@@ -508,10 +526,10 @@
     }
 
     if (result) {
-        TAIOralEvaluationWord *firstWord = result.words.firstObject;
-        if (firstWord) {
-            _WordTxt.text = [NSString stringWithFormat:@"%@",firstWord.word];
-        }
+//        TAIOralEvaluationWord *firstWord = result.words.firstObject;
+//        if (firstWord) {
+//            _WordTxt.text = [NSString stringWithFormat:@"%@",firstWord.word];
+//        }
         _SuggestedScoreTxt.text = [NSString stringWithFormat:@"%.2f",result.suggestedScore];
         _PronCompletionTxt.text = [NSString stringWithFormat:@"%.2f",result.pronCompletion];
         _PronAccuracyTxt.text   = [NSString stringWithFormat:@"%.2f",result.pronAccuracy];
@@ -534,6 +552,8 @@
     if (data.bEnd) {
         [self onFinish];
         //
+        [self.speechTools endSpeech];
+        
         [self onResult:result.mj_JSONString];
     }
 }
@@ -546,6 +566,101 @@
 {
     [self onVolume:(int)volume];
 }
+
+#pragma mark - QCloudRealTimeRecognizerDelegate
+- (void)realTimeRecognizerOnSliceRecognize:(QCloudRealTimeRecognizer *)recognizer
+                                  result:(QCloudRealTimeResult *)result
+{
+    if (0 == result.code) {
+        _WordTxt.text = result.recognizedText;
+//        [PTDebugView addLog:result.recognizedText];
+    }
+    NSLog(@"realTimeRecognizerOnSliceRecognize result %@", [result debugDescription]);
+    NSLog(@"result json text= %@", result.jsonText);
+}
+
+//- (void)realTimeRecognizerDidStartRecord:(QCloudRealTimeRecognizer *)recorder error:(NSError *)error
+//{
+//    NSLog(@"realTimeRecognizerDidStartRecord error %@", error);
+//    if (!error) {
+//      
+//    }
+//}
+
+//- (void)realTimeRecognizerDidStopRecord:(QCloudRealTimeRecognizer *)recorder
+//{
+//    NSLog(@"realTimeRecognizerDidStopRecord");
+//    _isRecording = NO;
+//    [self stopAnimation];
+//    [self updateButtonTitle];
+//}
+
+//- (void)realTimeRecognizerDidUpdateVolumeDB:(QCloudRealTimeRecognizer *)recognizer volume:(float)volume
+//{
+//    NSLog(@"realTimeRecognizerDidUpdateVolume volume:%lf", volume);
+//    _volume = volume;
+//    maxVolume = volume > maxVolume ? volume : maxVolume;
+//    minVolume = volume < minVolume ? volume : minVolume;
+//    [self updateVolumeDB:volume];
+//}
+
+
+//- (void)realTimeRecognizerOnFlowRecognizeStart:(QCloudRealTimeRecognizer *)recognizer voiceId:(NSString *)voiceId seq:(NSInteger)seq
+//{
+//    NSLog(@"realTimeRecognizerOnFlowRecognizeStart:%@ seq:%ld", voiceId, seq);
+//}
+/**
+ * 检测到语音流结束识别
+ * @param voiceId 本次识别对应的voiceId
+ */
+- (void)realTimeRecognizerOnFlowRecognizeEnd:(QCloudRealTimeRecognizer *)recognizer voiceId:(NSString *)voiceId seq:(NSInteger)seq
+{
+    NSLog(@"realTimeRecognizerOnFlowRecognizeEnd:%@ seq:%ld", voiceId, seq);
+}
+
+- (void)realTimeRecognizerOnSegmentSuccessRecognize:(QCloudRealTimeRecognizer *)recognizer result:(QCloudRealTimeResult *)result
+{
+    QCloudRealTimeResultResponse *currentResult = [result.resultList firstObject];
+    NSLog(@"realTimeRecognizerOnSegmentSuccessRecognize:%@ index:%ld", currentResult.voiceTextStr, currentResult.index);
+}
+
+- (void)realTimeRecognizerDidFinish:(QCloudRealTimeRecognizer *)recorder result:(NSString *)result
+{
+    _WordTxt.text = result;
+    NSLog(@"realTimeRecognizerDidFinish:%@", result);
+}
+
+//- (void)realTimeRecognizerDidError:(QCloudRealTimeRecognizer *)recognizer result:(QCloudRealTimeResult *)result;
+//{
+//    NSString* msg = nil;
+//    if(result.clientErrCode != QCloudRealTimeClientErrCode_Success){ //客户端返回的错误
+//        msg = [NSString stringWithFormat:@"realTimeRecognizerDidError:code=%@ errmsg=%@", @(result.clientErrCode),result.clientErrMessage];
+//        NSLog(@"%@", msg);
+//        _WordTxt.text = msg;
+//        
+//    }else{ //后端返回的错误
+//        msg = [NSString stringWithFormat:@"realTimeRecognizerDidError:code=%@ errmsg=%@", @(result.code),result.jsonText];
+//        NSLog(@"%@", msg);
+//        _WordTxt.text = msg;
+//    }
+//    [self.view makeToast:msg duration:1.3 position:CSToastPositionCenter];
+//}
+
+//-(void)realTimeRecognizerOnSliceDetectTimeOut{
+//    NSLog(@"realTimeRecognizeronSliceDetectTimeOut：触发了静音超时");
+    //当QCloudConfig.endRecognizeWhenDetectSilence 打开时，触发静音超时事件会回调此事件
+    //当QCloudConfig.endRecognizeWhenDetectSilenceAutoStop 打开时，回调此事件的同时会停止本次识别，此配置默认打开
+    
+//}
+/**
+ * 日志输出
+ * @param log 日志
+ */
+//- (void)realTimeRecgnizerLogOutPutWithLog:(NSString *)log{
+    
+//    NSLog(@"log=====%@",log);
+//}
+
 
 #pragma mark - other
 - (void)scoreWithByPath:(NSString *)path andwavPath:(NSString *)wavPath{

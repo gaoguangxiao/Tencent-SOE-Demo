@@ -13,8 +13,7 @@ target 'demo' do
   pod 'AFServiceNet' 
 #  , :path => '~/Documents/GitHub/AFServiceNet'
   
-  pod 'RSAdventureApi'
-#  , :path => '~/Desktop/SourceTree/rs_bridge/rsadventureapi'
+  pod 'RSAdventureApi', :path => '~/Desktop/SourceTree/rs_bridge/rsadventureapi'
   
   pod 'GXTaskDownload'
 #  , :path => '~/Documents/GitHub/GXTaskDownload' # 下载组件
@@ -28,8 +27,11 @@ target 'demo' do
   pod 'GXAudioRecord'
 #  , :path=>'~/Documents/GitHub/gxaudioqueue'
   
-  pod 'RSBridgeAudioEvaluation'
+  pod 'RSBridgeAudioEvaluation' 
+#  , :path => '~/Desktop/SourceTree/rs_bridge/record'
   #  pod 'TAISDK_iOS'
   
+  pod 'GGXAppleSpeech'
+  pod 'QCloudRealTime' #语言识别
   pod 'IQKeyboardManagerSwift'
 end

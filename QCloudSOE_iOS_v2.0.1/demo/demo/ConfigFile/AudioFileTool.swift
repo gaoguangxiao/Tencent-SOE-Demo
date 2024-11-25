@@ -75,9 +75,9 @@ public class AudioFileTool: NSObject {
         
         
         if let filePath = path.toFileUrl {
-            try? localRecordPlayer.playpcm(fileURL: filePath)
+//            try? localRecordPlayer.playpcm(fileURL: filePath)
 //            localRecordPlayerV2.playpcm(fileURL: filePath)
-            
+            audioRecordPlayer2.play(url: path)
         }
         
     }

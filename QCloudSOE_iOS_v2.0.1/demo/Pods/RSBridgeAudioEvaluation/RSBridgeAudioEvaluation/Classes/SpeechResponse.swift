@@ -23,9 +23,14 @@ public enum SpeechResponse: String {
     case recordingEvent   // Changes in recording
     
     //Changes in recording
-    enum RecordingEventType: String {
+    public enum RecordingEventType: String {
         case evaluation // Score the speech
         case speech     // voice-to-text
+        
+        case volume
+        case timeout
+        case match
+        case quiet
     }
 }
 
@@ -63,4 +68,49 @@ public extension SpeechResponse {
     var speech: String {
         return RecordingEventType.speech.rawValue
     }
+    
+    var volume: String {
+         RecordingEventType.volume.rawValue
+    }
+    
+    var timeout: String {
+        RecordingEventType.timeout.rawValue
+    }
+    
+    var match: String {
+         RecordingEventType.match.rawValue
+    }
+    
+    var quiet: String {
+         RecordingEventType.quiet.rawValue
+    }
 }
+
+
+public typealias EventEvaluationRecording = SpeechResponse.RecordingEventType
+
+
+//
+public protocol AudioEvaluationProtocol: NSObjectProtocol {
+    
+    /// 录制结束
+    func audioRecordEnd(code: Int, msg: String, data: Dictionary<String, Any>)
+    
+    /// 音量发生变化
+    func audioRecordVolume(volume: Int)
+    
+    /// 静音事件
+    func audioRecordSliceDetectTimeOut()
+    
+    /// 评测超时事件
+    func evaluationTimeOut()
+    /// 匹配事件
+    func evaluationMatch()
+    
+    /// 打分
+    func speechEventEnd(code: Int, msg: String, data: Dictionary<String,Any>)
+    
+    //
+    func evaluationStream(data: Dictionary<String,Any>)
+}
+ 

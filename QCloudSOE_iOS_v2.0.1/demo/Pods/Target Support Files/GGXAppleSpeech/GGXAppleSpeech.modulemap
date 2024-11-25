@@ -1,0 +1,6 @@
+framework module GGXAppleSpeech {
+  umbrella header "GGXAppleSpeech-umbrella.h"
+
+  export *
+  module * { export * }
+}
