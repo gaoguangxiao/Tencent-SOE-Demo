@@ -184,6 +184,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>QCloudFileRecognizer.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>QCloudRealTime.xcscheme</key>
 		<dict>
 			<key>isShown</key>

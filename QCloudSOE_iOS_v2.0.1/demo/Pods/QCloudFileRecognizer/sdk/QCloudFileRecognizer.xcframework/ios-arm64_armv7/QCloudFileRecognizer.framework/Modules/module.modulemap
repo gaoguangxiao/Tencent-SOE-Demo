@@ -1,0 +1,10 @@
+framework module QCloudFileRecognizer {
+  header "QCloudFileRecognizeParams.h"
+  header "QCloudFileRecognizerCommonParams.h"
+  header "QCloudFileRecognizerConfig.h"
+  header "QCloudFileRecognizer_old.h"
+  header "QCloudFlashFileRecognizeParams.h"
+  header "QCloudFlashFileRecognizer.h"
+  header "sdk_version.h"
+  export *
+}

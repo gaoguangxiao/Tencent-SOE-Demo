@@ -10,4 +10,4 @@
 NSString* kQDAppId = @"1321939176";
 NSString* kQDSecretId = @"";
 NSString* kQDSecretKey = @"";
-NSString* kQDToken = nil;
+NSString* kQDToken = @"";

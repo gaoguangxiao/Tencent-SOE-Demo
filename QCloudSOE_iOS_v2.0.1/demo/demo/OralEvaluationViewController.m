@@ -28,7 +28,13 @@
 #import <RSAdventureApi-Swift.h>
 //旧版
 #import <TAISDK/TAIOralEvaluation.h>
+
+//语言识别
 #import <QCloudRealTime/QCloudRealTimeRecognizer.h>
+#import <QCloudRealTime/QCloudAudioDataSource.h>
+#import <QCloudFileRecognizer/QCloudFlashFileRecognizeParams.h>
+#import <QCloudFileRecognizer/QCloudFlashFileRecognizer.h>
+
 //音频格式转换
 #import "GGXAudioConvertor.h"
 #import "RSShowWaveView.h"
@@ -36,7 +42,10 @@
 
 #import "MBProgressHUD.h"
 #import "TAIDataSourceHandle.h" //对音频pcm、wav音频解析数据
-@interface OralEvaluationViewController () <TAIOralListener, UITextFieldDelegate,TAIOralEvaluationDelegate,QCloudRealTimeRecognizerDelegate>
+@interface OralEvaluationViewController () <TAIOralListener, UITextFieldDelegate,
+TAIOralEvaluationDelegate,
+QCloudRealTimeRecognizerDelegate,
+QCloudFlashFileRecognizerDelegate>
 
 @property (weak, nonatomic) IBOutlet UITextField *refText;
 
@@ -70,6 +79,9 @@
 
 //@property (nonatomic, strong) TXSpeechTool *speechTools;//腾讯语言识别
 @property (nonatomic, strong) QCloudRealTimeRecognizer *realTimeRecognizer;
+
+@property (nonatomic, strong) QCloudFlashFileRecognizer *recognizer;
+
 //音频评测面板
 @property (weak, nonatomic) IBOutlet UILabel *WordTxt;//识别结果
 @property (weak, nonatomic) IBOutlet UILabel *SuggestedScoreTxt;//建议评分
@@ -333,15 +345,16 @@
         NSLog(@"audio path is: %@",self.audioPath);
         config.vadInterval = self->_vadSlider.value;
         config.vadVolume = self->_vadVolumeSlider.value;
+        
+        //音频录制开启语言识别
+        [self onStartButtonTouched];
     } else {
         
     }
     
     self->_ctl = nil;
     //    self->_source = nil;
-    
-    [self onStartButtonTouched];
-    
+        
     self->_ctl =  [config build:source listener:self];
     
     self->_running = true;
@@ -456,6 +469,7 @@
     
     //
     [self.dataSourceHandle build:_source listener:self];
+    [self onRecognizeAudioFileRecord:audioPath];
 }
 
 - (void)onRecord {
@@ -568,8 +582,7 @@
 }
 
 #pragma mark - 语言识别
-- (void)onStartButtonTouched
-{
+- (void)onStartButtonTouched {
     
     //    if (!_realTimeRecognizer) {
     //1.创建QCloudConfig实例
@@ -613,12 +626,13 @@
     //2.创建QCloudRealTimeRecognizer实例
     
     //使用外部数据源传入语音数据，自定义data source需要实现QCloudAudioDataSource协议
-    //        QCloudDemoAudioDataSource *dataSource = [[QCloudDemoAudioDataSource alloc] init];
-    //        _realTimeRecognizer = [[QCloudRealTimeRecognizer alloc] initWithConfig:config dataSource:dataSource];
-    
-    //使用SDK内置录音器传入语音数据
-    _realTimeRecognizer = [[QCloudRealTimeRecognizer alloc] initWithConfig:config];
-    
+//        QCloudDemoAudioDataSource *dataSource = [[QCloudDemoAudioDataSource alloc] init];
+//        _realTimeRecognizer = [[QCloudRealTimeRecognizer alloc] initWithConfig:config dataSource:dataSource];
+//    } else {
+        
+        //使用SDK内置录音器传入语音数据
+        _realTimeRecognizer = [[QCloudRealTimeRecognizer alloc] initWithConfig:config];
+//    }
 //    [_realTimeRecognizer EnableDebugLog:YES];//是否打印日志
     
     //3.设置delegate
@@ -749,6 +763,100 @@
 //    NSLog(@"log=====%@",log);
 //}
 
+#pragma mark - 文件识别
+- (void)onRecognizeAudioFileRecord:(NSString *)audioPath {
+    
+//    [self.view makeToastActivity:CSToastPositionCenter];
+    if([kQDToken isEqual:@""]){
+        _recognizer = [[QCloudFlashFileRecognizer alloc] initWithAppId:[PrivateInfo shareInstance].appId
+                                                              secretId:[PrivateInfo shareInstance].secretId
+                                                             secretKey:[PrivateInfo shareInstance].secretKey
+                                                                 token:[PrivateInfo shareInstance].token];
+    }else{
+        _recognizer = [[QCloudFlashFileRecognizer alloc] initWithAppId:kQDAppId secretId:kQDSecretId secretKey:kQDSecretKey token:kQDToken];
+    }
+    [_recognizer EnableDebugLog:YES];//是否打印日志
+    _recognizer.delegate = self;
+    
+    //必须使用[QCloudFlashFileRecognizeParams defaultRequestParams]初始化
+    QCloudFlashFileRecognizeParams *params = [QCloudFlashFileRecognizeParams defaultRequestParams];
+//    NSString *filePath = [[NSBundle mainBundle] pathForResource:@"test1" ofType:@"mp3"];
+    NSData *audioData = [[NSData alloc] initWithContentsOfFile:audioPath];
+    params.audioData = audioData;
+    //音频格式。支持 wav、pcm、ogg-opus、speex、silk、mp3、m4a、aac。
+    params.voiceFormat = @"mp3";
+    
+    //以下参数不设置将使用默认值
+//    params.engineModelType = @"16k_zh";//引擎模型类型,默认16k_zh。8k_zh：8k 中文普通话通用；16k_zh：16k 中文普通话通用；16k_zh_video：16k 音视频领域。
+//    params.filterDirty = 0;;// 0 ：默认状态 不过滤脏话 1：过滤脏话
+//    params.filterModal = 0;// 0 ：默认状态 不过滤语气词  1：过滤部分语气词 2:严格过滤
+//    params.filterPunc = 0;// 0 ：默认状态 不过滤句末的句号 1：滤句末的句号
+//    params.convertNumMode = 1;;//1：默认状态 根据场景智能转换为阿拉伯数字；0：全部转为中文数字。
+//    params.speakerDiarization = 0; //是否开启说话人分离（目前支持中文普通话引擎），默认为0，0：不开启，1：开启。
+//    params.firstChannelOnly = 1; //是否只识别首个声道，默认为1。0：识别所有声道；1：识别首个声道。
+//    params.wordInfo = 0; //是否显示词级别时间戳，默认为0。0：不显示；1：显示，不包含标点时间戳，2：显示，包含标点时间戳。
+    
+//    params.requestTimeoutInternval = 600;//网络超时时间，默认600s,您可以根据业务需求更改此值；
+//注意：如果设置过短的时间，网络超时断开将无法获取到识别结果，并且会消耗该音频时长的识别额度
+    // params.reinforceHotword = 1; // 开启热词增强
+    // params.sentenceMaxLength = 10;
+    
+    [_recognizer recognize:params];
+    
+}
+
+
+#pragma mark - QCloudFlashFileRecognizerDelegate
+//上传文件成功回调
+- (void)FlashFileRecognizer:(QCloudFlashFileRecognizer *_Nullable)recognizer status:(nullable NSInteger *) status text:(nullable NSString *)text resultData:(nullable NSDictionary *) resultData
+{
+    
+    if(status == 0){
+        NSLog(@"识别成功");
+        //text为识别结果
+    }else{
+        NSLog(@"上传文件成功，但服务器端识别失败");
+        //text为错误原因
+    }
+    
+    NSLog(@"QCloudFlashFileRecognizer text:%@", text);
+    _WordTxt.text = text;
+    
+/*以上只解析整段话内容，如需精确解析词级别时间戳 请根据业务需求自行解析resultData，以下为直接打印json结果，格式参考api文档
+    https://cloud.tencent.com/document/product/1093/52097
+ */
+    
+//        NSData *jsonData = [NSJSONSerialization dataWithJSONObject:resultData options:NSJSONWritingPrettyPrinted error:nil];
+//        NSString* text2 =  [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+//    NSLog(@"QCloudFlashFileRecognizer text2:%@", text2);
+//        self.TextView.text = text2;
+
+
+    
+//    [self.view hideToastActivity];
+}
+
+//识别错误回调，网络错误，返回结果无法解析等
+- (void)FlashFileRecognizer:(QCloudFlashFileRecognizer *_Nullable)recognizer error:(nullable NSError *)error resultData:(nullable NSDictionary *)resultData
+{
+    NSLog(@"QCloudFlashFileRecognizer error:%@", error);
+//    if (resultData != nil) {
+//        NSError* error = nil;
+//        NSData* ret = [NSJSONSerialization dataWithJSONObject:resultData options:NSJSONWritingPrettyPrinted error:&error];
+//        if(error != nil) {
+//            self.TextView.text = [error localizedDescription];
+//        } else {
+//            self.TextView.text = [[NSString alloc] initWithData:ret encoding:NSUTF8StringEncoding];
+//        }
+//    }else {
+//        self.TextView.text = [error localizedDescription];
+//    }
+//    [self.view hideToastActivity];
+}
+-(void)FlashFileRecgnizerLogOutPutWithLog:(NSString *)log{
+    
+    NSLog(@"log===%@",log);
+}
 
 #pragma mark - other
 - (void)scoreWithByPath:(NSString *)path andwavPath:(NSString *)wavPath{
@@ -762,6 +870,7 @@
         [MBProgressHUD hideHUDForView:self.view animated:YES];
         if (self.classVersion == 2) {
             [self initTAIConfig:self-> _source];
+            [self onRecognizeAudioFileRecord:path];
         } else {
             [self onLocalRecord:path andwavPath:wavPath];
         }

@@ -174,6 +174,13 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1E6C846A2CF47FD600CF0B42 /* QCloud */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = QCloud;
+			sourceTree = "<group>";
+		};
 		1E7A252E2CC2172B0080D18A /* ConfigFile */ = {
 			isa = PBXGroup;
 			children = (
@@ -330,6 +337,7 @@
 		7E2FC9A22BFEEE3800077232 /* demo */ = {
 			isa = PBXGroup;
 			children = (
+				1E6C846A2CF47FD600CF0B42 /* QCloud */,
 				1EA56E9B2CC607B800C4FBD8 /* TAIFramework */,
 				1E7A252E2CC2172B0080D18A /* ConfigFile */,
 				1E8419622CC0E0E8005E1439 /* 原生录制音频 */,
@@ -733,7 +741,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1.0;
+				MARKETING_VERSION = 1.2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.tencent.cloud.ggx.demo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -776,7 +784,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1.0;
+				MARKETING_VERSION = 1.2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.tencent.cloud.ggx.demo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

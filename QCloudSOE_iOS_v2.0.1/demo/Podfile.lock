@@ -83,6 +83,7 @@ PODS:
   - PKHUD (5.3.0)
   - PTDebugView (0.1.9):
     - GGXSwiftExtension
+  - QCloudFileRecognizer (3.1.22)
   - QCloudRealTime (3.1.22)
   - ReachabilitySwift (5.2.4)
   - RSAdventureApi (0.0.3):
@@ -133,6 +134,7 @@ DEPENDENCIES:
   - GXTaskDownload
   - IQKeyboardManagerSwift
   - MJExtension
+  - QCloudFileRecognizer
   - QCloudRealTime
   - RSAdventureApi (from `~/Desktop/SourceTree/rs_bridge/rsadventureapi`)
   - RSBridgeAudioEvaluation
@@ -166,6 +168,7 @@ SPEC REPOS:
     - Moya
     - PKHUD
     - PTDebugView
+    - QCloudFileRecognizer
     - QCloudRealTime
     - ReachabilitySwift
     - RxCocoa
@@ -206,6 +209,7 @@ SPEC CHECKSUMS:
   Moya: 138f0573e53411fb3dc17016add0b748dfbd78ee
   PKHUD: 98f3e4bc904b9c916f1c5bb6d765365b5357291b
   PTDebugView: c719fbcf92bbcad675a9fba8a6206e863d8d021c
+  QCloudFileRecognizer: a911e411987ae2cc28d78e154ae5cde421bc6312
   QCloudRealTime: 16df92ea9951c08c6c7d2ffb4c5d22bb3fe9f324
   ReachabilitySwift: 32793e867593cfc1177f5d16491e3a197d2fccda
   RSAdventureApi: 5c98e16d12045cffb12ca133b5efcb54700448ca
@@ -220,6 +224,6 @@ SPEC CHECKSUMS:
   YYModel: 2a7fdd96aaa4b86a824e26d0c517de8928c04b30
   ZKBaseSwiftProject: 04cb3fb43a971c6bf0eb4ae718210b114c03daf9
 
-PODFILE CHECKSUM: 7d97e64757866e02aca48ddf5d20d8b61ed3cb31
+PODFILE CHECKSUM: f1af9d89dbf687702325d5da8ad6a30bb17089a7
 
 COCOAPODS: 1.16.1
