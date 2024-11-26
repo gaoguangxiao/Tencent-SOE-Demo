@@ -26,6 +26,7 @@
 #import "GGXSwiftExtension-Swift.h"
 #import <RSBridgeAudioEvaluation-Swift.h>
 #import <RSAdventureApi-Swift.h>
+#import "RSBridgeAudioEvaluation-Swift.h"
 //旧版
 #import <TAISDK/TAIOralEvaluation.h>
 
@@ -96,6 +97,9 @@ QCloudFlashFileRecognizerDelegate>
 //录制音频
 @property (nonatomic, copy) NSString *audioPath;
 
+//点击评测时，存储录制参数
+@property (nonatomic, strong) RSBridgeAudioModel *bridgeAudioModel;
+
 //将录制oc-该外swift工具
 //@property (nonatomic, strong) RSAudioEvaluationManagerV2 *audioEvaluationV2;
 @end
@@ -133,6 +137,7 @@ QCloudFlashFileRecognizerDelegate>
     
     self.dataSourceHandle = [TAIDataSourceHandle new];
     
+    
     //    self.audioEvaluationV2 = [RSAudioEvaluationManagerV2 new];
     //    //保存待测试的网络数据
     //    NSString *re = [TESTDATA loadTestTxt:@"long_text_2024-10-18-16-20-39.txt"];
@@ -154,7 +159,31 @@ QCloudFlashFileRecognizerDelegate>
     _PronFluencyTxt.text = @"";
 }
 
+#pragma mark  开始评测
 - (IBAction)onClick:(id)sender {
+    
+    //整合录制参数
+    self.bridgeAudioModel = [RSBridgeAudioModel new];
+    
+    NSString *engineModelType = self.engineSeg.selectedSegmentIndex == 0 ? @"16k_en" : @"16k_zh";
+    
+    TIMConfigModel *configModel = [TIMConfigModel new];
+    configModel.engineModelType = engineModelType;
+    
+    TIMRecognitionConfig *recognitionConfig = [TIMRecognitionConfig new];
+    recognitionConfig.engineModelType = engineModelType;
+    
+    self.bridgeAudioModel.RecognitionConfig = recognitionConfig;
+    self.bridgeAudioModel.TIMConfig = configModel;
+    
+    self.bridgeAudioModel.stream = self.sentenceInfoSeg.selectedSegmentIndex == 1;
+    configModel.evalMode = 1;//self.evalModeSeg.selectedSegmentIndex;
+    configModel.textMode = self.textModeSeg.selectedSegmentIndex;
+    configModel.scoreCoeff = self.coeffSlider.value;
+    configModel.refText = self.refText.text;
+    
+    self.bridgeAudioModel.vadInterval = self->_vadSlider.value;
+    self.bridgeAudioModel.dbValue = self->_vadVolumeSlider.value;
     
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     [self.recordSOE startSOEWithCompletionHandler:^(NSInteger code) {
@@ -473,6 +502,7 @@ QCloudFlashFileRecognizerDelegate>
 }
 
 - (void)onRecord {
+
     if([self.oralEvaluation isRecording]){
         __weak typeof(self) ws = self;
         [self.oralEvaluation stopRecordAndEvaluation:^(TAIError *error) {
@@ -489,16 +519,20 @@ QCloudFlashFileRecognizerDelegate>
     param.secretId = [PrivateInfo shareInstance].secretId;
     param.secretKey = [PrivateInfo shareInstance].secretKey;
     param.token = [PrivateInfo shareInstance].token;
-    param.workMode = (TAIOralEvaluationWorkMode)self.sentenceInfoSeg.selectedSegmentIndex == 0? TAIOralEvaluationWorkMode_Once : TAIOralEvaluationWorkMode_Stream;
-    param.evalMode = (TAIOralEvaluationEvalMode)self.evalModeSeg.selectedSegmentIndex;
+    
+    TIMConfigModel *configModel = self.bridgeAudioModel.TIMConfig;
+    
+    param.workMode = self.bridgeAudioModel.stream ? TAIOralEvaluationWorkMode_Stream : TAIOralEvaluationWorkMode_Once;// (TAIOralEvaluationWorkMode)self.sentenceInfoSeg.selectedSegmentIndex == 0? TAIOralEvaluationWorkMode_Once : TAIOralEvaluationWorkMode_Stream;
+    param.evalMode = configModel.evalMode;//(TAIOralEvaluationEvalMode)self.evalModeSeg.selectedSegmentIndex;
+    param.scoreCoeff = configModel.scoreCoeff;//self.coeffSlider.value;
+    param.textMode = configModel.textMode;//(TAIOralEvaluationTextMode)self.textModeSeg.selectedSegmentIndex;
+    param.refText = configModel.refText;//self.refText.text;
+    
     param.serverType = TAIOralEvaluationServerType_English;
     param.hostType = TAIOralEvaluationHostType_Common;//(TAIOralEvaluationHostType)self.sourceSeg.selectedSegmentIndex;
-    param.scoreCoeff = self.coeffSlider.value;
     param.fileType = TAIOralEvaluationFileType_Mp3;
     param.storageMode = TAIOralEvaluationStorageMode_Enable;
-    param.textMode = (TAIOralEvaluationTextMode)self.textModeSeg.selectedSegmentIndex;
-    param.refText = self.refText.text;
-    
+        
     param.audioPath = [NSString stringWithFormat:@"%@/%@.mp3", NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)[0], param.sessionId];
     self.audioPath = param.audioPath;
     if(param.workMode == TAIOralEvaluationWorkMode_Stream){
@@ -515,11 +549,10 @@ QCloudFlashFileRecognizerDelegate>
     recordParam.fragSize = 1.0 * 1024;
     recordParam.vadEnable = YES;
     
-    recordParam.vadInterval = self->_vadSlider.value;
-    recordParam.db = self->_vadVolumeSlider.value;
+    recordParam.vadInterval = self.bridgeAudioModel.vadInterval;//self->_vadSlider.value;
+    recordParam.db = self.bridgeAudioModel.dbValue;//self->_vadVolumeSlider.value;
     
     [self onStartButtonTouched];
-    
     
     [self.oralEvaluation setRecorderParam:recordParam];
     __weak typeof(self) ws = self;
@@ -601,16 +634,18 @@ QCloudFlashFileRecognizerDelegate>
      */
     //    QCloudConfig *config = [[QCloudConfig alloc] initWithAppId:kQDAppId secretId:kQDSecretId secretId:@"填入临时SecretId" secretKey:@"填入临时SecretKey" token:@"对应的token" projectId:[kQDProjectId integerValue]];
     
-    
     config.sliceTime = 40;                             //语音分片时长40ms
     config.enableDetectVolume = true; //是否检测音量
-    config.endRecognizeWhenDetectSilence = _vadVolumeSlider.value > 0; //是否检测静音，静音阈值大于0检测
-    //        config.endRecognizeWhenDetectSilenceAutoStop = YES;//是否检测到静音停止识别，默认YES
-    config.silenceDetectDuration = _vadSlider.value/1000;
+    config.endRecognizeWhenDetectSilence = self.bridgeAudioModel.vadInterval > 0;//_vadVolumeSlider.value > 0; //是否检测静音，静音阈值大于0检测
+    config.endRecognizeWhenDetectSilenceAutoStop = YES;//是否检测到静音停止识别，默认YES
+    config.silenceDetectDuration = self.bridgeAudioModel.vadInterval/1000;
     config.requestTimeout = 10;
     //        16k_en：英文通用
     //        16k_zh：中文通用
-    config.engineType = self.engineSeg.selectedSegmentIndex == 0 ? @"16k_en" : @"16k_zh"; //设置引擎，不设置默认16k_zh
+    
+    TIMRecognitionConfig *recognitionConfig = self.bridgeAudioModel.RecognitionConfig;
+    
+    config.engineType = recognitionConfig.engineModelType;// self.engineSeg.selectedSegmentIndex == 0 ? @"16k_en" : @"16k_zh"; //设置引擎，不设置默认16k_zh
     //        config.reinforceHotword = 1;
     config.noiseThreshold = 0.5;
     
@@ -648,7 +683,13 @@ QCloudFlashFileRecognizerDelegate>
     //
     //注意:使用内置录音器前需要先设置Category状态为可录音模式
     NSError *error = nil;
-    [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryRecord error:&error];
+//    [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryRecord error:&error];
+    [[AVAudioSession sharedInstance]setCategory:AVAudioSessionCategoryPlayAndRecord withOptions:AVAudioSessionCategoryOptionDefaultToSpeaker error:&error];
+//    if #available(iOS 10.0, *) {//iOS 新增.allowAirPlay .allowBluetoothA2DP
+//        try AVAudioSession.sharedInstance().setCategory(AVAudioSession.Category.playAndRecord, options: [.defaultToSpeaker, .allowBluetooth, .allowAirPlay, .allowBluetoothA2DP])
+//    } else {
+//        try AVAudioSession.sharedInstance().setCategory(AVAudioSession.Category.playAndRecord, options: [.defaultToSpeaker, .allowBluetooth])
+//    }
     if (error) {
         NSLog(@"AVAudioSession setCategory error %@", error);
     }
@@ -662,10 +703,12 @@ QCloudFlashFileRecognizerDelegate>
     //    else {
     [_realTimeRecognizer start];
     //    }
+    
 }
 
 
 #pragma mark - QCloudRealTimeRecognizerDelegate
+//语音流的识别结果
 - (void)realTimeRecognizerOnSegmentSuccessRecognize:(QCloudRealTimeRecognizer *)recognizer result:(QCloudRealTimeResult *)result
 {
     _WordTxt.text = result.recognizedText;
@@ -673,15 +716,16 @@ QCloudFlashFileRecognizerDelegate>
     NSLog(@"realTimeRecognizerOnSegmentSuccessRecognize:%@ index:%ld", currentResult.voiceTextStr, currentResult.index);
 }
 
+//每个语音包分片识别结果
 - (void)realTimeRecognizerOnSliceRecognize:(QCloudRealTimeRecognizer *)recognizer
                                     result:(QCloudRealTimeResult *)result
 {
-    if (0 == result.code) {
-        _WordTxt.text = result.recognizedText;
-        //        [PTDebugView addLog:result.recognizedText];
-    }
-    NSLog(@"realTimeRecognizerOnSliceRecognize result %@", [result debugDescription]);
-    NSLog(@"result json text= %@", result.jsonText);
+//    if (0 == result.code) {
+//        _WordTxt.text = result.recognizedText;
+//        //        [PTDebugView addLog:result.recognizedText];
+//    }
+//    NSLog(@"realTimeRecognizerOnSliceRecognize result %@", [result debugDescription]);
+//    NSLog(@"result json text= %@", result.jsonText);
 }
 
 //一次识别成功回调
@@ -717,10 +761,11 @@ QCloudFlashFileRecognizerDelegate>
 //}
 
 
-//- (void)realTimeRecognizerOnFlowRecognizeStart:(QCloudRealTimeRecognizer *)recognizer voiceId:(NSString *)voiceId seq:(NSInteger)seq
-//{
-//    NSLog(@"realTimeRecognizerOnFlowRecognizeStart:%@ seq:%ld", voiceId, seq);
-//}
+- (void)realTimeRecognizerOnFlowRecognizeStart:(QCloudRealTimeRecognizer *)recognizer voiceId:(NSString *)voiceId seq:(NSInteger)seq
+{
+    NSLog(@"realTimeRecognizerOnFlowRecognizeStart:%@ seq:%ld", voiceId, seq);
+}
+
 /**
  * 检测到语音流结束识别
  * @param voiceId 本次识别对应的voiceId
@@ -786,8 +831,10 @@ QCloudFlashFileRecognizerDelegate>
     //音频格式。支持 wav、pcm、ogg-opus、speex、silk、mp3、m4a、aac。
     params.voiceFormat = @"mp3";
     
+    TIMRecognitionConfig *recognitionConfig = self.bridgeAudioModel.RecognitionConfig;
+    
     //以下参数不设置将使用默认值
-//    params.engineModelType = @"16k_zh";//引擎模型类型,默认16k_zh。8k_zh：8k 中文普通话通用；16k_zh：16k 中文普通话通用；16k_zh_video：16k 音视频领域。
+    params.engineModelType = recognitionConfig.engineModelType;//引擎模型类型,默认16k_zh。8k_zh：8k 中文普通话通用；16k_zh：16k 中文普通话通用；16k_zh_video：16k 音视频领域。
 //    params.filterDirty = 0;;// 0 ：默认状态 不过滤脏话 1：过滤脏话
 //    params.filterModal = 0;// 0 ：默认状态 不过滤语气词  1：过滤部分语气词 2:严格过滤
 //    params.filterPunc = 0;// 0 ：默认状态 不过滤句末的句号 1：滤句末的句号

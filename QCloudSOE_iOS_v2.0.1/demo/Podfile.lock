@@ -18,7 +18,7 @@ PODS:
     - AFNetworking
     - MBProgressHUD
     - YYModel
-  - Alamofire (5.10.1)
+  - Alamofire (5.10.2)
   - GGXAppleSpeech (0.1.0):
     - TKPermissionKit/Speech
   - GGXRSA (0.1.2)
@@ -86,7 +86,7 @@ PODS:
   - QCloudFileRecognizer (3.1.22)
   - QCloudRealTime (3.1.22)
   - ReachabilitySwift (5.2.4)
-  - RSAdventureApi (0.0.3):
+  - RSAdventureApi (0.0.4):
     - GGXRSA
     - GXSwiftNetwork
     - RSBridgeCore
@@ -110,7 +110,7 @@ PODS:
   - RxRelay (6.8.0):
     - RxSwift (= 6.8.0)
   - RxSwift (6.8.0)
-  - SmartCodable (4.2.6)
+  - SmartCodable (4.3.0)
   - SnapKit (5.7.1)
   - TKPermissionKit/Public (1.2.9)
   - TKPermissionKit/Speech (1.2.9):
@@ -136,12 +136,12 @@ DEPENDENCIES:
   - MJExtension
   - QCloudFileRecognizer
   - QCloudRealTime
-  - RSAdventureApi (from `~/Desktop/SourceTree/rs_bridge/rsadventureapi`)
-  - RSBridgeAudioEvaluation
+  - RSAdventureApi
+  - RSBridgeAudioEvaluation (from `~/Desktop/SourceTree/rs_bridge/record`)
 
 SPEC REPOS:
   http://gitlab.risekid.cn/ce/ios-bridge/rs-trunk.git:
-    - RSBridgeAudioEvaluation
+    - RSAdventureApi
     - RSBridgeCore
   https://github.com/CocoaPods/Specs.git:
     - AFNetworking
@@ -181,13 +181,13 @@ SPEC REPOS:
     - ZKBaseSwiftProject
 
 EXTERNAL SOURCES:
-  RSAdventureApi:
-    :path: "~/Desktop/SourceTree/rs_bridge/rsadventureapi"
+  RSBridgeAudioEvaluation:
+    :path: "~/Desktop/SourceTree/rs_bridge/record"
 
 SPEC CHECKSUMS:
   AFNetworking: 3bd23d814e976cd148d7d44c3ab78017b744cd58
   AFServiceNet: fe357b7ba831486fac2661792e9929efc0b18a7b
-  Alamofire: 840d2a1ad82355b536ec6ba5f97e5bfa54600ca3
+  Alamofire: 7193b3b92c74a07f85569e1a6c4f4237291e7496
   GGXAppleSpeech: 7084861ec944ecb41098cebd83a04efe2bcfd674
   GGXRSA: b5b3527dba4f129d139d383cc46d5cc84ddf30ad
   GGXSwiftExtension: ef35cfe3275df105db6d0f320ee413423833ff4c
@@ -212,18 +212,18 @@ SPEC CHECKSUMS:
   QCloudFileRecognizer: a911e411987ae2cc28d78e154ae5cde421bc6312
   QCloudRealTime: 16df92ea9951c08c6c7d2ffb4c5d22bb3fe9f324
   ReachabilitySwift: 32793e867593cfc1177f5d16491e3a197d2fccda
-  RSAdventureApi: 5c98e16d12045cffb12ca133b5efcb54700448ca
-  RSBridgeAudioEvaluation: 22b76b2c31c31e2fa56dd41ce0770d8cd9f0fa05
+  RSAdventureApi: 53a28f4fb8810db85e4a77e977b0485184acc07d
+  RSBridgeAudioEvaluation: f3bdbb6f82f2f5f66b53f2bb305256f6c4b81766
   RSBridgeCore: 5f4890ab23d7ea3d41f598d5c61c07058347cd49
   RxCocoa: 2d33c1e1e5d66492052ad46b11024ae287572880
   RxRelay: 335c78b926a2aea8d863a6d25f1ed3b5ad8e8705
   RxSwift: 4e28be97cbcfeee614af26d83415febbf2bf6f45
-  SmartCodable: 09bc8e160ecb5fd0a7500cca792eb03e75a06477
+  SmartCodable: e1ad00634eb72d34e76e8a96cd5382bf4127cee9
   SnapKit: d612e99e678a2d3b95bf60b0705ed0a35c03484a
   TKPermissionKit: 7a4eb4f2ca67c750962e0dcba88b1e779fe81dcf
   YYModel: 2a7fdd96aaa4b86a824e26d0c517de8928c04b30
   ZKBaseSwiftProject: 04cb3fb43a971c6bf0eb4ae718210b114c03daf9
 
-PODFILE CHECKSUM: f1af9d89dbf687702325d5da8ad6a30bb17089a7
+PODFILE CHECKSUM: dee1375513bc92d4f8c74e8ab8905946748a7ec2
 
 COCOAPODS: 1.16.1
